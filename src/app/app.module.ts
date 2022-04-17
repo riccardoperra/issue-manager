@@ -1,5 +1,5 @@
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {TuiAlertModule, TuiDialogModule, TuiRootModule} from "@taiga-ui/core";
+import {TuiAlertModule, TuiButtonModule, TuiDialogModule, TuiRootModule} from "@taiga-ui/core";
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
@@ -17,7 +17,8 @@ import {RXA_PROVIDER} from "./shared/rxa-custom/rxa.provider";
     TuiRootModule,
     BrowserAnimationsModule,
     TuiDialogModule,
-    TuiAlertModule
+    TuiAlertModule,
+    TuiButtonModule
   ],
   providers: [
     RXA_PROVIDER

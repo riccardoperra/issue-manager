@@ -5,6 +5,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {RXA_PROVIDER} from "./shared/rxa-custom/rxa.provider";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import {AppComponent} from './app.component';
     TuiDialogModule,
     TuiAlertModule
   ],
-  providers: [],
+  providers: [
+    RXA_PROVIDER
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

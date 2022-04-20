@@ -1,0 +1,37 @@
+@import '~@taiga-ui/core/styles/mixins/mixins';
+
+:host {
+  flex: 1;
+}
+
+.card {
+  width: 100%;
+  min-height: 150px;
+
+  > .card__skeleton {
+    width: 70%;
+  }
+
+  .card-tag__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  @include transition('box-shadow');
+
+  &:hover {
+    @include shadow(4);
+  }
+}
+
+.image {
+  display: block;
+  object-fit: cover;
+  width: calc(100% + 2rem);
+  max-height: 200px;
+  margin: -1rem -1rem 1rem;
+  height: 200px;
+  background-color: var(--tui-base-04);
+  border-radius: var(--tui-radius-l) var(--tui-radius-l) 0 0;
+}

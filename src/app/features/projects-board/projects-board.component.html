@@ -1,0 +1,14 @@
+<div class="tui-container tui-container_adaptive tui-space_top-5">
+  <h1>Projects board</h1>
+
+  <div
+    class="tui-row tui-row_adaptive tui-col_stretch tui-space_top-6 board-row"
+  >
+    <div
+      class="tui-col_xs-12 tui-col_md-4 wrapper"
+      *rxFor="let project of projects$; trackBy: projectTrackBy"
+    >
+      <app-project-card [project]="project"></app-project-card>
+    </div>
+  </div>
+</div>

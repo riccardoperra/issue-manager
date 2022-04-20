@@ -1,0 +1,9 @@
+@import '~@taiga-ui/core/styles/mixins/mixins';
+
+.board-row {
+  row-gap: 2rem;
+}
+
+.wrapper {
+  display: flex;
+}

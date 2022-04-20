@@ -1,0 +1,49 @@
+<tui-island class="card" *ngIf="project; else fallback">
+  <img
+    [src]="project?.imageUrl"
+    *ngIf="project?.imageUrl; else fallbackImage"
+    class="image"
+  />
+  <ng-template #fallbackImage>
+    <div class="image"></div>
+  </ng-template>
+
+  <div class="tui-island__content">
+    <div class="w-100">
+      <h3 class="tui-island__title">
+        {{ project?.name }}
+      </h3>
+      <p class="tui-island__paragraph">
+        {{ project?.description ?? 'No description' }}
+      </p>
+
+      <div class="card-tag__list tui-space_top-6">
+        <ng-container *ngIf="project.tags.length > 0; else noTagsContent">
+          <tui-tag
+            [autoColor]="true"
+            class="tag"
+            *ngFor="let tag of project.tags"
+            [value]="tag"
+          >
+          </tui-tag>
+        </ng-container>
+        <ng-template #noTagsContent>
+          <p class="tui-island__paragraph">
+            {{ 'No tags' }}
+          </p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</tui-island>
+
+<ng-template #fallback>
+  <tui-island class="card">
+    <div class="card__skeleton">
+      <div
+        class="tui-island__title tui-skeleton tui-skeleton_text tui-skeleton_short"
+      ></div>
+      <div class="tui-island__title tui-skeleton tui-skeleton_text"></div>
+    </div>
+  </tui-island>
+</ng-template>

@@ -29,6 +29,7 @@
     "@taiga-ui/core": "^2.41.1",
     "@taiga-ui/icons": "^2.41.1",
     "@taiga-ui/kit": "^2.41.1",
+    "appwrite": "^7.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

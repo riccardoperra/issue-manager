@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  width: 100%;
+
+  .welcome {
+    flex: 1;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+
+  .welcome__title {
+    .welcome__title-label {
+      font-weight: 500;
+    }
+
+    .welcome__title-name {
+      margin: 0;
+    }
+  }
+}

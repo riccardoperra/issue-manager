@@ -5,6 +5,7 @@ import { tuiButtonOptionsProvider } from '@taiga-ui/core';
 import { ProjectsState } from './shared/state/projects.state';
 import { AuthState } from './shared/auth/auth.state';
 import { RxActionFactory } from './shared/rxa-custom/actions/actions.factory';
+import { tuiTagOptionsProvider } from '@taiga-ui/kit';
 
 export const APP_PROVIDERS: Provider[] = [
   RxActionFactory,
@@ -14,6 +15,9 @@ export const APP_PROVIDERS: Provider[] = [
   tuiButtonOptionsProvider({
     size: 'm',
     appearance: 'primary',
+  }),
+  tuiTagOptionsProvider({
+    autoColor: true,
   }),
   {
     provide: APP_INITIALIZER,

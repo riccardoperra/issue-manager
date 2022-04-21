@@ -1,0 +1,27 @@
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
+.text {
+  font: var(--tui-font-text-s);
+  color: var(--tui-text-02);
+  @include tui-space('top', 0);
+}
+
+.inner {
+  margin: 1rem 0;
+  white-space: normal;
+}
+
+.control {
+  max-width: 17rem;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 1rem;
+}

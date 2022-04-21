@@ -4,12 +4,19 @@ import { Appwrite, Models } from 'appwrite';
 import { realtimeListener } from '../shared/utils/realtime';
 import { from, Observable } from 'rxjs';
 
+export const enum ProjectVisibility {
+  'public' = 'public',
+  'private' = 'private',
+  'notVisible' = 'notListed',
+}
+
 export interface Project extends Models.Document {
   readonly name: string;
   readonly description: string | null;
   readonly imageUrl: string | null;
   readonly public: boolean;
   readonly tags: string[];
+  readonly visibility: ProjectVisibility;
 }
 
 @Injectable({ providedIn: 'root' })

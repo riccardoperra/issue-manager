@@ -1,14 +1,23 @@
 <div class="tui-container tui-container_adaptive tui-space_top-5">
-  <h1>Projects board</h1>
+  <app-projects-board-header
+    [account]="account$ | push"
+    (createProject)="actions.openCreateProjectDialog()"
+  ></app-projects-board-header>
 
-  <div
-    class="tui-row tui-row_adaptive tui-col_stretch tui-space_top-6 board-row"
-  >
+  <hr class="tui-space_top-6 tui-space_bottom-6" />
+
+  <div>
+    <h1>Projects board</h1>
+
     <div
-      class="tui-col_xs-12 tui-col_md-4 wrapper"
-      *rxFor="let project of projects$; trackBy: projectTrackBy"
+      class="tui-row tui-row_adaptive tui-col_stretch tui-space_top-6 board-row"
     >
-      <app-project-card [project]="project"></app-project-card>
+      <div
+        class="tui-col_xs-12 tui-col_md-4 wrapper"
+        *rxFor="let project of projects$; trackBy: projectTrackBy"
+      >
+        <app-project-card [project]="project"></app-project-card>
+      </div>
     </div>
   </div>
 </div>

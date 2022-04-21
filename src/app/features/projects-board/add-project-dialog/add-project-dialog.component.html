@@ -1,0 +1,103 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="b-form">
+  <h3 class="tui-form__header tui-form__header_margin-top_none">
+    Add new project
+  </h3>
+  <div class="tui-form__row">
+    <label tuiLabel [label]="'Name*'">
+      <tui-input
+        tuiAutoFocus
+        formControlName="name"
+        [tuiTextfieldLabelOutside]="true"
+      >
+      </tui-input>
+      <tui-field-error formControlName="name"></tui-field-error>
+    </label>
+  </div>
+  <div class="tui-form__row">
+    <label tuiLabel [label]="'Description'">
+      <tui-text-area
+        formControlName="description"
+        [tuiTextfieldLabelOutside]="true"
+      ></tui-text-area>
+      <tui-field-error formControlName="description"></tui-field-error>
+    </label>
+  </div>
+
+  <div class="tui-form__row">
+    <label tuiLabel label="Tags">
+      <tui-input-tag
+        [tuiTextfieldLabelOutside]="true"
+        [tuiTextfieldCleaner]="true"
+        [uniqueTags]="true"
+        formControlName="tags"
+      ></tui-input-tag>
+      <tui-field-error formControlName="tags"></tui-field-error>
+    </label>
+  </div>
+
+  <div class="tui-form__row">
+    <label tuiLabel label="Visibility">
+      <div
+        tuiGroup
+        orientation="horizontal"
+        [collapsed]="true"
+        class="tui-space_top-1"
+      >
+        <tui-radio-block
+          formControlName="visibility"
+          contentAlign="left"
+          [item]="'private'"
+          nativeId="example4"
+          size="l"
+          class="control"
+        >
+          <div class="inner">
+            Private
+            <div class="text">
+              Your project is private. Only authenticated users with the right
+              permissions will be able to view the board.
+            </div>
+          </div>
+        </tui-radio-block>
+        <tui-radio-block
+          formControlName="visibility"
+          contentAlign="left"
+          [item]="'public'"
+          nativeId="example4"
+          size="l"
+          class="control"
+        >
+          <div class="inner">
+            Public
+            <div class="text">
+              Your project is public. Everyone can view the board listed in the
+              homepage.
+            </div>
+          </div>
+        </tui-radio-block>
+        <tui-radio-block
+          formControlName="visibility"
+          contentAlign="left"
+          [item]="'notVisible'"
+          nativeId="example4"
+          size="l"
+          class="control"
+        >
+          <div class="inner">
+            Not visible
+            <div class="text">
+              Your project is public. Only users that have access to the project
+              link are able to open the board.
+            </div>
+          </div>
+        </tui-radio-block>
+      </div>
+    </label>
+  </div>
+  <div class="tui-form__row actions">
+    <button tuiButton appearance="secondary" type="button" (click)="close()">
+      Cancel
+    </button>
+    <button tuiButton appearance="primary">Confirm</button>
+  </div>
+</form>

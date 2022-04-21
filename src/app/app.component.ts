@@ -3,7 +3,6 @@ import { ZonelessRouting } from './shared/zone-less/zone-less-routing.service';
 import { Appwrite } from 'appwrite';
 import { APPWRITE } from './providers/appwrite.provider';
 import { ProjectsState } from './shared/state/projects.state';
-import { RxEffects } from '@rx-angular/state/effects';
 import { AuthState } from './shared/auth/auth.state';
 import { AuthEffects } from './shared/auth/auth.effects';
 
@@ -12,7 +11,6 @@ import { AuthEffects } from './shared/auth/auth.effects';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [RxEffects],
 })
 export class AppComponent {
   title = 'appwrite-hackathon';
@@ -22,8 +20,6 @@ export class AppComponent {
   constructor(
     private readonly zonelessRouting: ZonelessRouting,
     private readonly projectsState: ProjectsState,
-    @Inject(RxEffects)
-    private readonly rxEffects: RxEffects,
     @Inject(AuthState)
     private readonly authState: AuthState,
     @Inject(AuthEffects)
@@ -32,10 +28,7 @@ export class AppComponent {
   ) {
     this.zonelessRouting.init();
 
-    this.rxEffects.register(
-      this.authState.onAuthError$,
-      this.authEffects.authError
-    );
+    this.authState.select().subscribe(console.log);
   }
 
   log(e: any) {

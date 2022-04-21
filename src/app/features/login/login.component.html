@@ -1,0 +1,67 @@
+<div class="wrapper">
+  <div class="tui-container tui-container_adaptive">
+    <div class="tui-row tui-row_sme">
+      <div class="tui-col_12">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="tui-row tui-row_sme">
+            <div class="tui-col_6">
+              <h3 class="tui-form__header tui-form__header_margin-top_none">
+                Login
+              </h3>
+
+              <a tuiLink type="button" [routerLink]="'/register'">
+                Don't have an account ? Sign Up
+              </a>
+
+              <div class="tui-form__row">
+                <tui-input
+                  tuiTextfieldExampleText="johndoe@example.com"
+                  formControlName="email"
+                >
+                  Email
+                  <span class="tui-required"></span>
+                </tui-input>
+                <tui-field-error formControlName="email"></tui-field-error>
+              </div>
+
+              <div class="tui-form__row">
+                <tui-input-password formControlName="password">
+                  Password
+                  <span class="tui-required"></span>
+                </tui-input-password>
+                <tui-field-error formControlName="password"></tui-field-error>
+              </div>
+
+              <div class="tui-form__row">
+                <button
+                  tuiButton
+                  size="l"
+                  type="submit"
+                  class="tui-space_right-3"
+                >
+                  Login
+                </button>
+                <button
+                  tuiButton
+                  size="l"
+                  appearance="secondary"
+                  type="button"
+                  (click)="actions.loginAsGuest()"
+                >
+                  Login as guest
+                </button>
+              </div>
+            </div>
+            <div class="tui-col_6">
+              <img
+                class="login-image"
+                src="/assets/login_draw.png"
+                alt="Draw "
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

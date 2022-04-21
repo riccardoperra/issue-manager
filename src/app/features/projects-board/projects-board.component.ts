@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, TrackByFunction } from '@angular/core';
 import { ProjectsState } from '../../shared/state/projects.state';
 import { TuiDialogService, tuiFadeIn } from '@taiga-ui/core';
-import { Project } from '../../data/projects.service';
+import { AddProjectRequest, Project } from '../../data/projects.service';
 import { AuthState } from '../../shared/auth/auth.state';
 import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
 import { RxState } from '@rx-angular/state';
@@ -47,11 +47,19 @@ export class ProjectsBoardComponent extends RxState<never> implements OnInit {
     const content = new PolymorpheusComponent(AddProjectDialogComponent);
 
     this.dialogService
-      .open(content, {
+      .open<AddProjectRequest | null>(content, {
         size: 'l',
         closeable: true,
         dismissible: true,
       })
-      .subscribe();
+      .pipe(
+        tap((result) => {
+          if (!result) return;
+          return this.projectsState.actions.addProject(result);
+        })
+      )
+      .subscribe((result) => {
+        if (!result) return;
+      });
   }
 }

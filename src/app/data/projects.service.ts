@@ -14,10 +14,14 @@ export interface Project extends Models.Document {
   readonly name: string;
   readonly description: string | null;
   readonly imageUrl: string | null;
-  readonly public: boolean;
   readonly tags: string[];
   readonly visibility: ProjectVisibility;
 }
+
+export type AddProjectRequest = Pick<
+  Project,
+  'name' | 'description' | 'visibility' | 'tags' | 'imageUrl'
+>;
 
 @Injectable({ providedIn: 'root' })
 export class ProjectsService {
@@ -32,6 +36,18 @@ export class ProjectsService {
     return from(
       this.appwrite.database.listDocuments<Project>(
         ProjectsService.collectionId
+      )
+    );
+  }
+
+  createProject(project: AddProjectRequest): Observable<Project> {
+    return from(
+      this.appwrite.database.createDocument<Project>(
+        ProjectsService.collectionId,
+        'unique()',
+        project,
+        ['role:all'],
+        ['role:all']
       )
     );
   }

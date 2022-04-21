@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { TuiDialogContext } from '@taiga-ui/core';
+import { AddProjectRequest } from '../../../data/projects.service';
 
 @Component({
   selector: 'app-add-project-dialog',
@@ -20,7 +21,7 @@ export class AddProjectDialogComponent {
 
   constructor(
     @Inject(POLYMORPHEUS_CONTEXT)
-    private readonly context: TuiDialogContext<void, void>,
+    private readonly context: TuiDialogContext<void, AddProjectRequest>,
     @Inject(FormBuilder)
     private readonly fb: FormBuilder
   ) {}

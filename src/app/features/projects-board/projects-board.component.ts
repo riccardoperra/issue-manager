@@ -52,14 +52,9 @@ export class ProjectsBoardComponent extends RxState<never> implements OnInit {
         closeable: true,
         dismissible: true,
       })
-      .pipe(
-        tap((result) => {
-          if (!result) return;
-          return this.projectsState.actions.addProject(result);
-        })
-      )
       .subscribe((result) => {
         if (!result) return;
+        return this.projectsState.actions.addProject(result);
       });
   }
 }

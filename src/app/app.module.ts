@@ -29,7 +29,6 @@ import { AppShellModule } from './app-shell/app-shell.module';
     TuiDialogModule,
     TuiAlertModule,
     HttpClientModule,
-    TuiButtonModule,
     ProjectsBoardModule,
     ReactiveFormsModule,
   ],

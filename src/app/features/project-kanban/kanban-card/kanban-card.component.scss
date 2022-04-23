@@ -1,0 +1,20 @@
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
+.list-card {
+  min-height: 60px;
+  @include shadow('1');
+}
+
+.list-title {
+  font: var(--tui-font-text-m);
+  font-weight: bold;
+}
+
+:host(.dragging) {
+  display: block;
+  position: absolute;
+  left: calc(var(--drag-x) * 1px);
+  top: calc(var(--drag-y) * 1px);
+  width: var(--box-width);
+  height: var(--box-height);
+}

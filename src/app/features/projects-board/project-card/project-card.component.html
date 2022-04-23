@@ -1,13 +1,4 @@
 <tui-island class="card" *ngIf="project; else fallback">
-  <img
-    [src]="project?.imageUrl"
-    *ngIf="project?.imageUrl; else fallbackImage"
-    class="image"
-  />
-  <ng-template #fallbackImage>
-    <div class="image"></div>
-  </ng-template>
-
   <div class="tui-island__content">
     <div class="w-100">
       <h3 class="tui-island__title">

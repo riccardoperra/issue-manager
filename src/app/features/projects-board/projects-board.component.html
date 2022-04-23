@@ -16,7 +16,10 @@
         class="tui-col_xs-12 tui-col_md-4 wrapper"
         *rxFor="let project of projects$; trackBy: projectTrackBy"
       >
-        <app-project-card [project]="project"></app-project-card>
+        <app-project-card
+          [project]="project"
+          [routerLink]="['project', project.$id]"
+        ></app-project-card>
       </div>
     </div>
   </div>

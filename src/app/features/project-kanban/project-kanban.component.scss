@@ -1,0 +1,75 @@
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
+:host {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--tui-base-01);
+  display: block;
+  margin: 0;
+}
+
+.list-grid {
+  display: flex;
+
+  .list-wrapper {
+    width: 280px;
+    height: 100%;
+    margin: 0 4px;
+    display: inline-block;
+    background-color: var(--tui-base-03);
+  }
+
+  .list-header {
+    border-bottom: 1px solid var(--tui-base-04);
+    font: var(--tui-font-text-l);
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  .list-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    height: 100%;
+    width: 100%;
+  }
+
+  .list-title-add {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.list-grid.cdk-drop-list-dragging app-kanban-card:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-custom-placeholder {
+  background: #ccc;
+  border: dotted 3px #999;
+  min-height: 60px;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder {
+  background-color: var(--tui-base-05);
+}

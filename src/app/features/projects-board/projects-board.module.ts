@@ -4,7 +4,6 @@ import { ProjectsBoardComponent } from './projects-board.component';
 import { ForModule } from '@rx-angular/template/experimental/for';
 import {
   TuiAvatarModule,
-  TuiFieldErrorModule,
   TuiInputModule,
   TuiInputTagModule,
   TuiIslandModule,
@@ -27,6 +26,7 @@ import { TuiAutoFocusModule, TuiRepeatTimesModule } from '@taiga-ui/cdk';
 import { HeaderComponent } from './header/header.component';
 import { AddProjectDialogComponent } from './add-project-dialog/add-project-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -55,9 +55,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     TuiRadioBlockModule,
     TuiTooltipModule,
     TuiLabelModule,
-    TuiFieldErrorModule,
     TuiInputTagModule,
     TuiModeModule,
+    RouterModule,
   ],
 })
 export class ProjectsBoardModule {}

@@ -6,6 +6,14 @@ import { AuthGuard } from './shared/auth/auth.guard';
 const routes: Routes = [
   { path: '', component: ProjectsBoardComponent, canActivate: [AuthGuard] },
   {
+    path: 'project/:projectId',
+    loadChildren: () =>
+      import('./features/project-kanban/project-kanban.module').then(
+        (m) => m.ProjectKanbanModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'login',
     loadChildren: () =>
       import('./features/login/login.module').then((m) => m.LoginModule),

@@ -1,0 +1,39 @@
+<p>project-kanban works!</p>
+
+<div class="list-grid" cdkDropListGroup>
+  <tui-island
+    *rxFor="let list of groupedCardsByCategory$; trackBy: categoriesTrackBy"
+    class="list-wrapper"
+    cdkDropList
+    [cdkDropListData]="list.cards"
+    [id]="'list-' + list.$id"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <div class="list-header">
+      {{ list.name }}
+    </div>
+
+    <div class="list-content tui-island__content">
+      <app-kanban-card
+        [card]="card"
+        cdkDrag
+        *rxFor="let card of list.cards; trackBy: cardTrackBy"
+      >
+      </app-kanban-card>
+    </div>
+    <div class="list-content tui-island__content">
+      <tui-island
+        [hoverable]="false"
+        [transparent]="true"
+        class="list-card"
+        size="s"
+        (click)="addNew()"
+      >
+        <span class="tui-island__title list-title list-title-add">
+          <tui-svg src="tuiIconPlus"></tui-svg>
+          Add new card
+        </span>
+      </tui-island>
+    </div>
+  </tui-island>
+</div>

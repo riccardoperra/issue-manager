@@ -192,10 +192,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/cdk@^13.0.0":
-  version "13.3.3"
-  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-13.3.3.tgz#f98d9d67744bf7fa7ee5a8aeb756c6546b88793e"
-  integrity sha512-dzd31mta2VwffxbeO4CelMqb7WswLnkC/r2QZXySnc0CTmj44HqXkqdZuEvVgxaKRVpxsYeuBuhhhy8U00YMOw==
+"@angular/cdk@^13.3.4":
+  version "13.3.4"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-13.3.4.tgz#047d3474e1938aa11b4665286bcd09aa4c45424c"
+  integrity sha512-im4LKxJaIuqFVzmtf650PoiYsn/SZlvBV2zEgzusK8HwQ24C1Lya7NQSApwl8k43h4eKO1OvUKBjqL5uDgEQag==
   dependencies:
     tslib "^2.3.0"
   optionalDependencies:
@@ -4888,6 +4888,11 @@ levn@^0.4.1:
   dependencies:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
+
+lexorank@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/lexorank/-/lexorank-1.0.4.tgz#49ad4b93937f444763cc2660c147506326aa41b1"
+  integrity sha512-CMgA8AMJIX/QfoYHKyjg0hv9W1SGL2xRkt0uLyhT9xKKRj73fHi+IhsrB3W36wwk4I0iz8YlKHfdW14QDwerMA==
 
 license-webpack-plugin@4.0.2:
   version "4.0.2"

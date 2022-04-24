@@ -6,16 +6,16 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CategoriesService, Category } from '../../data/categories.service';
 import { ActivatedRoute } from '@angular/router';
 import {
-  merge,
   distinctUntilChanged,
   exhaustMap,
   filter,
   forkJoin,
   map,
+  merge,
+  of,
   switchMap,
   tap,
   withLatestFrom,
-  debounceTime,
 } from 'rxjs';
 import { Project, ProjectsService } from '../../data/projects.service';
 import { Card, CardsService } from '../../data/cards.service';
@@ -136,6 +136,58 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
         state.cards.map((card) =>
           card.$id === $id ? patch(card, { rank, categoryId }) : card
         )
+    );
+
+    this.initRealtime();
+  }
+
+  initRealtime(): void {
+    this.hold(
+      this.cardsService.changes$.pipe(
+        tap((event) => {
+          if (event.event === 'database.documents.create') {
+            this.connect('cards', of(event), (state, event) => {
+              return state.cards.concat(event.payload);
+            });
+          } else if (event.event === 'database.documents.delete') {
+            this.connect('cards', of(event), (state, event) => {
+              return state.cards.filter(
+                (card) => card.$id !== event.payload.$id
+              );
+            });
+          } else if (event.event === 'database.documents.update') {
+            this.connect('cards', of(event), (state, event) => {
+              return state.cards.map((card) =>
+                card.$id === event.payload.$id ? event.payload : card
+              );
+            });
+          }
+        })
+      )
+    );
+
+    this.hold(
+      this.categoriesService.changes$.pipe(
+        tap((event) => {
+          if (event.event === 'database.documents.create') {
+            this.connect('categories', of(event), (state, event) => {
+              return state.categories.concat(event.payload);
+            });
+          } else if (event.event === 'database.documents.delete') {
+            this.connect('categories', of(event), (state, event) => {
+              return state.categories.filter(
+                (card) => card.$id !== event.payload.$id
+              );
+            });
+          } else if (event.event === 'database.documents.update') {
+            this.connect('categories', of(event), (state, event) => {
+              return state.categories.map((card) =>
+                card.$id === event.payload.$id ? event.payload : card
+              );
+            });
+          }
+        })
+      )
     );
   }
 

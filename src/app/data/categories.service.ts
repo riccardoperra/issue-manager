@@ -2,6 +2,8 @@ import { Appwrite, Models, Query } from 'appwrite';
 import { Inject, Injectable } from '@angular/core';
 import { APPWRITE } from '../providers/appwrite.provider';
 import { from, Observable } from 'rxjs';
+import { realtimeListener } from '../shared/utils/realtime';
+import { Card } from './cards.service';
 
 export interface Category extends Models.Document {
   readonly name: string;
@@ -38,4 +40,9 @@ export class CategoriesService {
       )
     );
   }
+
+  readonly changes$ = realtimeListener<Category>(
+    this.appwrite,
+    `collections.${CategoriesService.collectionId}.documents`
+  );
 }

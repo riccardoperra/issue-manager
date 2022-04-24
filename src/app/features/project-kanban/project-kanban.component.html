@@ -1,39 +1,77 @@
-<p>project-kanban works!</p>
-
-<div class="list-grid" cdkDropListGroup>
-  <tui-island
-    *rxFor="let list of groupedCardsByCategory$; trackBy: categoriesTrackBy"
-    class="list-wrapper"
-    cdkDropList
-    [cdkDropListData]="list.cards"
-    [id]="'list-' + list.$id"
-    (cdkDropListDropped)="drop($event)"
+<div class="tui-container tui-container_fullwidth tui-space__top-6">
+  <div
+    class="project-kanban-title"
+    *rxLet="project$; let project; strategy: 'local'"
   >
-    <div class="list-header">
-      {{ list.name }}
-    </div>
+    <tui-breadcrumbs size="l">
+      <ng-container *ngFor="let item of breadcrumb">
+        <a *tuiBreadcrumb tuiLink [routerLink]="item.routerLink">
+          {{ item.caption }}
+        </a>
+      </ng-container>
+      <a
+        *tuiBreadcrumb
+        tuiLink
+        [routerLink]="['/project', project.$id]"
+        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLinkActive]="'active'"
+      >
+        {{ project.name }}
+      </a>
+    </tui-breadcrumbs>
+    <h1>{{ project.name }}</h1>
+  </div>
 
-    <div class="list-content tui-island__content">
-      <app-kanban-card
-        [card]="card"
-        cdkDrag
-        *rxFor="let card of list.cards; trackBy: cardTrackBy"
-      >
-      </app-kanban-card>
-    </div>
-    <div class="list-content tui-island__content">
+  <div cdkDropListGroup class="tui-space_top-4">
+    <div
+      class="list-grid"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="actions.moveCategory($event)"
+    >
       <tui-island
-        [hoverable]="false"
+        *ngFor="let list of categories$ | async; trackBy: categoriesTrackBy"
         [transparent]="true"
-        class="list-card"
-        size="s"
-        (click)="addNew()"
+        [cdkDragData]="list"
+        cdkDrag
+        class="list-wrapper"
       >
-        <span class="tui-island__title list-title list-title-add">
-          <tui-svg src="tuiIconPlus"></tui-svg>
-          Add new card
-        </span>
+        <div class="list-header" cdkDragHandle>
+          {{ list.name }}
+
+          <div class="list-header-actions">
+            <button size="s" tuiIconButton appearance="secondary">
+              <tui-svg src="tuiIconMoreHorLarge"></tui-svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="tui-island__content tui-space_all-4">
+          <button
+            tuiButton
+            type="button"
+            appearance="secondary"
+            size="m"
+            class="list-add-new-card-action"
+            (click)="addNew()"
+          >
+            <tui-svg src="tuiIconPlus"></tui-svg>
+            Add new card
+          </button>
+        </div>
+
+        <div class="list-wrapper-drag-placeholder" *cdkDragPlaceholder></div>
       </tui-island>
     </div>
-  </tui-island>
+  </div>
 </div>
+
+<!--<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">-->
+<!--  <div-->
+<!--    class="example-box"-->
+<!--    *ngFor="let movie of movies"-->
+<!--    cdkDrag-->
+<!--  >-->
+<!--    {{ movie }}-->
+<!--  </div>-->
+<!--</div>-->

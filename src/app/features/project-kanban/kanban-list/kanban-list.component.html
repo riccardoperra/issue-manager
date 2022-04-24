@@ -8,12 +8,7 @@
   <div
     cdkDrag
     [cdkDragData]="card"
-    *rxFor="
-      let card of cards$ | async;
-      trackBy: cardTrackBy;
-      parent: true;
-      strategy: 'native'
-    "
+    *rxFor="let card of cards$; trackBy: cardTrackBy; strategy: 'native'"
     class="card-wrapper"
   >
     <app-kanban-card [card]="card"></app-kanban-card>

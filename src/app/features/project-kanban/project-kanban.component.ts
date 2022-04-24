@@ -27,7 +27,7 @@ interface LocalActions {
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [RxActionFactory, ProjectKanbanAdapter],
 })
-export class ProjectKanbanComponent implements OnInit {
+export class ProjectKanbanComponent {
   readonly ui = this.rxActionFactory.create();
   readonly breadcrumb = [{ caption: 'Dashboard', routerLink: '/' }];
   readonly project$ = this.adapter.project$;
@@ -105,7 +105,13 @@ export class ProjectKanbanComponent implements OnInit {
       return { target: event.item.data.$id, newRank: updatedRank.format() };
     } else {
       const ranks = groupedCards[categoryId].map(({ rank }) => rank);
-      const updatedRank = moveRank(ranks, -1, event.currentIndex);
+      const updatedRank = moveRank(
+        ranks,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      console.log(ranks, updatedRank);
 
       return {
         target: event.item.data.$id,
@@ -114,8 +120,6 @@ export class ProjectKanbanComponent implements OnInit {
       };
     }
   }
-
-  ngOnInit(): void {}
 
   addNew(): void {
     // const state = this.get();

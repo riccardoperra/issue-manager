@@ -11,6 +11,22 @@ export const sortByRank = (a: string, b: string): number => {
   return left.compareTo(right);
 };
 
+export const sortArrayByRankProperty = <
+  T,
+  K extends keyof Pick<
+    T,
+    // TODO: fix type
+    keyof { [key in keyof T]: T[key] extends string ? key : never }
+  >
+>(
+  array: readonly T[],
+  key: K
+): readonly T[] => {
+  return (array as T[]).sort((a, b) =>
+    sortByRank(a[key] as unknown as string, b[key] as unknown as string)
+  );
+};
+
 export const getNextRank = (ranks: string[]): LexoRank => {
   if (ranks.length === 0) return LexoRank.middle();
   const lastRank = ranks[ranks.length - 1];

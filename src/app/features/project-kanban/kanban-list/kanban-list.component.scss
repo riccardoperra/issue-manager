@@ -9,7 +9,6 @@
   row-gap: 1rem;
   height: 100%;
   width: 100%;
-  border: 1px solid red;
 }
 
 .list-title-add {
@@ -17,7 +16,7 @@
   align-items: center;
 }
 
-.card-wrapper:not(.cdk-drag-placeholder) {
+.cdk-drop-list-dragging .card-wrapper:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
@@ -32,6 +31,5 @@
 }
 
 .cdk-drag-animating {
-  will-change: auto;
-  //transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

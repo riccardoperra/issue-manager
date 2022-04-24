@@ -22,7 +22,17 @@ export const moveRank = (
   prevIndex: number,
   nextIndex: number
 ): LexoRank => {
-  const right = ranks[nextIndex];
-  const rank = LexoRank.parse(right);
-  return rank.between(nextIndex > prevIndex ? rank.genNext() : rank.genPrev());
+  const parsedRanks = ranks.map(LexoRank.parse);
+  const replacedItemRank = LexoRank.parse(ranks[nextIndex]);
+  const isFirst = nextIndex === 0;
+  const isLast = nextIndex === ranks.length - 1;
+
+  if (isFirst) {
+    return replacedItemRank.between(parsedRanks[0].genPrev());
+  } else if (isLast) {
+    return replacedItemRank.between(parsedRanks[nextIndex].genNext());
+  } else {
+    const siblingIndex = prevIndex < nextIndex ? nextIndex + 1 : nextIndex - 1;
+    return replacedItemRank.between(parsedRanks[siblingIndex]);
+  }
 };

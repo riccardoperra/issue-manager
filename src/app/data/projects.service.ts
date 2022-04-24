@@ -40,6 +40,15 @@ export class ProjectsService {
     );
   }
 
+  getById($id: Project['$id']): Observable<Project> {
+    return from(
+      this.appwrite.database.getDocument<Project>(
+        ProjectsService.collectionId,
+        $id
+      )
+    );
+  }
+
   createProject(project: AddProjectRequest): Observable<Project> {
     return from(
       this.appwrite.database.createDocument<Project>(

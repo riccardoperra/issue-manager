@@ -6,6 +6,7 @@ import { from, Observable } from 'rxjs';
 export interface Category extends Models.Document {
   readonly name: string;
   readonly projectId: string;
+  rank: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -22,6 +23,18 @@ export class CategoriesService {
       this.appwrite.database.listDocuments<Category>(
         CategoriesService.collectionId,
         [Query.equal('projectId', projectId)]
+      )
+    );
+  }
+
+  updatePosition($id: Category['$id'], rank: string): Observable<Category> {
+    return from(
+      this.appwrite.database.updateDocument<Category>(
+        CategoriesService.collectionId,
+        $id,
+        {
+          rank: rank,
+        } as Pick<Category, 'rank'>
       )
     );
   }

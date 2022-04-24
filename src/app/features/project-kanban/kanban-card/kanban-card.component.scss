@@ -2,7 +2,6 @@
 
 .list-card {
   min-height: 60px;
-  @include shadow('1');
 }
 
 .list-title {
@@ -17,4 +16,18 @@
   top: calc(var(--drag-y) * 1px);
   width: var(--box-width);
   height: var(--box-height);
+}
+
+.cdk-drag-placeholder {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.custom-placeholder {
+  background: var(--tui-secondary);
+  border-radius: var(--tui-radius-l);
+  border: dotted 3px var(--tui-secondary-active);
+  min-height: 60px;
+  width: 280px;
+  z-index: 999;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

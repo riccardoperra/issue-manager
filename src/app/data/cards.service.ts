@@ -61,12 +61,28 @@ export class CardsService {
     );
   }
 
-  updatePosition(card: Card, rank: string): Observable<Card> {
-    const { $id } = card;
+  updateCategory(
+    $id: Card['$id'],
+    categoryId: string,
+    rank: string
+  ): Observable<Card> {
     return from(
       this.appwrite.database.updateDocument<Card>(
         CardsService.collectionId,
-        card.$id,
+        $id,
+        {
+          rank,
+          categoryId,
+        } as Pick<Card, 'rank' | 'categoryId'>
+      )
+    );
+  }
+
+  updatePosition($id: Card['$id'], rank: string): Observable<Card> {
+    return from(
+      this.appwrite.database.updateDocument<Card>(
+        CardsService.collectionId,
+        $id,
         {
           rank: rank,
         } as Pick<Card, 'rank'>

@@ -9,6 +9,7 @@
 
 .list-grid {
   display: flex;
+  align-items: flex-start;
   gap: 3rem;
 }
 
@@ -81,6 +82,10 @@
 .list-add-new-card-action {
   width: 100%;
   flex: 1;
+
+  &.first-add {
+    height: 92px;
+  }
 }
 
 .project-kanban-title {

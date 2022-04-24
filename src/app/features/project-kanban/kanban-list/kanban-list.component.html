@@ -1,0 +1,17 @@
+<div
+  *rxLet="list$; let list; strategy: 'native'"
+  class="list-content tui-island__content"
+  cdkDropList
+  [id]="'list-' + list.$id"
+  (cdkDropListDropped)="dropEvent.emit($event)"
+>
+  <div
+    cdkDrag
+    [cdkDragData]="card"
+    *rxFor="let card of cards$; trackBy: cardTrackBy; strategy: 'native'"
+    class="card-wrapper"
+  >
+    <app-kanban-card [card]="card"></app-kanban-card>
+    <div class="custom-placeholder" *cdkDragPlaceholder></div>
+  </div>
+</div>

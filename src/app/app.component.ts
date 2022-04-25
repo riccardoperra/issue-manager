@@ -15,7 +15,6 @@ export class AppComponent {
   title = 'appwrite-hackathon';
 
   constructor(
-    private readonly projectsState: ProjectsState,
     @Inject(AuthState)
     private readonly authState: AuthState,
     @Inject(AuthEffects)

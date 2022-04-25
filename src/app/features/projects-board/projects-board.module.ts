@@ -4,6 +4,7 @@ import { ProjectsBoardComponent } from './projects-board.component';
 import { ForModule } from '@rx-angular/template/experimental/for';
 import {
   TuiAvatarModule,
+  TuiFieldErrorModule,
   TuiInputModule,
   TuiInputTagModule,
   TuiIslandModule,
@@ -16,6 +17,7 @@ import {
   TuiGroupModule,
   TuiLabelModule,
   TuiLinkModule,
+  TuiLoaderModule,
   TuiModeModule,
   TuiTextfieldControllerModule,
   TuiTooltipModule,
@@ -58,6 +60,8 @@ import { RouterModule } from '@angular/router';
     TuiInputTagModule,
     TuiModeModule,
     RouterModule,
+    TuiFieldErrorModule,
+    TuiLoaderModule,
   ],
 })
 export class ProjectsBoardModule {}

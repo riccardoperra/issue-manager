@@ -7,6 +7,7 @@ import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory
 import { RxState } from '@rx-angular/state';
 import { AddProjectDialogComponent } from './add-project-dialog/add-project-dialog.component';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { startWith } from 'rxjs';
 
 interface ProjectsBoardActions {
   openCreateProjectDialog: void;
@@ -22,6 +23,7 @@ interface ProjectsBoardActions {
 export class ProjectsBoardComponent extends RxState<never> implements OnInit {
   readonly actions = this.rxActions.create();
   readonly projects$ = this.projectsState.projects$;
+  readonly loading$ = this.projectsState.loading$.pipe(startWith(false));
   readonly account$ = this.authState.account$;
 
   readonly projectTrackBy: TrackByFunction<Project> = (index, { $id }) => $id;

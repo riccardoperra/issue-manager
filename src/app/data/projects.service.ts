@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { APPWRITE } from '../providers/appwrite.provider';
 import { Appwrite, Models } from 'appwrite';
 import { realtimeListener } from '../shared/utils/realtime';
-import { from, Observable } from 'rxjs';
+import { from, map, Observable } from 'rxjs';
 
 export const enum ProjectVisibility {
   'public' = 'public',
@@ -51,14 +51,15 @@ export class ProjectsService {
 
   createProject(project: AddProjectRequest): Observable<Project> {
     return from(
-      this.appwrite.database.createDocument<Project>(
-        ProjectsService.collectionId,
-        'unique()',
-        project,
-        ['role:all'],
-        ['role:all']
+      this.appwrite.functions.createExecution(
+        'create-project',
+        JSON.stringify({
+          ...project,
+          $collectionId: ProjectsService.collectionId,
+        }),
+        false
       )
-    );
+    ).pipe(map((x) => JSON.parse(x.stdout)));
   }
 
   readonly changes$ = realtimeListener<Project>(

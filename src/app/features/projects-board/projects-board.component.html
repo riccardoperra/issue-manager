@@ -1,26 +1,28 @@
-<div class="tui-container tui-container_adaptive tui-space_top-5">
-  <app-projects-board-header
-    [account]="account$ | push"
-    (createProject)="actions.openCreateProjectDialog()"
-  ></app-projects-board-header>
+<tui-loader [showLoader]="loading$ | push" [overlay]="true" size="xl">
+  <div class="tui-container tui-container_adaptive tui-space_top-5">
+    <app-projects-board-header
+      [account]="account$ | push"
+      (createProject)="actions.openCreateProjectDialog()"
+    ></app-projects-board-header>
 
-  <hr class="tui-space_top-6 tui-space_bottom-6" />
+    <hr class="tui-space_top-6 tui-space_bottom-6" />
 
-  <div>
-    <h1>Projects board</h1>
+    <div>
+      <h1>Projects board</h1>
 
-    <div
-      class="tui-row tui-row_adaptive tui-col_stretch tui-space_top-6 board-row"
-    >
       <div
-        class="tui-col_xs-12 tui-col_md-4 wrapper"
-        *rxFor="let project of projects$; trackBy: projectTrackBy"
+        class="tui-row tui-row_adaptive tui-col_stretch tui-space_top-6 board-row"
       >
-        <app-project-card
-          [project]="project"
-          [routerLink]="['project', project.$id]"
-        ></app-project-card>
+        <div
+          class="tui-col_xs-12 tui-col_md-4 wrapper"
+          *rxFor="let project of projects$; trackBy: projectTrackBy"
+        >
+          <app-project-card
+            [project]="project"
+            [routerLink]="['project', project.$id]"
+          ></app-project-card>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</tui-loader>

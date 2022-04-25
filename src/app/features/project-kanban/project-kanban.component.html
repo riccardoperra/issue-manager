@@ -25,14 +25,17 @@
 
       <div class="tui-row tui-space_all-0 tui-row_align_center">
         <h1 class="tui-space_right-4">{{ project.name }}</h1>
-        <button
-          tuiButton
-          appearance="accent"
-          size="s"
-          (click)="showArchived = !showArchived"
-        >
-          Archived
-        </button>
+        <app-kanban-membership-list></app-kanban-membership-list>
+        <div class="project-kanban-actions">
+          <button
+            tuiButton
+            appearance="accent"
+            size="s"
+            (click)="showArchived = !showArchived"
+          >
+            Archived
+          </button>
+        </div>
       </div>
     </div>
 

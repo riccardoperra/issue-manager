@@ -1,0 +1,52 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="confirm()"
+  (tuiActiveZoneChange)="zoneChange($event)"
+  class="wrapper"
+>
+  <button
+    *ngIf="!edit"
+    tuiButton
+    type="button"
+    appearance="secondary"
+    size="m"
+    class="list-add-new-card-action"
+    (click)="add()"
+  >
+    <tui-svg src="tuiIconPlus"></tui-svg>
+    Add new card
+  </button>
+
+  <tui-expand [expanded]="edit">
+    <tui-island>
+      <div class="tui-island__content content">
+        <tui-input-inline
+          *ngIf="edit"
+          tuiAutoFocus
+          formControlName="name"
+          (keydown.escape)="close()"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          Insert a title to the list...
+        </tui-input-inline>
+
+        <div class="actions" [class.tui-space_top-2]="edit">
+          <ng-container *ngIf="edit">
+            <button tuiButton type="submit" size="s" appearance="primary">
+              Confirm
+            </button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="secondary"
+              size="s"
+              (click)="close()"
+            >
+              <tui-svg src="tuiIconClose"></tui-svg>
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </tui-island>
+  </tui-expand>
+</form>

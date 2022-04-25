@@ -1,0 +1,41 @@
+:host {
+  display: flex;
+  column-gap: 0.25rem;
+}
+
+.avatar {
+  cursor: pointer;
+}
+
+.avatar-detail {
+  width: 300px;
+  padding: var(--tui-padding-m);
+
+  .dropdown-close {
+    position: absolute;
+    right: var(--tui-padding-m);
+  }
+
+  .avatar-title {
+    display: flex;
+    align-items: center;
+    column-gap: var(--tui-padding-m);
+  }
+
+  .avatar-info {
+    .avatar-name {
+      margin: 0;
+    }
+
+    .avatar-email {
+      color: var(--tui-text-02);
+    }
+  }
+
+  .avatar-other-info {
+    border-top: 1px solid var(--tui-base-02);
+    margin-top: var(--tui-padding-m);
+    margin-bottom: var(--tui-padding-m);
+    padding-top: var(--tui-padding-m);
+  }
+}

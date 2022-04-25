@@ -23,11 +23,7 @@ module.exports = async (request, response) => {
 
   const name = kebabCase(payload.name);
 
-  const team = await teams.create(
-    randomUUID(),
-    `project_workspace_${name}`,
-    []
-  );
+  const team = await teams.create('unique()', `project_workspace_${name}`, []);
 
   try {
     const teamPermission = `team:${team.$id}`;
@@ -36,8 +32,8 @@ module.exports = async (request, response) => {
 
     const project = await database.createDocument(
       payload.$collectionId,
-      'unique()',
-      { name, description, tags, visibility },
+      team.$id,
+      { name, description, tags, visibility, workspaceId: team.$id },
       [teamPermission],
       [teamPermission]
     );

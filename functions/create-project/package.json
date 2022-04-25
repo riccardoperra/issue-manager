@@ -4,7 +4,8 @@
   "description": "Create a project and init workspace",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "cd ../../ && appwrite functions createDeployment --functionId=create-project --activate=true --entrypoint=index.js --code=./functions/create-project"
   },
   "keywords": [
     "appwrite"

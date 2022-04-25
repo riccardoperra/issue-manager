@@ -1,0 +1,61 @@
+<ng-container *rxLet="currentUser$; let currentUser">
+  <tui-hosted-dropdown
+    *rxFor="let member of members$"
+    tuiDropdownAlign="left"
+    tuiDropdownDirection="bottom"
+    [content]="dropdownContent"
+    #dropdown
+  >
+    <tui-avatar
+      size="s"
+      [rounded]="false"
+      [autoColor]="true"
+      [text]="member.name"
+      class="avatar"
+    >
+      <ng-template #dropdownContent>
+        <div class="avatar-detail">
+          <div class="dropdown-close" (click)="dropdown.updateOpen(false)">
+            <button tuiIconButton size="s" appearance="flat">
+              <tui-svg src="tuiIconCloseLarge"></tui-svg>
+            </button>
+          </div>
+
+          <div class="avatar-title">
+            <tui-avatar
+              size="m"
+              [avatarUrl]="getAvatar(member)"
+              [text]="member.name"
+              [autoColor]="true"
+            ></tui-avatar>
+            <div class="avatar-info">
+              <h2 class="avatar-name">{{ member.name }}</h2>
+              <span class="avatar-email">{{ member.email }}</span>
+            </div>
+          </div>
+          <div class="avatar-other-info">
+            <div>
+              Joined the {{ getJoinedDate(member) | date: 'dd/MM/yyyy' }}
+            </div>
+            <div class="tui-space_top-2">
+              <tui-badge
+                *rxFor="let role of member.roles"
+                size="s"
+                status="neutral"
+                [value]="role"
+              ></tui-badge>
+            </div>
+          </div>
+          <div
+            class="avatar-actions"
+            *ngIf="currentUser && isCurrentUser(member, currentUser)"
+          >
+            <button size="s" tuiButton appearance="primary">
+              Edit profile
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </tui-avatar>
+  </tui-hosted-dropdown>
+</ng-container>

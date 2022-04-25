@@ -6,9 +6,11 @@ import { RouterModule } from '@angular/router';
 import { ROUTES } from './project-kanban.routes';
 import {
   TuiActionModule,
+  TuiAvatarModule,
   TuiBadgedContentModule,
   TuiBadgeModule,
   TuiBreadcrumbsModule,
+  TuiDropdownHoverModule,
   TuiInputInlineModule,
   TuiInputModule,
   TuiIslandModule,
@@ -19,6 +21,7 @@ import {
   TuiButtonModule,
   TuiDataListModule,
   TuiDropdownControllerModule,
+  TuiDropdownModule,
   TuiExpandModule,
   TuiHostedDropdownModule,
   TuiLinkModule,
@@ -33,6 +36,7 @@ import {
   TuiDragModule,
   TuiDroppableModule,
   TuiElementModule,
+  TuiHoveredModule,
   TuiMapperPipeModule,
   TuiOverscrollModule,
 } from '@taiga-ui/cdk';
@@ -43,6 +47,7 @@ import { KanbanAddListComponent } from './kanban-add-list/kanban-add-list.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { KanbanArchivedMenuComponent } from './kanban-archived-menu/kanban-archived-menu.component';
 import { KanbanAddCardComponent } from './kanban-add-card/kanban-add-card.component';
+import { KanbanMembershipListComponent } from './kanban-membership-list/kanban-membership-list.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +57,7 @@ import { KanbanAddCardComponent } from './kanban-add-card/kanban-add-card.compon
     KanbanAddListComponent,
     KanbanArchivedMenuComponent,
     KanbanAddCardComponent,
+    KanbanMembershipListComponent,
   ],
   imports: [
     CommonModule,
@@ -86,6 +92,10 @@ import { KanbanAddCardComponent } from './kanban-add-card/kanban-add-card.compon
     TuiElementModule,
     TuiTabsModule,
     TuiInputInlineModule,
+    TuiAvatarModule,
+    TuiDropdownHoverModule,
+    TuiDropdownModule,
+    TuiHoveredModule,
   ],
 })
 export class ProjectKanbanModule {}

@@ -23,6 +23,7 @@ import { Project, ProjectsService } from '../../data/projects.service';
 import { Card, CardsService } from '../../data/cards.service';
 import { patch } from '@rx-angular/cdk/transformations';
 import { sortArrayByRankProperty } from '../../shared/utils/ranking';
+import { TeamsService } from '../../data/team.service';
 
 interface Actions {
   fetch: { $projectId: string };
@@ -44,6 +45,7 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
   private readonly categories$ = this.select('categories');
 
   readonly project$ = this.select('project');
+  readonly members$ = this.select('workspace', 'members');
 
   readonly sortedCategories$: Observable<readonly Category[]> =
     this.categories$.pipe(
@@ -131,7 +133,9 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
     @Inject(CategoriesService)
     private readonly categoriesService: CategoriesService,
     @Inject(CardsService)
-    private readonly cardsService: CardsService
+    private readonly cardsService: CardsService,
+    @Inject(TeamsService)
+    private readonly teamsService: TeamsService
   ) {
     super();
 
@@ -237,11 +241,15 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
   private readonly loadResources = (projectId: string) =>
     this.projectsService.getById(projectId).pipe(
       exhaustMap((project) =>
-        this.loadCategoriesAndCards(project).pipe(
-          map(({ categories, cards }) => ({
+        forkJoin([
+          this.teamsService.getTeamDetail(projectId),
+          this.loadCategoriesAndCards(project),
+        ]).pipe(
+          map(([workspace, { categories, cards }]) => ({
             categories,
             cards,
             project,
+            workspace,
           }))
         )
       )

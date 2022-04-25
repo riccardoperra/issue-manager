@@ -1,6 +1,6 @@
 {
-    "projectId": "625c24911fc8763f53d2",
-    "projectName": "appwrite-hackathon",
+    "projectId": "6266dee0c136eddd5e31",
+    "projectName": "realtime-kanban",
     "collections": [
         {
             "$id": "6260423eee67978fa0da",
@@ -42,15 +42,6 @@
                     "default": null
                 },
                 {
-                    "key": "tags",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": true,
-                    "size": 255,
-                    "default": null
-                },
-                {
                     "key": "visibility",
                     "type": "string",
                     "status": "available",
@@ -62,6 +53,15 @@
                         "notListed"
                     ],
                     "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "tags",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": true,
+                    "size": 255,
                     "default": null
                 }
             ],
@@ -101,6 +101,15 @@
                     "default": null
                 },
                 {
+                    "key": "categoryId",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
                     "key": "archived",
                     "type": "boolean",
                     "status": "available",
@@ -109,10 +118,10 @@
                     "default": false
                 },
                 {
-                    "key": "categoryId",
+                    "key": "content",
                     "type": "string",
                     "status": "available",
-                    "required": true,
+                    "required": false,
                     "array": false,
                     "size": 255,
                     "default": null
@@ -127,7 +136,7 @@
                     "default": null
                 },
                 {
-                    "key": "content",
+                    "key": "rank",
                     "type": "string",
                     "status": "available",
                     "required": false,
@@ -140,15 +149,6 @@
                     "type": "string",
                     "status": "available",
                     "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "rank",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
                     "array": false,
                     "size": 255,
                     "default": null
@@ -181,7 +181,7 @@
             "permission": "collection",
             "attributes": [
                 {
-                    "key": "name",
+                    "key": "projectId",
                     "type": "string",
                     "status": "available",
                     "required": true,
@@ -190,7 +190,7 @@
                     "default": null
                 },
                 {
-                    "key": "projectId",
+                    "key": "name",
                     "type": "string",
                     "status": "available",
                     "required": true,
@@ -229,6 +229,32 @@
                     ]
                 }
             ]
+        }
+    ],
+    "functions": [
+        {
+            "$id": "6266e0c44e3090e5a22b",
+            "name": "on-delete-project",
+            "runtime": "node-16.0",
+            "path": "functions/on-delete-project",
+            "entrypoint": "src/index.js",
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        },
+        {
+            "$id": "create-project",
+            "name": "create-project",
+            "runtime": "node-16.0",
+            "path": "functions/create-project",
+            "entrypoint": "src/index.js",
+            "execute": [
+                "role:member"
+            ],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
         }
     ]
 }

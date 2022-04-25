@@ -206,6 +206,14 @@
                     "array": false,
                     "size": 255,
                     "default": null
+                },
+                {
+                    "key": "archived",
+                    "type": "boolean",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "default": false
                 }
             ],
             "indexes": [

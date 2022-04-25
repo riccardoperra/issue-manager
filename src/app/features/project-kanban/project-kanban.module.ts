@@ -9,6 +9,7 @@ import {
   TuiBadgedContentModule,
   TuiBadgeModule,
   TuiBreadcrumbsModule,
+  TuiInputInlineModule,
   TuiInputModule,
   TuiIslandModule,
   TuiTabsModule,
@@ -41,6 +42,7 @@ import { LetModule, PushModule } from '@rx-angular/template';
 import { KanbanAddListComponent } from './kanban-add-list/kanban-add-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { KanbanArchivedMenuComponent } from './kanban-archived-menu/kanban-archived-menu.component';
+import { KanbanAddCardComponent } from './kanban-add-card/kanban-add-card.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { KanbanArchivedMenuComponent } from './kanban-archived-menu/kanban-archi
     KanbanListComponent,
     KanbanAddListComponent,
     KanbanArchivedMenuComponent,
+    KanbanAddCardComponent,
   ],
   imports: [
     CommonModule,
@@ -82,6 +85,7 @@ import { KanbanArchivedMenuComponent } from './kanban-archived-menu/kanban-archi
     TuiOverscrollModule,
     TuiElementModule,
     TuiTabsModule,
+    TuiInputInlineModule,
   ],
 })
 export class ProjectKanbanModule {}

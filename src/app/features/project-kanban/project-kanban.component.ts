@@ -7,7 +7,7 @@ import {
   TrackByFunction,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, tap, withLatestFrom } from 'rxjs';
+import { map, pluck, switchMap, tap, withLatestFrom } from 'rxjs';
 import { Category } from '../../data/categories.service';
 import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
 import { Card } from '../../data/cards.service';
@@ -22,6 +22,7 @@ interface LocalActions {
   moveCategory: CdkDragDrop<readonly Category[], readonly Category[], Category>;
   moveCard: CdkDragDrop<readonly Card[], readonly Card[], Card>;
   addCategory: { name: string; scrollRef: Element };
+  addCard: { name: string; $categoryId: string };
   archiveCategory: { $id: string };
 }
 
@@ -123,6 +124,22 @@ export class ProjectKanbanComponent {
       ),
       this.adapter.ui.updateArchivedCategory
     );
+
+    this.adapter.hold(
+      this.ui.addCard$.pipe(
+        withLatestFrom(this.groupedCards$),
+        map(([event, groupedCards]) => {
+          const cards = groupedCards[event.$categoryId];
+          const last = getNextRank(cards.map(({ rank }) => rank)).format();
+          return {
+            name: event.name,
+            $categoryId: event.$categoryId,
+            rank: last,
+          };
+        })
+      ),
+      this.adapter.ui.addCard
+    );
   }
 
   onCategoryDrop(
@@ -171,23 +188,5 @@ export class ProjectKanbanComponent {
         categoryId,
       };
     }
-  }
-
-  addNew(): void {
-    // const state = this.get();
-    // const card = state.cards.filter(
-    //   (card) => card.categoryId === '62630d8529e4d20b3938'
-    // );
-    // let pos;
-    // if (card.length === 0) {
-    //   pos = LexoRank.middle();
-    // } else {
-    //   const lastPos = card[card.length - 1].rank;
-    //   const rank = LexoRank.parse(lastPos as unknown as string);
-    //   pos = rank.genNext();
-    // }
-    // this.cardsService
-    //   .add(pos.format())
-    //   .subscribe(() => this.actions.fetch('62605f3cd11dd686fa41'));
   }
 }

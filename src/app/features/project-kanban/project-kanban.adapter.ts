@@ -14,8 +14,10 @@ import {
   merge,
   Observable,
   of,
+  pluck,
   switchMap,
   tap,
+  withLatestFrom,
 } from 'rxjs';
 import { Project, ProjectsService } from '../../data/projects.service';
 import { Card, CardsService } from '../../data/cards.service';
@@ -32,6 +34,7 @@ interface Actions {
   updateCardCategory: { $id: string; rank: string; categoryId: string };
   addCategory: { name: string; rank: string; $projectId: string };
   updateArchivedCategory: { $id: string; archived: boolean };
+  addCard: { name: string; rank: string; $categoryId: string };
 }
 
 @Injectable()
@@ -103,6 +106,17 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
     this.ui.updateArchivedCategory$.pipe(
       switchMap(({ $id, archived }) =>
         this.categoriesService.archiveCategory($id, archived)
+      )
+    ),
+    this.ui.addCard$.pipe(
+      withLatestFrom(this.project$.pipe(pluck('$id'))),
+      switchMap(([{ name, rank, $categoryId }, $projectId]) =>
+        this.cardsService.addCard({
+          name,
+          rank,
+          categoryId: $categoryId,
+          projectId: $projectId,
+        })
       )
     )
   );

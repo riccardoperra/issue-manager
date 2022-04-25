@@ -106,18 +106,11 @@
                   </div>
 
                   <div class="tui-island__content tui-space_all-4">
-                    <button
-                      tuiButton
-                      type="button"
-                      appearance="secondary"
-                      size="m"
-                      class="list-add-new-card-action"
-                      [class.first-add]="groupedCards[list.$id].length === 0"
-                      (click)="addNew()"
-                    >
-                      <tui-svg src="tuiIconPlus"></tui-svg>
-                      Add new card
-                    </button>
+                    <app-kanban-add-card
+                      (confirmEvent)="
+                        ui.addCard({ name: $event, $categoryId: list.$id })
+                      "
+                    ></app-kanban-add-card>
                   </div>
                 </div>
 

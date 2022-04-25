@@ -8,7 +8,7 @@ import { Project } from './projects.service';
 export interface Card extends Models.Document {
   readonly name: string;
   readonly content: string;
-  readonly boardId: string; // projectId;
+  readonly projectId: string; // projectId;
   readonly tags: string[];
   readonly archived: boolean;
   readonly categoryId: string;

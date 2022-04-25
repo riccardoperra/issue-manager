@@ -31,7 +31,7 @@ interface Actions {
   updateCardPosition: { $id: string; rank: string };
   updateCardCategory: { $id: string; rank: string; categoryId: string };
   addCategory: { name: string; rank: string; $projectId: string };
-  archiveCategory: { $id: string };
+  updateArchivedCategory: { $id: string; archived: boolean };
 }
 
 @Injectable()
@@ -100,8 +100,10 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
         })
       )
     ),
-    this.ui.archiveCategory$.pipe(
-      switchMap(({ $id }) => this.categoriesService.archiveCategory($id))
+    this.ui.updateArchivedCategory$.pipe(
+      switchMap(({ $id, archived }) =>
+        this.categoriesService.archiveCategory($id, archived)
+      )
     )
   );
 
@@ -141,10 +143,13 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
         )
     );
 
-    this.connect('categories', this.ui.archiveCategory$, (state, { $id }) =>
-      state.categories.map((category) =>
-        category.$id === $id ? patch(category, { archived: true }) : category
-      )
+    this.connect(
+      'categories',
+      this.ui.updateArchivedCategory$,
+      (state, { $id, archived }) =>
+        state.categories.map((category) =>
+          category.$id === $id ? patch(category, { archived }) : category
+        )
     );
 
     this.connect('cards', this.ui.updateCardPosition$, (state, { $id, rank }) =>

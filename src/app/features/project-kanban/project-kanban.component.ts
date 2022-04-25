@@ -112,7 +112,7 @@ export class ProjectKanbanComponent {
 
     this.adapter.hold(
       this.ui.archiveCategory$.pipe(
-        map(({ $id }) => ({ $id: $id })),
+        map(({ $id }) => ({ $id: $id, archived: true })),
         tap(() =>
           this.alertService
             .open('List archived successfully', {
@@ -121,7 +121,7 @@ export class ProjectKanbanComponent {
             .subscribe()
         )
       ),
-      this.adapter.ui.archiveCategory
+      this.adapter.ui.updateArchivedCategory
     );
   }
 

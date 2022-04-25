@@ -1,0 +1,50 @@
+<div class="menu" [@tuiSlideIn]="{ value: 'right', duration: 300 }">
+  <tui-scrollbar class="menu-scrollbar">
+    <div class="tui-space_all-4" *rxLet="vm$; let vm">
+      <tui-tabs [(activeItemIndex)]="activeIndex">
+        <button tuiTab>
+          <span class="tui-space_right-2">Archived lists</span>
+          <tui-badge status="primary" [value]="vm.lists.length"></tui-badge>
+        </button>
+        <button tuiTab>
+          <span class="tui-space_right-2">Archived cards</span>
+          <tui-badge status="primary" [value]="vm.cards.length"></tui-badge>
+        </button>
+      </tui-tabs>
+
+      <div class="tui-space_top-4">
+        <div
+          *ngIf="activeIndex === 0"
+          [@tuiFadeIn]="{ duration: 200 }"
+          class="list"
+        >
+          <tui-island *rxFor="let list of vm.lists">
+            <div class="tui-island__content">
+              <span> {{ list.name }} </span>
+              <button
+                tuiButton
+                tuiIconButton
+                size="s"
+                appearance="secondary"
+                (click)="undoArchiveCategory(list)"
+              >
+                <tui-svg src="tuiIconUndo"></tui-svg>
+              </button>
+            </div>
+          </tui-island>
+        </div>
+
+        <div
+          *ngIf="activeIndex === 1"
+          [@tuiFadeIn]="{ duration: 200 }"
+          class="list"
+        >
+          <tui-island *rxFor="let card of vm.cards">
+            {{ card.name }}
+          </tui-island>
+          <span>No archived cards</span>
+        </div>
+      </div>
+    </div>
+  </tui-scrollbar>
+</div>

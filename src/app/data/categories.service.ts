@@ -54,12 +54,15 @@ export class CategoriesService {
     );
   }
 
-  archiveCategory($id: Category['$id']): Observable<Category> {
+  archiveCategory(
+    $id: Category['$id'],
+    archived: boolean
+  ): Observable<Category> {
     return from(
       this.appwrite.database.updateDocument<Category>(
         CategoriesService.collectionId,
         $id,
-        { archived: true } as Pick<Category, 'archived'>
+        { archived } as Pick<Category, 'archived'>
       )
     );
   }

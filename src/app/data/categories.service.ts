@@ -11,6 +11,8 @@ export interface Category extends Models.Document {
   rank: string;
 }
 
+export type AddCategory = Pick<Category, 'name' | 'rank' | 'projectId'>;
+
 @Injectable({ providedIn: 'root' })
 export class CategoriesService {
   static collectionId = '62604a098cb45c928e5b';
@@ -37,6 +39,16 @@ export class CategoriesService {
         {
           rank: rank,
         } as Pick<Category, 'rank'>
+      )
+    );
+  }
+
+  addCategory(request: AddCategory): Observable<Category> {
+    return from(
+      this.appwrite.database.createDocument<Category>(
+        CategoriesService.collectionId,
+        'unique()',
+        request
       )
     );
   }

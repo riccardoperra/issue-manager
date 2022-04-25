@@ -3,23 +3,26 @@ import {
   ChangeDetectorRef,
   Component,
   Inject,
+  NgZone,
   TrackByFunction,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, withLatestFrom } from 'rxjs';
+import { map, tap, withLatestFrom } from 'rxjs';
 import { Category } from '../../data/categories.service';
 import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
 import { Card } from '../../data/cards.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { getNextRank, moveRank } from '../../shared/utils/ranking';
 import { ProjectKanbanAdapter } from './project-kanban.adapter';
-import { TuiDialogService } from '@taiga-ui/core';
+import { TuiAlertService, TuiDialogService } from '@taiga-ui/core';
+import { TuiNotification } from '@taiga-ui/core/enums/notification';
+import { TuiScrollService } from '@taiga-ui/cdk';
 
 interface LocalActions {
   moveCategory: CdkDragDrop<readonly Category[], readonly Category[], Category>;
   moveCard: CdkDragDrop<readonly Card[], readonly Card[], Card>;
-  addCategory: string;
-  archiveCategory: string;
+  addCategory: { name: string; scrollRef: Element };
+  archiveCategory: { $id: string };
 }
 
 @Component({
@@ -52,7 +55,13 @@ export class ProjectKanbanComponent {
     @Inject(RxActionFactory)
     private readonly rxActionFactory: RxActionFactory<LocalActions>,
     @Inject(TuiDialogService)
-    private readonly dialogService: TuiDialogService
+    private readonly dialogService: TuiDialogService,
+    @Inject(TuiAlertService)
+    private readonly alertService: TuiAlertService,
+    @Inject(TuiScrollService)
+    private readonly scrollService: TuiScrollService,
+    @Inject(NgZone)
+    private readonly ngZone: NgZone
   ) {
     this.adapter.hold(
       this.ui.moveCard$.pipe(
@@ -79,8 +88,15 @@ export class ProjectKanbanComponent {
 
     this.adapter.hold(
       this.ui.addCategory$.pipe(
+        tap(({ scrollRef }) => {
+          this.ngZone.run(() => {
+            this.scrollService
+              .scroll$(scrollRef, 0, scrollRef.scrollWidth, 150)
+              .subscribe();
+          });
+        }),
         withLatestFrom(this.project$, this.categories$),
-        map(([name, project, categories]) => ({
+        map(([{ name }, project, categories]) => ({
           name,
           $projectId: project.$id,
           rank: getNextRank(
@@ -92,7 +108,16 @@ export class ProjectKanbanComponent {
     );
 
     this.adapter.hold(
-      this.ui.archiveCategory$.pipe(map((id) => ({ $id: id }))),
+      this.ui.archiveCategory$.pipe(
+        map(({ $id }) => ({ $id: $id })),
+        tap(() =>
+          this.alertService
+            .open('List archived successfully', {
+              status: TuiNotification.Success,
+            })
+            .subscribe()
+        )
+      ),
       this.adapter.ui.archiveCategory
     );
   }

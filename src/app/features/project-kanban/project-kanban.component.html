@@ -1,4 +1,4 @@
-<div class="tui-container tui-container_fullwidth tui-space__top-6">
+<div class="tui-container tui-container_fullwidth tui-space__top-6 wrapper">
   <div
     class="project-kanban-title"
     *rxLet="project$; let project; strategy: 'local'"
@@ -28,10 +28,10 @@
 
   <div
     cdkDropListGroup
-    class="tui-space_top-4"
+    class="tui-space_top-4 droplist-wrapper"
     *rxLet="categories$; let categories; strategy: 'native'"
   >
-    <tui-scrollbar>
+    <tui-scrollbar #scrollEl="elementRef" tuiElement class="scrollbar">
       <div
         class="list-grid"
         cdkDropList
@@ -75,7 +75,7 @@
                       <tui-data-list>
                         <button
                           tuiOption
-                          (click)="ui.archiveCategory(list.$id)"
+                          (click)="ui.archiveCategory({ $id: list.$id })"
                         >
                           Archive this list
                         </button>
@@ -121,7 +121,12 @@
 
           <app-kanban-add-list
             class="list-wrapper"
-            (confirmEvent)="ui.addCategory($event)"
+            (confirmEvent)="
+              ui.addCategory({
+                name: $event,
+                scrollRef: scrollEl.nativeElement
+              })
+            "
           ></app-kanban-add-list>
         </div>
       </div>

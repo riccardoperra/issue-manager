@@ -30,7 +30,9 @@ import {
   TuiAutoFocusModule,
   TuiDragModule,
   TuiDroppableModule,
+  TuiElementModule,
   TuiMapperPipeModule,
+  TuiOverscrollModule,
 } from '@taiga-ui/cdk';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { KanbanListComponent } from './kanban-list/kanban-list.component';
@@ -74,6 +76,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     TuiBadgeModule,
     TuiBadgedContentModule,
     TuiScrollbarModule,
+    TuiOverscrollModule,
+    TuiElementModule,
   ],
 })
 export class ProjectKanbanModule {}

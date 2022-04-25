@@ -98,6 +98,11 @@
             ></div>
           </tui-island>
         </ng-container>
+
+        <app-kanban-add-list
+          class="list-wrapper"
+          (confirmEvent)="ui.addCategory($event)"
+        ></app-kanban-add-list>
       </div>
     </div>
   </div>

@@ -15,7 +15,6 @@ import {
   of,
   switchMap,
   tap,
-  withLatestFrom,
 } from 'rxjs';
 import { Project, ProjectsService } from '../../data/projects.service';
 import { Card, CardsService } from '../../data/cards.service';
@@ -30,6 +29,7 @@ interface Actions {
   updateCategoryPosition: { $id: string; rank: string };
   updateCardPosition: { $id: string; rank: string };
   updateCardCategory: { $id: string; rank: string; categoryId: string };
+  addCategory: { name: string; rank: string; $projectId: string };
 }
 
 @Injectable()
@@ -41,14 +41,12 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
   readonly project$ = this.select('project');
 
   readonly sortedCategories$ = this.categories$.pipe(
-    map((categories) => sortArrayByRankProperty(categories, 'rank')),
-    tap((x) => console.log('category change'))
+    map((categories) => sortArrayByRankProperty(categories, 'rank'))
   );
 
   readonly cardsByCategory$ = this.select(
-    selectSlice(['cards']),
-    withLatestFrom(this.categories$),
-    map(([{ cards }, categories]) => {
+    selectSlice(['cards', 'categories']),
+    map(({ cards, categories }) => {
       const initialValue = categories.reduce(
         (acc, category) => ({
           ...acc,
@@ -83,6 +81,15 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
     this.ui.updateCardCategory$.pipe(
       switchMap(({ $id, categoryId, rank }) =>
         this.cardsService.updateCategory($id, categoryId, rank)
+      )
+    ),
+    this.ui.addCategory$.pipe(
+      switchMap(({ $projectId, rank, name }) =>
+        this.categoriesService.addCategory({
+          projectId: $projectId,
+          rank,
+          name,
+        })
       )
     )
   );

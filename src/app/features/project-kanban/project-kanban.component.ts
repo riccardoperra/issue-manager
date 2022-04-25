@@ -3,21 +3,21 @@ import {
   ChangeDetectorRef,
   Component,
   Inject,
-  OnInit,
   TrackByFunction,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, tap, withLatestFrom } from 'rxjs';
+import { map, withLatestFrom } from 'rxjs';
 import { Category } from '../../data/categories.service';
 import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
 import { Card } from '../../data/cards.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { moveRank } from '../../shared/utils/ranking';
+import { getNextRank, moveRank } from '../../shared/utils/ranking';
 import { ProjectKanbanAdapter } from './project-kanban.adapter';
 
 interface LocalActions {
   moveCategory: CdkDragDrop<readonly Category[], readonly Category[], Category>;
   moveCard: CdkDragDrop<readonly Card[], readonly Card[], Card>;
+  addCategory: string;
 }
 
 @Component({
@@ -28,7 +28,7 @@ interface LocalActions {
   providers: [RxActionFactory, ProjectKanbanAdapter],
 })
 export class ProjectKanbanComponent {
-  readonly ui = this.rxActionFactory.create();
+  readonly ui = new RxActionFactory<LocalActions>().create();
   readonly breadcrumb = [{ caption: 'Dashboard', routerLink: '/' }];
   readonly project$ = this.adapter.project$;
   readonly categories$ = this.adapter.sortedCategories$;
@@ -68,6 +68,20 @@ export class ProjectKanbanComponent {
           categoryId: event.categoryId,
         });
       }
+    );
+
+    this.adapter.hold(
+      this.ui.addCategory$.pipe(
+        withLatestFrom(this.project$, this.categories$),
+        map(([name, project, categories]) => ({
+          name,
+          $projectId: project.$id,
+          rank: getNextRank(
+            categories.map((category) => category.rank)
+          ).format(),
+        }))
+      ),
+      this.adapter.ui.addCategory
     );
   }
 
@@ -110,8 +124,6 @@ export class ProjectKanbanComponent {
         event.previousIndex,
         event.currentIndex
       );
-
-      console.log(ranks, updatedRank);
 
       return {
         target: event.item.data.$id,

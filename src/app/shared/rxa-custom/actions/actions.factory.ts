@@ -22,7 +22,7 @@ export class RxActionFactory<T extends Actions> implements OnDestroy {
 
   constructor(
     @Optional()
-    private readonly errorHandler: ErrorHandler
+    private readonly errorHandler?: ErrorHandler
   ) {}
 
   /*

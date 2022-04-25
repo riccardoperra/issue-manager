@@ -6,13 +6,14 @@ import {
   ProjectsService,
 } from '../../data/projects.service';
 import { Inject, Injectable } from '@angular/core';
-import { map, merge, startWith, switchMap, tap } from 'rxjs';
+import { finalize, map, merge, startWith, switchMap, tap } from 'rxjs';
 import { patch } from '@rx-angular/cdk/transformations';
 import { RxActionFactory } from '../rxa-custom/actions/actions.factory';
 import { TuiAlertService } from '@taiga-ui/core';
 
 export interface ProjectsModel {
   readonly projects: readonly Project[];
+  readonly loading: boolean;
 }
 
 export interface ProjectsActions {
@@ -30,13 +31,17 @@ export class ProjectsState
 {
   readonly actions = this.rxActions.create();
 
-  readonly projects$ = this.select(map((state) => state.projects)).pipe(
-    startWith(null)
-  );
+  readonly projects$ = this.select('projects');
+  readonly loading$ = this.select('loading');
 
   private readonly sideEffects$ = merge(
     this.actions.addProject$.pipe(
-      switchMap((request) => this.projectsService.createProject(request))
+      tap(() => this.set({ loading: true })),
+      switchMap((request) =>
+        this.projectsService
+          .createProject(request)
+          .pipe(finalize(() => this.set({ loading: false })))
+      )
     )
   );
 

@@ -38,6 +38,7 @@ export const moveRank = (
   prevIndex: number,
   nextIndex: number
 ): LexoRank => {
+  if (!ranks || ranks.length === 0) return LexoRank.middle();
   const parsedRanks = ranks.map(LexoRank.parse);
   const replacedItemRank = LexoRank.parse(ranks[nextIndex]);
   const isFirst = nextIndex === 0;

@@ -7,12 +7,21 @@ import { ROUTES } from './project-kanban.routes';
 import {
   TuiActionModule,
   TuiBreadcrumbsModule,
+  TuiInputModule,
   TuiIslandModule,
   TuiTagModule,
 } from '@taiga-ui/kit';
-import { TuiButtonModule, TuiLinkModule, TuiSvgModule } from '@taiga-ui/core';
+import {
+  TuiButtonModule,
+  TuiExpandModule,
+  TuiLinkModule,
+  TuiSvgModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/core';
 import { KanbanCardComponent } from './kanban-card/kanban-card.component';
 import {
+  TuiActiveZoneModule,
+  TuiAutoFocusModule,
   TuiDragModule,
   TuiDroppableModule,
   TuiMapperPipeModule,
@@ -20,12 +29,15 @@ import {
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { KanbanListComponent } from './kanban-list/kanban-list.component';
 import { LetModule, PushModule } from '@rx-angular/template';
+import { KanbanAddListComponent } from './kanban-add-list/kanban-add-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     ProjectKanbanComponent,
     KanbanCardComponent,
     KanbanListComponent,
+    KanbanAddListComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +56,12 @@ import { LetModule, PushModule } from '@rx-angular/template';
     TuiActionModule,
     TuiBreadcrumbsModule,
     TuiLinkModule,
+    TuiExpandModule,
+    TuiInputModule,
+    TuiTextfieldControllerModule,
+    TuiAutoFocusModule,
+    TuiActiveZoneModule,
+    ReactiveFormsModule,
   ],
 })
 export class ProjectKanbanModule {}

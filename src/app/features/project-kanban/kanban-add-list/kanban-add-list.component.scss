@@ -1,0 +1,13 @@
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.actions {
+  display: flex;
+  column-gap: 0.25rem;
+
+  .list-add-new-card-action {
+    flex: 1;
+  }
+}

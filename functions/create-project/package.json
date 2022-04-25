@@ -1,0 +1,19 @@
+{
+  "name": "cloud-functions-create-project",
+  "version": "1.0.0",
+  "description": "Create a project and init workspace",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "appwrite"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^17.0.26",
+    "lexorank": "^1.0.4",
+    "node-appwrite": "^5.1.0"
+  }
+}

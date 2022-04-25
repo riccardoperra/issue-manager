@@ -14,7 +14,7 @@ import { Card } from '../../data/cards.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { getNextRank, moveRank } from '../../shared/utils/ranking';
 import { ProjectKanbanAdapter } from './project-kanban.adapter';
-import { TuiAlertService, TuiDialogService } from '@taiga-ui/core';
+import { TuiAlertService, TuiDialogService, tuiSlideIn } from '@taiga-ui/core';
 import { TuiNotification } from '@taiga-ui/core/enums/notification';
 import { TuiScrollService } from '@taiga-ui/cdk';
 
@@ -31,6 +31,7 @@ interface LocalActions {
   styleUrls: ['./project-kanban.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [RxActionFactory, ProjectKanbanAdapter],
+  animations: [tuiSlideIn],
 })
 export class ProjectKanbanComponent {
   readonly ui = new RxActionFactory<LocalActions>().create();
@@ -41,6 +42,8 @@ export class ProjectKanbanComponent {
     .select('categories')
     .pipe(map((cat) => cat.filter(({ archived }) => archived).length));
   readonly groupedCards$ = this.adapter.cardsByCategory$;
+
+  showArchived = false;
 
   readonly categoriesTrackBy: TrackByFunction<Category> = (index, category) =>
     `${category.$id}`;

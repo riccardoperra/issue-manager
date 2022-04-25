@@ -7,6 +7,18 @@
   height: 100vh;
 }
 
+.main-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100%;
+  padding: 0;
+  margin: 0px;
+
+  > .wrapper {
+    flex: 1;
+  }
+}
+
 .wrapper {
   height: 100%;
   display: flex;

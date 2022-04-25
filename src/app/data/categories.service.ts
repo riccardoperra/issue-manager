@@ -49,7 +49,7 @@ export class CategoriesService {
       this.appwrite.database.createDocument<Category>(
         CategoriesService.collectionId,
         'unique()',
-        request
+        { ...request, archived: false }
       )
     );
   }

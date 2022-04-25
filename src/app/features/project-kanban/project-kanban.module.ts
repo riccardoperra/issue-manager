@@ -11,6 +11,7 @@ import {
   TuiBreadcrumbsModule,
   TuiInputModule,
   TuiIslandModule,
+  TuiTabsModule,
   TuiTagModule,
 } from '@taiga-ui/kit';
 import {
@@ -39,6 +40,7 @@ import { KanbanListComponent } from './kanban-list/kanban-list.component';
 import { LetModule, PushModule } from '@rx-angular/template';
 import { KanbanAddListComponent } from './kanban-add-list/kanban-add-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { KanbanArchivedMenuComponent } from './kanban-archived-menu/kanban-archived-menu.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     KanbanCardComponent,
     KanbanListComponent,
     KanbanAddListComponent,
+    KanbanArchivedMenuComponent,
   ],
   imports: [
     CommonModule,
@@ -78,6 +81,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     TuiScrollbarModule,
     TuiOverscrollModule,
     TuiElementModule,
+    TuiTabsModule,
   ],
 })
 export class ProjectKanbanModule {}

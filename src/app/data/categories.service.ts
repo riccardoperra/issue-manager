@@ -8,7 +8,8 @@ import { Card } from './cards.service';
 export interface Category extends Models.Document {
   readonly name: string;
   readonly projectId: string;
-  rank: string;
+  readonly archived: boolean;
+  readonly rank: string;
 }
 
 export type AddCategory = Pick<Category, 'name' | 'rank' | 'projectId'>;
@@ -49,6 +50,16 @@ export class CategoriesService {
         CategoriesService.collectionId,
         'unique()',
         request
+      )
+    );
+  }
+
+  archiveCategory($id: Category['$id']): Observable<Category> {
+    return from(
+      this.appwrite.database.updateDocument<Category>(
+        CategoriesService.collectionId,
+        $id,
+        { archived: true } as Pick<Category, 'archived'>
       )
     );
   }

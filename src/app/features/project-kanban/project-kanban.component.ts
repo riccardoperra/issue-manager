@@ -13,11 +13,13 @@ import { Card } from '../../data/cards.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { getNextRank, moveRank } from '../../shared/utils/ranking';
 import { ProjectKanbanAdapter } from './project-kanban.adapter';
+import { TuiDialogService } from '@taiga-ui/core';
 
 interface LocalActions {
   moveCategory: CdkDragDrop<readonly Category[], readonly Category[], Category>;
   moveCard: CdkDragDrop<readonly Card[], readonly Card[], Card>;
   addCategory: string;
+  archiveCategory: string;
 }
 
 @Component({
@@ -32,6 +34,9 @@ export class ProjectKanbanComponent {
   readonly breadcrumb = [{ caption: 'Dashboard', routerLink: '/' }];
   readonly project$ = this.adapter.project$;
   readonly categories$ = this.adapter.sortedCategories$;
+  readonly archivedCount$ = this.adapter
+    .select('categories')
+    .pipe(map((cat) => cat.filter(({ archived }) => archived).length));
   readonly groupedCards$ = this.adapter.cardsByCategory$;
 
   readonly categoriesTrackBy: TrackByFunction<Category> = (index, category) =>
@@ -45,7 +50,9 @@ export class ProjectKanbanComponent {
     @Inject(ProjectKanbanAdapter)
     readonly adapter: ProjectKanbanAdapter,
     @Inject(RxActionFactory)
-    private readonly rxActionFactory: RxActionFactory<LocalActions>
+    private readonly rxActionFactory: RxActionFactory<LocalActions>,
+    @Inject(TuiDialogService)
+    private readonly dialogService: TuiDialogService
   ) {
     this.adapter.hold(
       this.ui.moveCard$.pipe(
@@ -82,6 +89,11 @@ export class ProjectKanbanComponent {
         }))
       ),
       this.adapter.ui.addCategory
+    );
+
+    this.adapter.hold(
+      this.ui.archiveCategory$.pipe(map((id) => ({ $id: id }))),
+      this.adapter.ui.archiveCategory
     );
   }
 

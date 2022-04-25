@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { ROUTES } from './project-kanban.routes';
 import {
   TuiActionModule,
+  TuiBadgedContentModule,
+  TuiBadgeModule,
   TuiBreadcrumbsModule,
   TuiInputModule,
   TuiIslandModule,
@@ -13,8 +15,12 @@ import {
 } from '@taiga-ui/kit';
 import {
   TuiButtonModule,
+  TuiDataListModule,
+  TuiDropdownControllerModule,
   TuiExpandModule,
+  TuiHostedDropdownModule,
   TuiLinkModule,
+  TuiScrollbarModule,
   TuiSvgModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core';
@@ -62,6 +68,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     TuiAutoFocusModule,
     TuiActiveZoneModule,
     ReactiveFormsModule,
+    TuiHostedDropdownModule,
+    TuiDropdownControllerModule,
+    TuiDataListModule,
+    TuiBadgeModule,
+    TuiBadgedContentModule,
+    TuiScrollbarModule,
   ],
 })
 export class ProjectKanbanModule {}

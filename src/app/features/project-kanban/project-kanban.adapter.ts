@@ -12,6 +12,7 @@ import {
   forkJoin,
   map,
   merge,
+  Observable,
   of,
   switchMap,
   tap,
@@ -30,6 +31,7 @@ interface Actions {
   updateCardPosition: { $id: string; rank: string };
   updateCardCategory: { $id: string; rank: string; categoryId: string };
   addCategory: { name: string; rank: string; $projectId: string };
+  archiveCategory: { $id: string };
 }
 
 @Injectable()
@@ -40,24 +42,30 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
 
   readonly project$ = this.select('project');
 
-  readonly sortedCategories$ = this.categories$.pipe(
-    map((categories) => sortArrayByRankProperty(categories, 'rank'))
-  );
+  readonly sortedCategories$: Observable<readonly Category[]> =
+    this.categories$.pipe(
+      map((categories) => categories.filter((category) => !category.archived)),
+      map((categories) => sortArrayByRankProperty(categories, 'rank'))
+    );
 
   readonly cardsByCategory$ = this.select(
     selectSlice(['cards', 'categories']),
     map(({ cards, categories }) => {
       const initialValue = categories.reduce(
-        (acc, category) => ({
-          ...acc,
-          [category.$id]: [],
-        }),
+        (acc, category) =>
+          !category.archived
+            ? {
+                ...acc,
+                [category.$id]: [],
+              }
+            : acc,
         {}
       );
       return sortArrayByRankProperty(cards, 'rank').reduce<
         Record<string, readonly Card[]>
       >((acc, card) => {
-        acc[card.categoryId] = (acc[card.categoryId] ?? []).concat(card);
+        if (!acc[card.categoryId]) return acc;
+        acc[card.categoryId] = acc[card.categoryId].concat(card);
         return acc;
       }, initialValue);
     })
@@ -91,6 +99,9 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
           name,
         })
       )
+    ),
+    this.ui.archiveCategory$.pipe(
+      switchMap(({ $id }) => this.categoriesService.archiveCategory($id))
     )
   );
 
@@ -128,6 +139,12 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
         state.categories.map((category) =>
           category.$id === $id ? patch(category, { rank }) : category
         )
+    );
+
+    this.connect('categories', this.ui.archiveCategory$, (state, { $id }) =>
+      state.categories.map((category) =>
+        category.$id === $id ? patch(category, { archived: true }) : category
+      )
     );
 
     this.connect('cards', this.ui.updateCardPosition$, (state, { $id, rank }) =>

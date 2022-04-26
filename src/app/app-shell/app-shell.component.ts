@@ -24,9 +24,13 @@ export class AppShellComponent implements OnInit {
         .subscribe((loggedIn) => {
           if (loggedIn) {
             const route = document.location.pathname;
-            this.router.navigate([
-              route !== '/' && route !== '/login' ? route : '/',
-            ]);
+            const params = new URLSearchParams(window.location.search);
+            // @ts-ignore
+            const p = Object.fromEntries([...params.entries()]);
+            this.router.navigate(
+              [route !== '/' && route !== '/login' ? route : '/'],
+              { queryParams: p }
+            );
           } else {
             this.router.navigate(['/login']);
           }

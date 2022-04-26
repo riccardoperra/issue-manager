@@ -1,10 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  TuiAlertModule,
-  TuiButtonModule,
-  TuiDialogModule,
-  TuiRootModule,
-} from '@taiga-ui/core';
+import { TuiAlertModule, TuiDialogModule, TuiRootModule } from '@taiga-ui/core';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 

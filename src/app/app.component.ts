@@ -1,9 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { Appwrite } from 'appwrite';
-import { APPWRITE } from './providers/appwrite.provider';
-import { ProjectsState } from './shared/state/projects.state';
-import { AuthState } from './shared/auth/auth.state';
-import { AuthEffects } from './shared/auth/auth.effects';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +9,5 @@ import { AuthEffects } from './shared/auth/auth.effects';
 export class AppComponent {
   title = 'appwrite-hackathon';
 
-  constructor(
-    @Inject(AuthState)
-    private readonly authState: AuthState,
-    @Inject(AuthEffects)
-    private readonly authEffects: AuthEffects,
-    @Inject(APPWRITE) private readonly appwrite: Appwrite
-  ) {}
+  constructor() {}
 }

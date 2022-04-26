@@ -18,6 +18,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./features/login/login.module').then((m) => m.LoginModule),
   },
+  {
+    path: 'team',
+    loadChildren: () =>
+      import('./features/team/team.module').then((m) => m.TeamModule),
+  },
 ];
 
 @NgModule({

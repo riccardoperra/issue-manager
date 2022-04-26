@@ -24,8 +24,8 @@
   background: var(--tui-secondary);
   border-radius: var(--tui-radius-l);
   border: dotted 3px var(--tui-secondary-active);
-  min-height: 92px;
   width: auto;
+  height: auto;
   z-index: 999;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

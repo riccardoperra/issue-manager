@@ -12,12 +12,14 @@ import { Card } from '../../../data/cards.service';
 import { CdkDragDrop, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { RxState } from '@rx-angular/state';
 import { distinctUntilChanged, of } from 'rxjs';
+import { tuiFadeIn } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-kanban-list',
   templateUrl: './kanban-list.component.html',
   styleUrls: ['./kanban-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [tuiFadeIn],
 })
 export class KanbanListComponent
   extends RxState<{ category: Category; cards: readonly Card[] }>
@@ -41,7 +43,7 @@ export class KanbanListComponent
     CdkDragDrop<readonly Card[], readonly Card[], Card>
   >();
 
-  readonly cardTrackBy: TrackByFunction<Card> = (index, card) => card.rank;
+  readonly cardTrackBy: TrackByFunction<Card> = (index, card) => card.$id;
 
   constructor(readonly c: CdkDropListGroup<any>) {
     super();

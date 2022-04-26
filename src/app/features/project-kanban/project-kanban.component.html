@@ -25,7 +25,10 @@
 
       <div class="tui-row tui-space_all-0 tui-row_align_center">
         <h1 class="tui-space_right-4">{{ project.name }}</h1>
-        <app-kanban-membership-list></app-kanban-membership-list>
+        <app-kanban-membership-list
+          (removeMember)="adapter.ui.removeMember($event)"
+          (addMember)="adapter.ui.addMember($event)"
+        ></app-kanban-membership-list>
         <div class="project-kanban-actions">
           <button
             tuiButton
@@ -42,98 +45,108 @@
     <div
       cdkDropListGroup
       class="tui-space_top-4 droplist-wrapper"
-      *rxLet="categories$; let categories; strategy: 'native'"
+      style="overflow: hidden"
+      *rxLet="categories$; let categories; strategy: 'immediate'"
     >
       <tui-scrollbar #scrollEl="elementRef" tuiElement class="scrollbar">
-        <div
-          class="list-grid"
-          cdkDropList
-          [cdkDropListOrientation]="'horizontal'"
-          [cdkDropListData]="categories"
-          (cdkDropListDropped)="onCategoryDrop($event)"
-        >
+        <div class="content">
           <div
-            cdkDropListGroup
-            class="list-grid"
-            *rxLet="groupedCards$; let groupedCards"
+            class="list-grid-wrapper"
+            cdkDropList
+            [cdkDropListOrientation]="'horizontal'"
+            [cdkDropListData]="categories"
+            (cdkDropListDropped)="onCategoryDrop($event)"
           >
-            <ng-container
-              *rxFor="
-                let list of categories;
-                strategy: 'native';
-                trackBy: categoriesTrackBy;
-                let index = index
-              "
+            <div
+              cdkDropListGroup
+              class="list-grid"
+              *rxLet="groupedCards$; let groupedCards"
             >
-              <tui-island
-                [transparent]="true"
-                [cdkDragData]="list"
-                cdkDrag
-                class="list-wrapper"
+              <ng-container
+                *rxFor="
+                  let list of categories;
+                  strategy: 'immediate';
+                  trackBy: categoriesTrackBy;
+                  let index = index
+                "
               >
-                <div #ref>
-                  <div class="list-header" cdkDragHandle>
-                    {{ list.name }}
-
-                    <div class="list-header-actions">
-                      <tui-hosted-dropdown
-                        tuiDropdownAlign="right"
-                        [content]="listActionMenu"
-                      >
-                        <button size="s" tuiIconButton appearance="flat">
-                          <tui-svg src="tuiIconMoreHorLarge"></tui-svg>
-                        </button>
-                      </tui-hosted-dropdown>
-                      <ng-template #listActionMenu>
-                        <tui-data-list>
-                          <button
-                            tuiOption
-                            (click)="ui.archiveCategory({ $id: list.$id })"
-                          >
-                            Archive this list
-                          </button>
-                        </tui-data-list>
-                      </ng-template>
-                    </div>
-                  </div>
-
-                  <div
-                    class="tui-island__content"
-                    [class.tui-space_all-4]="groupedCards[list.$id].length > 0"
+                <div class="list-wrapper">
+                  <tui-island
+                    [transparent]="true"
+                    [cdkDragData]="list"
+                    cdkDrag
+                    tuiElement
+                    #ref="elementRef"
                   >
-                    <app-kanban-list
-                      [cards]="groupedCards[list.$id]"
-                      [list]="list"
-                      (dropEvent)="ui.moveCard($event)"
-                    ></app-kanban-list>
-                  </div>
+                    <div class="list-header" cdkDragHandle>
+                      {{ list.name }}
 
-                  <div class="tui-island__content tui-space_all-4">
-                    <app-kanban-add-card
-                      (confirmEvent)="
-                        ui.addCard({ name: $event, $categoryId: list.$id })
-                      "
-                    ></app-kanban-add-card>
-                  </div>
+                      <div class="list-header-actions">
+                        <tui-hosted-dropdown
+                          tuiDropdownAlign="right"
+                          [content]="listActionMenu"
+                        >
+                          <button size="s" tuiIconButton appearance="flat">
+                            <tui-svg src="tuiIconMoreHorLarge"></tui-svg>
+                          </button>
+                        </tui-hosted-dropdown>
+                        <ng-template #listActionMenu>
+                          <tui-data-list>
+                            <button
+                              tuiOption
+                              (click)="ui.archiveCategory({ $id: list.$id })"
+                            >
+                              Archive this list
+                            </button>
+                          </tui-data-list>
+                        </ng-template>
+                      </div>
+                    </div>
+
+                    <tui-scrollbar>
+                      <div
+                        class="tui-island__content"
+                        [class.tui-space_all-4]="
+                          groupedCards[list.$id].length > 0
+                        "
+                      >
+                        <app-kanban-list
+                          [cards]="groupedCards[list.$id]"
+                          [list]="list"
+                          (dropEvent)="ui.moveCard($event)"
+                        ></app-kanban-list>
+                      </div>
+                    </tui-scrollbar>
+
+                    <div
+                      class="tui-island__content tui-space_all-4 list-add-card"
+                    >
+                      <app-kanban-add-card
+                        (confirmEvent)="
+                          ui.addCard({ name: $event, $categoryId: list.$id })
+                        "
+                      ></app-kanban-add-card>
+                    </div>
+
+                    <div
+                      class="list-wrapper-drag-placeholder"
+                      [style.height.px]="ref.nativeElement.clientHeight"
+                      *cdkDragPlaceholder
+                    ></div>
+                  </tui-island>
                 </div>
+              </ng-container>
 
-                <div
-                  class="list-wrapper-drag-placeholder"
-                  [style.height.px]="ref.clientHeight"
-                  *cdkDragPlaceholder
-                ></div>
-              </tui-island>
-            </ng-container>
-
-            <app-kanban-add-list
-              class="list-wrapper"
-              (confirmEvent)="
-                ui.addCategory({
-                  name: $event,
-                  scrollRef: scrollEl.nativeElement
-                })
-              "
-            ></app-kanban-add-list>
+              <app-kanban-add-list
+                class="list-wrapper"
+                (confirmEvent)="
+                  ui.addCategory({
+                    name: $event,
+                    scrollRef: scrollEl.nativeElement
+                  })
+                "
+              ></app-kanban-add-list>
+            </div>
           </div>
         </div>
       </tui-scrollbar>

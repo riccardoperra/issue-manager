@@ -24,6 +24,7 @@ import { Card, CardsService } from '../../data/cards.service';
 import { patch } from '@rx-angular/cdk/transformations';
 import { sortArrayByRankProperty } from '../../shared/utils/ranking';
 import { TeamsService } from '../../data/team.service';
+import { ProjectsState } from '../../shared/state/projects.state';
 
 interface Actions {
   fetch: { $projectId: string };
@@ -36,6 +37,8 @@ interface Actions {
   addCategory: { name: string; rank: string; $projectId: string };
   updateArchivedCategory: { $id: string; archived: boolean };
   addCard: { name: string; rank: string; $categoryId: string };
+  addMember: string;
+  removeMember: string;
 }
 
 @Injectable()
@@ -120,6 +123,35 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
           projectId: $projectId,
         })
       )
+    ),
+    this.ui.addMember$.pipe(
+      withLatestFrom(this.project$.pipe(pluck('$id'))),
+      switchMap(([email, $projectId]) =>
+        this.teamsService.addMembership($projectId, email).pipe(
+          tap((membership) => {
+            console.log('workspace', membership);
+            return this.set('workspace', (state) =>
+              patch(state.workspace, {
+                members: [...state.workspace.members, membership],
+              })
+            );
+          })
+        )
+      )
+    ),
+    this.ui.removeMember$.pipe(
+      withLatestFrom(this.project$.pipe(pluck('$id'))),
+      switchMap(([$id, $projectId]) =>
+        this.teamsService.removeMembership($projectId, $id).pipe(
+          tap((membership) =>
+            this.set('workspace', (state) =>
+              patch(state.workspace, {
+                members: state.workspace.members.filter((m) => m.$id !== $id),
+              })
+            )
+          )
+        )
+      )
     )
   );
 
@@ -135,7 +167,9 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
     @Inject(CardsService)
     private readonly cardsService: CardsService,
     @Inject(TeamsService)
-    private readonly teamsService: TeamsService
+    private readonly teamsService: TeamsService,
+    @Inject(ProjectsState)
+    private readonly projectsState: ProjectsState
   ) {
     super();
 

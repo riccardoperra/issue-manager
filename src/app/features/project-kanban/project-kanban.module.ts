@@ -24,6 +24,7 @@ import {
   TuiDropdownModule,
   TuiExpandModule,
   TuiHostedDropdownModule,
+  TuiLabelModule,
   TuiLinkModule,
   TuiScrollbarModule,
   TuiSvgModule,
@@ -48,6 +49,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { KanbanArchivedMenuComponent } from './kanban-archived-menu/kanban-archived-menu.component';
 import { KanbanAddCardComponent } from './kanban-add-card/kanban-add-card.component';
 import { KanbanMembershipListComponent } from './kanban-membership-list/kanban-membership-list.component';
+import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,7 @@ import { KanbanMembershipListComponent } from './kanban-membership-list/kanban-m
     KanbanArchivedMenuComponent,
     KanbanAddCardComponent,
     KanbanMembershipListComponent,
+    KanbanBoardComponent,
   ],
   imports: [
     CommonModule,
@@ -96,6 +99,7 @@ import { KanbanMembershipListComponent } from './kanban-membership-list/kanban-m
     TuiDropdownHoverModule,
     TuiDropdownModule,
     TuiHoveredModule,
+    TuiLabelModule,
   ],
 })
 export class ProjectKanbanModule {}

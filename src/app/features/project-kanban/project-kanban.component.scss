@@ -1,7 +1,7 @@
 @import '~@taiga-ui/core/styles/taiga-ui-local';
 
 :host {
-  background-color: var(--tui-base-01);
+  background-color: var(--tui-base-02);
   display: block;
   margin: 0;
   height: 100vh;
@@ -26,26 +26,48 @@
   flex-direction: column;
   padding: 0;
 
+  ::ng-deep .scrollbar {
+    height: 100%;
+    .content {
+      height: 100%;
+    }
+  }
+
   .droplist-wrapper {
     height: 100%;
     flex: 1;
 
     .scrollbar {
       height: 100%;
+
+      .content {
+        height: 100%;
+      }
     }
   }
 }
 
-.list-grid {
+.kanban-list {
+  .kanban-add-list {
+    flex: 1;
+  }
+}
+.list-grid-wrapper {
   display: flex;
-  align-items: flex-start;
-  gap: 2rem;
-  flex-wrap: nowrap;
-  margin: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  vertical-align: top;
+  margin-bottom: 1rem;
 
-  > .list-grid {
+  .list-grid {
+    flex: 1;
     padding-left: var(--tui-padding-l);
     padding-right: var(--tui-padding-l);
+    display: flex;
+    gap: 2rem;
   }
 }
 
@@ -77,23 +99,38 @@
 .list-wrapper {
   width: 280px;
   height: 100%;
-  margin: 0;
   display: inline-block;
-  background-color: var(--tui-base-01);
-  padding: 0;
-  cursor: pointer;
-}
+  vertical-align: top;
+  white-space: nowrap;
+  margin: 0;
 
-.list-header {
-  font: var(--tui-font-text-l);
-  padding: var(--tui-padding-l);
-  font-weight: bold;
-  margin-bottom: var(--tui-height-s);
-  display: flex;
-  align-items: center;
+  tui-island {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    position: relative;
+    box-sizing: border-box;
+    background-color: var(--tui-base-01);
+    //background-color: rgb(248 250 252);
+    padding: 0;
+    cursor: pointer;
+  }
 
-  .list-header-actions {
-    margin-left: auto;
+  .list-header {
+    font: var(--tui-font-text-l);
+    padding: var(--tui-padding-l);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    flex: 1;
+
+    .list-header-actions {
+      margin-left: auto;
+    }
+  }
+
+  .list-add-card {
+    flex: 1;
   }
 }
 

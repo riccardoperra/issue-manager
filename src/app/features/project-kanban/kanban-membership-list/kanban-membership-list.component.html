@@ -48,14 +48,70 @@
           </div>
           <div
             class="avatar-actions"
-            *ngIf="currentUser && isCurrentUser(member, currentUser)"
+            *ngIf="
+              currentUser && isCurrentUser(member, currentUser);
+              else actions
+            "
           >
             <button size="s" tuiButton appearance="primary">
               Edit profile
             </button>
           </div>
+          <ng-template #actions>
+            <div class="avatar-actions">
+              <button
+                size="s"
+                tuiButton
+                appearance="primary"
+                (click)="removeMember.emit(member.$id)"
+              >
+                Remove
+              </button>
+            </div>
+          </ng-template>
         </div>
       </ng-template>
     </tui-avatar>
+  </tui-hosted-dropdown>
+
+  <tui-hosted-dropdown
+    tuiDropdownAlign="right"
+    [tuiDropdownSided]="true"
+    tuiDropdownDirection="bottom"
+    [content]="addMemberContent"
+    #dropdown
+  >
+    <button
+      [disabled]="dropdown.open"
+      tuiButton
+      size="s"
+      icon="tuiIconPlus"
+      appearance="primary"
+    >
+      Add new
+    </button>
+    <ng-template #addMemberContent>
+      <form
+        [formGroup]="addForm"
+        (ngSubmit)="
+          addMember.emit(addForm.value.email); dropdown.updateOpen(false)
+        "
+      >
+        <div class="add-member-dropdown">
+          <label tuiLabel [label]="'Email'">
+            <tui-input
+              class="input"
+              tuiTextfieldSize="s"
+              formControlName="email"
+              tuiAutoFocus
+              [tuiTextfieldLabelOutside]="true"
+            ></tui-input>
+          </label>
+          <span class="tui-text member-dropdown-hint">
+            An email to join this workspace will be sent to the user.
+          </span>
+        </div>
+      </form>
+    </ng-template>
   </tui-hosted-dropdown>
 </ng-container>

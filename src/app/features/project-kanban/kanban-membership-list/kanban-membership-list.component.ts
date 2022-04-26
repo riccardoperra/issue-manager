@@ -1,14 +1,17 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Inject,
   OnInit,
+  Output,
 } from '@angular/core';
 import { ProjectKanbanAdapter } from '../project-kanban.adapter';
 import { tuiPure } from '@taiga-ui/cdk';
 import { Models } from 'appwrite';
 import { Observable } from 'rxjs';
 import { AuthState } from '../../../shared/auth/auth.state';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-kanban-membership-list',
@@ -16,13 +19,21 @@ import { AuthState } from '../../../shared/auth/auth.state';
   styleUrls: ['./kanban-membership-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class KanbanMembershipListComponent implements OnInit {
+export class KanbanMembershipListComponent {
   readonly members$: Observable<readonly Models.Membership[]> =
     this.adapter.members$;
 
-  openDropdowns: Record<string, boolean> = {};
-
   readonly currentUser$ = this.authState.account$;
+
+  @Output()
+  addMember = new EventEmitter<string>();
+
+  @Output()
+  removeMember = new EventEmitter<string>();
+
+  addForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+  });
 
   constructor(
     @Inject(ProjectKanbanAdapter)
@@ -30,10 +41,6 @@ export class KanbanMembershipListComponent implements OnInit {
     @Inject(AuthState)
     private readonly authState: AuthState
   ) {}
-
-  onhoverChange(a: any) {
-    console.log(a);
-  }
 
   @tuiPure
   isCurrentUser(
@@ -53,6 +60,4 @@ export class KanbanMembershipListComponent implements OnInit {
   getJoinedDate(member: Models.Membership): number {
     return member.joined * 1000;
   }
-
-  ngOnInit(): void {}
 }

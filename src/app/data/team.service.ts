@@ -29,4 +29,35 @@ export class TeamsService {
       })
     );
   }
+
+  addMembership($projectId: string, email: string) {
+    return from(
+      this.appwrite.teams.createMembership(
+        $projectId,
+        email,
+        ['member'],
+        `http://localhost:4200/team/memberships/accept`
+      )
+    );
+  }
+
+  updateMembershipStatus(
+    teamId: string,
+    membershipId: string,
+    userId: string,
+    secret: string
+  ): Observable<Models.Membership> {
+    return from(
+      this.appwrite.teams.updateMembershipStatus(
+        teamId!,
+        membershipId!,
+        userId!,
+        secret!
+      )
+    );
+  }
+
+  removeMembership($projectId: string, $id: string) {
+    return from(this.appwrite.teams.deleteMembership($projectId, $id));
+  }
 }

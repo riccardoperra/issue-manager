@@ -42,6 +42,12 @@ Make sure you have [Appwrite CLI](https://appwrite.io/docs/command-line#installa
 
 Make sure you are in the same folder as your `appwrite.json` file and run `appwrite deploy function` to deploy your function. You will be prompted to select which functions you want to deploy.
 
-### Manual using tar.gz
 
-Manual deployment has no requirements and uses Appwrite Console to deploy the tag. First, enter the folder of your function. Then, create a tarball of the whole folder and gzip it. After creating `.tar.gz` file, visit Appwrite Console, click on the `Deploy Tag` button and switch to the `Manual` tab. There, set the `entrypoint` to `src/index.js`, and upload the file we just generated.
+```bash
+appwrite functions createDeployment \
+--functionId=create-project \
+--activate=true \
+--entrypoint='src/index.js' \
+--code='./functions/create-project'
+
+```

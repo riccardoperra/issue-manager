@@ -1,0 +1,76 @@
+<div
+  class="tui-container tui-container_adaptive"
+  *rxLet="card$; let card; rxSuspense: suspense"
+>
+  <div class="header">
+    <h1 class="tui-text header-text" *ngIf="!editingTitle; else editingContent">
+      {{ card.name }}
+      <button
+        tuiIconButton
+        icon="tuiIconEditLarge"
+        appearance="flat"
+        class="action"
+        (click)="editingTitle = !editingTitle"
+      ></button>
+    </h1>
+    <div class="header-actions" *ngIf="!card.archived">
+      <button
+        tuiButton
+        icon="tuiIconCloseCircleLarge"
+        appearance="flat"
+        (click)="archive()"
+      >
+        Archive
+      </button>
+    </div>
+    <ng-template #editingContent>
+      <tui-input
+        class="title-edit-input"
+        [formControl]="title"
+        tuiAutoFocus
+        tuiTextfieldSize="m"
+        (tuiActiveZoneChange)="onZoneChange($event)"
+        (keydown.escape)="onEsc($event)"
+        (keydown.enter)="onUpdateTitle()"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        {{ card.name }}
+      </tui-input>
+    </ng-template>
+  </div>
+
+  <tui-notification
+    status="warning"
+    class="tui-space_bottom-4"
+    *ngIf="card.archived"
+  >
+    <div style="display: flex; justify-content: space-between">
+      This card is archived.
+      <button
+        tuiButton
+        size="xs"
+        appearance="accent"
+        class="tui-space_left-auto"
+        (click)="undoArchive()"
+      >
+        Undo
+      </button>
+    </div>
+  </tui-notification>
+
+  <div class="editor-shell" [style.height.%]="100">
+    <app-lexical-editor
+      [content]="card.content"
+      (editorChange)="editorChange($event)"
+    ></app-lexical-editor>
+  </div>
+</div>
+
+<ng-template #suspense>
+  <tui-loader
+    size="xxl"
+    class="suspense-loader"
+    [textContent]="'Loading data...'"
+    [overlay]="true"
+  ></tui-loader>
+</ng-template>

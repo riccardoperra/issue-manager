@@ -6,6 +6,7 @@
   lexicalHistory
   [lexicalAutofocus]="true"
   class="lexical-editor"
+  (lexicalChangeEvent)="editorChange.emit($event)"
 >
   <lxc-toolbar *ngIf="richText"></lxc-toolbar>
   <div class="editor-container" lexicalRichText [class.plain-text]="!richText">

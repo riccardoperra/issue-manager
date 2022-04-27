@@ -2,16 +2,15 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostListener,
   Inject,
   Input,
   OnInit,
 } from '@angular/core';
 import { Card } from '../../../data/cards.service';
 import { TuiDialogService } from '@taiga-ui/core';
-import { EditCardComponent } from '../edit-card/edit-card.component';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { RxStrategyProvider } from '@rx-angular/cdk/render-strategies';
+import { KanbanCardEditorComponent } from '../kanban-card-editor/kanban-card-editor.component';
 
 @Component({
   selector: 'app-kanban-card',
@@ -23,10 +22,13 @@ export class KanbanCardComponent implements OnInit {
   @Input()
   card: Card | null = null;
 
-  onClick(h: any): void {
+  onClick(card: Card): void {
     this.dialogService
-      .open(new PolymorpheusComponent(EditCardComponent), {
+      .open(new PolymorpheusComponent(KanbanCardEditorComponent), {
         size: 'page',
+        data: {
+          cardId: card.$id,
+        },
       })
       .subscribe();
   }

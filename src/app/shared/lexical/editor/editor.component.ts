@@ -1,16 +1,23 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
-  OnInit,
+  Output,
+  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { AutoLinkNode, LinkNode } from '@lexical/link';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
-import { LexicalComposerConfig } from 'lexical-angular';
+import {
+  LexicalComposerConfig,
+  LexicalComposerDirective,
+} from 'lexical-angular';
 import { editorTheme } from './theme';
 import { FormControl } from '@angular/forms';
+import { CLEAR_HISTORY_COMMAND, EditorState } from 'lexical';
 
 @Component({
   selector: 'app-lexical-editor',
@@ -19,9 +26,18 @@ import { FormControl } from '@angular/forms';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlaygroundEditorComponent implements OnInit {
+export class PlaygroundEditorComponent implements AfterViewInit {
+  @Input()
+  content: string = '';
+
   @Input()
   richText: boolean = true;
+
+  @ViewChild(LexicalComposerDirective, { static: true })
+  composer!: LexicalComposerDirective;
+
+  @Output()
+  editorChange = new EventEmitter<EditorState>();
 
   config: LexicalComposerConfig = {
     namespace: 'PlaygroundEditor',
@@ -53,7 +69,15 @@ export class PlaygroundEditorComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    this.testing.valueChanges.subscribe(console.log);
+  ngAfterViewInit() {
+    const editor = this.composer.editor!;
+    const json = JSON.parse(this.content);
+    if (json && json.editorState) {
+      const editorState = editor.parseEditorState(
+        JSON.stringify(json.editorState)
+      );
+      editor.setEditorState(editorState);
+    }
+    editor.dispatchCommand(CLEAR_HISTORY_COMMAND, null);
   }
 }

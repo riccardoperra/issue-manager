@@ -26,7 +26,8 @@
   overflow: hidden;
   position: absolute;
   text-overflow: ellipsis;
-  top: 10px;
+  top: 70px;
+  z-index: 999;
   left: 10px;
   user-select: none;
   white-space: nowrap;

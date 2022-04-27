@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditCardComponent } from './edit-card.component';
+import { KanbanCardEditorComponent } from './kanban-card-editor.component';
 
 describe('EditCardComponent', () => {
-  let component: EditCardComponent;
-  let fixture: ComponentFixture<EditCardComponent>;
+  let component: KanbanCardEditorComponent;
+  let fixture: ComponentFixture<KanbanCardEditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditCardComponent ]
-    })
-    .compileComponents();
+      declarations: [KanbanCardEditorComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditCardComponent);
+    fixture = TestBed.createComponent(KanbanCardEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

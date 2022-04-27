@@ -3,7 +3,6 @@ import { Inject, Injectable } from '@angular/core';
 import { APPWRITE } from '../providers/appwrite.provider';
 import { from, Observable } from 'rxjs';
 import { realtimeListener } from '../shared/utils/realtime';
-import { Project } from './projects.service';
 
 export interface Card extends Models.Document {
   readonly name: string;
@@ -37,6 +36,12 @@ export class CardsService {
     );
   }
 
+  getById($id: string): Observable<Card> {
+    return from(
+      this.appwrite.database.getDocument<Card>(CardsService.collectionId, $id)
+    );
+  }
+
   addCard(card: AddCard): Observable<Card> {
     return from(
       this.appwrite.database.createDocument<Card>(
@@ -59,6 +64,42 @@ export class CardsService {
         CardsService.collectionId,
         $id,
         { rank: updatedRank } as Pick<Card, 'rank'>
+      )
+    );
+  }
+
+  updateTitle($id: Card['$id'], title: string): Observable<Card> {
+    return from(
+      this.appwrite.database.updateDocument<Card>(
+        CardsService.collectionId,
+        $id,
+        {
+          name: title,
+        } as Pick<Card, 'name'>
+      )
+    );
+  }
+
+  updateContent($id: Card['$id'], content: string): Observable<Card> {
+    return from(
+      this.appwrite.database.updateDocument<Card>(
+        CardsService.collectionId,
+        $id,
+        {
+          content,
+        } as Pick<Card, 'content'>
+      )
+    );
+  }
+
+  updateArchived($id: Card['$id'], archived: boolean): Observable<Card> {
+    return from(
+      this.appwrite.database.updateDocument<Card>(
+        CardsService.collectionId,
+        $id,
+        {
+          archived,
+        } as Pick<Card, 'archived'>
       )
     );
   }

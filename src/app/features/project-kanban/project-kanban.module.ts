@@ -26,6 +26,8 @@ import {
   TuiHostedDropdownModule,
   TuiLabelModule,
   TuiLinkModule,
+  TuiLoaderModule,
+  TuiNotificationModule,
   TuiScrollbarModule,
   TuiSvgModule,
   TuiTextfieldControllerModule,
@@ -46,13 +48,13 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { KanbanListComponent } from './kanban-list/kanban-list.component';
 import { LetModule, PushModule } from '@rx-angular/template';
 import { KanbanAddListComponent } from './kanban-add-list/kanban-add-list.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KanbanArchivedMenuComponent } from './kanban-archived-menu/kanban-archived-menu.component';
 import { KanbanAddCardComponent } from './kanban-add-card/kanban-add-card.component';
 import { KanbanMembershipListComponent } from './kanban-membership-list/kanban-membership-list.component';
 import { KanbanCardListComponent } from './kanban-card-list/kanban-card-list.component';
 import { PlaygroundEditorModule } from '../../shared/lexical/editor/editor.module';
-import { EditCardComponent } from './edit-card/edit-card.component';
+import { KanbanCardEditorComponent } from './kanban-card-editor/kanban-card-editor.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,7 @@ import { EditCardComponent } from './edit-card/edit-card.component';
     KanbanAddCardComponent,
     KanbanMembershipListComponent,
     KanbanCardListComponent,
-    EditCardComponent,
+    KanbanCardEditorComponent,
   ],
   imports: [
     CommonModule,
@@ -106,6 +108,9 @@ import { EditCardComponent } from './edit-card/edit-card.component';
     TuiLabelModule,
     TuiLetModule,
     PlaygroundEditorModule,
+    TuiLoaderModule,
+    FormsModule,
+    TuiNotificationModule,
   ],
 })
 export class ProjectKanbanModule {}

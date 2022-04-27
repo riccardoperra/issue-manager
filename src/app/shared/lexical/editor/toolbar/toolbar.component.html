@@ -1,0 +1,145 @@
+<div class="toolbar">
+  <button
+    class="toolbar-item spaced"
+    aria-label="Undo"
+    [disabled]="!(canUndo$ | async)"
+    (click)="onUndo()"
+  >
+    <i class="format undo"></i>
+  </button>
+
+  <button
+    class="toolbar-item"
+    aria-label="Redo"
+    [disabled]="!(canRedo$ | async)"
+    (click)="onRedo()"
+  >
+    <i class="format redo"></i>
+  </button>
+
+  <div class="divider"></div>
+
+  <ng-container *ngIf="showBlockTypeFormat">
+    <div class="inline-flex items-center">
+      <lxc-toolbar-block-dropdown [ngModel]="blockType">
+      </lxc-toolbar-block-dropdown>
+    </div>
+
+    <div class="divider"></div>
+  </ng-container>
+
+  <div class="inline-flex items-center">
+    <tui-select
+      [ngModel]="fontFamily"
+      (ngModelChange)="onFontFamilySelect($event)"
+      class="toolbar-select"
+      tuiTextfieldSize="s"
+    >
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="fontFamilyItems"
+      ></tui-data-list-wrapper>
+    </tui-select>
+  </div>
+
+  <div class="inline-flex items-center">
+    <tui-select
+      [ngModel]="fontSize"
+      (ngModelChange)="onFontSizeSelect($event)"
+      class="toolbar-select"
+      tuiTextfieldSize="s"
+    >
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="fontSizeItems"
+      ></tui-data-list-wrapper>
+    </tui-select>
+  </div>
+
+  <div class="divider"></div>
+
+  <button
+    class="toolbar-item"
+    tuiHint="Bold"
+    [class.active]="isBold"
+    (click)="onSetBold()"
+  >
+    <i class="format bold"></i>
+  </button>
+
+  <button
+    class="toolbar-item"
+    tuiHint="Italic"
+    [class.active]="isItalic"
+    (click)="onSetItalic()"
+  >
+    <i class="format italic"></i>
+  </button>
+
+  <button
+    class="toolbar-item"
+    tuiHint="Underline"
+    [class.active]="isUnderline"
+    (click)="onSetUnderline()"
+  >
+    <i class="format underline"></i>
+  </button>
+
+  <button
+    class="toolbar-item"
+    tuiHint="Strikethrough"
+    [class.active]="isStrikethrough"
+    (click)="onSetStrikethrough()"
+  >
+    <i class="format strikethrough"></i>
+  </button>
+
+  <button
+    class="toolbar-item"
+    tuiHint="Strikethrough"
+    [class.active]="isLink"
+    (click)="onInsertLink()"
+  >
+    <i class="format link"></i>
+  </button>
+  <ng-container *ngIf="isLink" [ngComponentOutlet]="floatingLinkEditor">
+  </ng-container>
+
+  <div class="divider"></div>
+
+  <button class="toolbar-item" tuiHint="Left align" (click)="onAlign('left')">
+    <i class="format left-align"></i>
+  </button>
+
+  <button
+    class="toolbar-item"
+    tuiHint="Center align"
+    (click)="onAlign('center')"
+  >
+    <i class="format center-align"></i>
+  </button>
+
+  <button class="toolbar-item" tuiHint="Right align" (click)="onAlign('right')">
+    <i class="format right-align"></i>
+  </button>
+
+  <button
+    class="toolbar-item"
+    tuiHint="Justify align"
+    (click)="onAlign('justify')"
+  >
+    <i class="format justify-align"></i>
+  </button>
+
+  <button class="toolbar-item" tuiHint="Outdent" (click)="onOutdent()">
+    <i
+      class="format outdent"
+      [class.indent]="isRTL"
+      [class.outdent]="!isRTL"
+    ></i>
+  </button>
+
+  <button class="toolbar-item" tuiHint="Indent" (click)="onIndent()">
+    <i class="format" [class.indent]="!isRTL" [class.outdent]="isRTL"> </i>
+  </button>
+</div>

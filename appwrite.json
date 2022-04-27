@@ -1,6 +1,6 @@
 {
-    "projectId": "6266dee0c136eddd5e31",
-    "projectName": "realtime-kanban",
+    "projectId": "6267091f55e56f032bea",
+    "projectName": "hackathon",
     "collections": [
         {
             "$id": "6260423eee67978fa0da",
@@ -33,15 +33,6 @@
                     "default": null
                 },
                 {
-                    "key": "imageUrl",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "format": "url",
-                    "default": null
-                },
-                {
                     "key": "visibility",
                     "type": "string",
                     "status": "available",
@@ -53,6 +44,15 @@
                         "notListed"
                     ],
                     "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "imageUrl",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "format": "url",
                     "default": null
                 },
                 {
@@ -92,6 +92,24 @@
             "permission": "collection",
             "attributes": [
                 {
+                    "key": "categoryId",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "name",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
                     "key": "tags",
                     "type": "string",
                     "status": "available",
@@ -101,7 +119,16 @@
                     "default": null
                 },
                 {
-                    "key": "categoryId",
+                    "key": "content",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "projectId",
                     "type": "string",
                     "status": "available",
                     "required": true,
@@ -118,37 +145,10 @@
                     "default": false
                 },
                 {
-                    "key": "content",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "name",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
                     "key": "rank",
                     "type": "string",
                     "status": "available",
                     "required": false,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "projectId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
                     "array": false,
                     "size": 255,
                     "default": null
@@ -199,6 +199,14 @@
                     "default": null
                 },
                 {
+                    "key": "archived",
+                    "type": "boolean",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "default": false
+                },
+                {
                     "key": "rank",
                     "type": "string",
                     "status": "available",
@@ -206,14 +214,6 @@
                     "array": false,
                     "size": 255,
                     "default": null
-                },
-                {
-                    "key": "archived",
-                    "type": "boolean",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "default": false
                 }
             ],
             "indexes": [

@@ -1,25 +1,52 @@
-<div
-  *rxLet="list$; let list; strategy: 'native'"
-  class="list-content tui-island__content"
-  cdkDropList
-  [id]="'list-' + list.$id"
-  (cdkDropListDropped)="dropEvent.emit($event)"
+<tui-island
+  class="wrapper"
+  cdkDrag
+  tuiElement
+  #ref="elementRef"
+  *rxLet="vm$; let vm"
+  [cdkDragData]="vm.list"
 >
-  <div
-    cdkDrag
-    #ref
-    [cdkDragData]="card"
-    *rxFor="let card of cards$; trackBy: cardTrackBy; strategy: 'native'"
-    class="card-wrapper"
-  >
-    <app-kanban-card
-      [@tuiFadeIn]="{ duration: 200 }"
-      [card]="card"
-    ></app-kanban-card>
-    <div
-      class="custom-placeholder"
-      [style.height.px]="ref.scrollHeight"
-      *cdkDragPlaceholder
-    ></div>
+  <div class="list-header" cdkDragHandle>
+    {{ vm.list.name }}
+
+    <div class="list-header-actions">
+      <tui-hosted-dropdown tuiDropdownAlign="right" [content]="listActionMenu">
+        <button size="s" tuiIconButton appearance="flat">
+          <tui-svg src="tuiIconMoreHorLarge"></tui-svg>
+        </button>
+      </tui-hosted-dropdown>
+      <ng-template #listActionMenu>
+        <tui-data-list>
+          <button tuiOption (click)="archiveCategory.emit(vm.list.$id)">
+            Archive this list
+          </button>
+        </tui-data-list>
+      </ng-template>
+    </div>
   </div>
-</div>
+
+  <tui-scrollbar>
+    <div
+      class="tui-island__content"
+      [class.tui-space_all-4]="vm.cards.length > 0"
+    >
+      <app-kanban-card-list
+        [cards]="vm.cards"
+        [list]="vm.list"
+        (dropEvent)="moveCard.emit($event)"
+      ></app-kanban-card-list>
+    </div>
+  </tui-scrollbar>
+
+  <div class="tui-island__content tui-space_all-4 list-add-card">
+    <app-kanban-add-card
+      (confirmEvent)="addCard.emit({ name: $event, $categoryId: vm.list.$id })"
+    ></app-kanban-add-card>
+  </div>
+
+  <div
+    class="list-wrapper-drag-placeholder"
+    [style.height.px]="ref.nativeElement.clientHeight"
+    *cdkDragPlaceholder
+  ></div>
+</tui-island>

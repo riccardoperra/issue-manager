@@ -1,7 +1,7 @@
 @import '~@taiga-ui/core/styles/taiga-ui-local';
 
 .list-card {
-  min-height: 60px;
+  min-height: 40px;
 }
 
 .list-title {
@@ -17,7 +17,7 @@
   background: var(--tui-secondary);
   border-radius: var(--tui-radius-l);
   border: dotted 3px var(--tui-secondary-active);
-  min-height: 60px;
+  min-height: 40px;
   width: 280px;
   z-index: 999;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);

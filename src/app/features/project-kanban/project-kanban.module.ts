@@ -38,6 +38,7 @@ import {
   TuiDroppableModule,
   TuiElementModule,
   TuiHoveredModule,
+  TuiLetModule,
   TuiMapperPipeModule,
   TuiOverscrollModule,
 } from '@taiga-ui/cdk';
@@ -49,7 +50,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { KanbanArchivedMenuComponent } from './kanban-archived-menu/kanban-archived-menu.component';
 import { KanbanAddCardComponent } from './kanban-add-card/kanban-add-card.component';
 import { KanbanMembershipListComponent } from './kanban-membership-list/kanban-membership-list.component';
-import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
+import { KanbanCardListComponent } from './kanban-card-list/kanban-card-list.component';
+import { PlaygroundEditorModule } from '../../shared/lexical/editor/editor.module';
+import { EditCardComponent } from './edit-card/edit-card.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +63,8 @@ import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
     KanbanArchivedMenuComponent,
     KanbanAddCardComponent,
     KanbanMembershipListComponent,
-    KanbanBoardComponent,
+    KanbanCardListComponent,
+    EditCardComponent,
   ],
   imports: [
     CommonModule,
@@ -100,6 +104,8 @@ import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
     TuiDropdownModule,
     TuiHoveredModule,
     TuiLabelModule,
+    TuiLetModule,
+    PlaygroundEditorModule,
   ],
 })
 export class ProjectKanbanModule {}

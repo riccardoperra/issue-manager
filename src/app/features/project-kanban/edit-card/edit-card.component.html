@@ -1,0 +1,25 @@
+<div class="tui-container tui-container_adaptive">
+  <div class="header">
+    <h1 class="tui-text header-text">
+      {{ 'Edit card ' }}
+      <button
+        tuiIconButton
+        icon="tuiIconEditLarge"
+        appearance="flat"
+        class="action"
+      ></button>
+    </h1>
+    <div class="header-actions">
+      <button tuiButton icon="tuiIconCloseCircleLarge" appearance="flat">
+        Archive
+      </button>
+      <button tuiButton icon="tuiIconCloseCircleLarge" appearance="flat">
+        Delete
+      </button>
+    </div>
+  </div>
+
+  <div class="editor-shell" [style.height.%]="100">
+    <app-lexical-editor></app-lexical-editor>
+  </div>
+</div>

@@ -1,5 +1,17 @@
-<tui-island *ngIf="card" [hoverable]="true" class="list-card" size="s">
+<tui-island
+  *ngIf="card"
+  class="list-card"
+  size="s"
+  [hoverable]="true"
+  (click)="onClick(header)"
+>
   <span class="tui-island__title list-title">
     {{ card.name }}
   </span>
 </tui-island>
+
+<ng-template #header>
+  <h2 class="tui-text">
+    {{ card!.name }}
+  </h2>
+</ng-template>

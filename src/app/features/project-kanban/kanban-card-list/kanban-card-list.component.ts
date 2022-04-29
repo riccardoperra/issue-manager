@@ -47,6 +47,9 @@ export class KanbanCardListComponent
     CdkDragDrop<readonly Card[], readonly Card[], Card>
   >();
 
+  @Output()
+  archiveCard = new EventEmitter<string>();
+
   readonly cardTrackBy: TrackByFunction<Card> = (index, card) => card.$id;
 
   constructor(readonly c: CdkDropListGroup<any>) {

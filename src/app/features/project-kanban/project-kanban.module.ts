@@ -10,6 +10,7 @@ import {
   TuiBadgedContentModule,
   TuiBadgeModule,
   TuiBreadcrumbsModule,
+  TuiDropdownContextModule,
   TuiDropdownHoverModule,
   TuiInputInlineModule,
   TuiInputModule,
@@ -111,6 +112,7 @@ import { KanbanCardEditorComponent } from './kanban-card-editor/kanban-card-edit
     TuiLoaderModule,
     FormsModule,
     TuiNotificationModule,
+    TuiDropdownContextModule,
   ],
 })
 export class ProjectKanbanModule {}

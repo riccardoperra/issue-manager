@@ -3,7 +3,8 @@
 .list-card {
   min-height: 40px;
   background-color: var(--tui-base-01);
-  @include transition('background-color');
+
+  @include transition(background-color);
 
   &:hover {
     background-color: var(--tui-base-02);
@@ -13,6 +14,11 @@
 .list-title {
   font: var(--tui-font-text-m);
   font-weight: bold;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .custom-placeholder {

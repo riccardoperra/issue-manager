@@ -73,6 +73,7 @@
                 [cards]="groupedCards[list.$id]"
                 (addCard)="ui.addCard($event)"
                 (moveCard)="ui.moveCard($event)"
+                (archiveCard)="ui.archiveCard({ $id: $event })"
                 (archiveCategory)="ui.archiveCategory({ $id: $event })"
               ></app-kanban-list>
 

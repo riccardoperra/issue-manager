@@ -15,7 +15,23 @@
     <app-kanban-card
       [@tuiFadeIn]="{ duration: 200 }"
       [card]="card"
+      [tuiDropdownContext]="contextMenu"
     ></app-kanban-card>
+
+    <ng-template #contextMenu let-close="close" let-activeZone="activeZone">
+      <tui-data-list
+        role="menu"
+        tuiDataListDropdownManager
+        [style.width.rem]="8"
+        [tuiActiveZoneParent]="activeZone"
+      >
+        <button tuiOption (click)="archiveCard.emit(card.$id); close()">
+          Archive
+          <tui-svg class="context-icon" src="tuiIconFolder"></tui-svg>
+        </button>
+      </tui-data-list>
+    </ng-template>
+
     <div
       class="custom-placeholder"
       [style.height.px]="ref.scrollHeight"

@@ -2,16 +2,18 @@
 
 .list-card {
   min-height: 40px;
+  background-color: var(--tui-base-01);
+  @include transition('background-color');
+
+  &:hover {
+    background-color: var(--tui-base-02);
+  }
 }
 
 .list-title {
   font: var(--tui-font-text-m);
   font-weight: bold;
 }
-
-//.cdk-drag-placeholder {
-//  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-//}
 
 .custom-placeholder {
   background: var(--tui-secondary);

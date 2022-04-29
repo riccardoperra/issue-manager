@@ -1,15 +1,7 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  Inject,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, ElementRef, Inject, Input, OnInit } from '@angular/core';
 import { Card } from '../../../data/cards.service';
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
-import { RxStrategyProvider } from '@rx-angular/cdk/render-strategies';
 import { KanbanCardEditorComponent } from '../kanban-card-editor/kanban-card-editor.component';
 
 @Component({
@@ -37,9 +29,7 @@ export class KanbanCardComponent implements OnInit {
     @Inject(ElementRef)
     private readonly elementRef: ElementRef<HTMLElement>,
     @Inject(TuiDialogService)
-    private readonly dialogService: TuiDialogService,
-    private readonly strategy: RxStrategyProvider,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly dialogService: TuiDialogService
   ) {}
 
   ngOnInit(): void {}

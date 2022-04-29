@@ -1,6 +1,23 @@
-import { Component, Inject, OnInit, TrackByFunction } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+  TrackByFunction,
+} from '@angular/core';
 import { ProjectsState } from '../../shared/state/projects.state';
-import { TuiDialogService, tuiFadeIn } from '@taiga-ui/core';
+import {
+  TuiButtonModule,
+  TuiDialogService,
+  tuiFadeIn,
+  TuiGroupModule,
+  TuiLabelModule,
+  TuiLinkModule,
+  TuiLoaderModule,
+  TuiModeModule,
+  TuiTextfieldControllerModule,
+  TuiTooltipModule,
+} from '@taiga-ui/core';
 import { AddProjectRequest, Project } from '../../data/projects.service';
 import { AuthState } from '../../shared/auth/auth.state';
 import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
@@ -8,6 +25,21 @@ import { RxState } from '@rx-angular/state';
 import { AddProjectDialogComponent } from './add-project-dialog/add-project-dialog.component';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { startWith } from 'rxjs';
+import { ForModule } from '@rx-angular/template/experimental/for';
+import {
+  TuiFieldErrorModule,
+  TuiInputTagModule,
+  TuiIslandModule,
+  TuiRadioBlockModule,
+  TuiTagModule,
+  TuiTextAreaModule,
+} from '@taiga-ui/kit';
+import { LetModule, PushModule } from '@rx-angular/template';
+import { TuiAutoFocusModule } from '@taiga-ui/cdk';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { HeaderComponent } from './header/header.component';
+import { ProjectCardComponent } from './project-card/project-card.component';
 
 interface ProjectsBoardActions {
   openCreateProjectDialog: void;
@@ -18,6 +50,17 @@ interface ProjectsBoardActions {
   templateUrl: './projects-board.component.html',
   styleUrls: ['./projects-board.component.scss'],
   animations: [tuiFadeIn],
+  standalone: true,
+  imports: [
+    RouterModule,
+    ForModule,
+    LetModule,
+    PushModule,
+    TuiLoaderModule,
+    HeaderComponent,
+    ProjectCardComponent,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [RxActionFactory],
 })
 export class ProjectsBoardComponent extends RxState<never> implements OnInit {

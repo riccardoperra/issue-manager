@@ -5,9 +5,9 @@ import { AuthGuard } from './shared/auth/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./features/projects-board/projects-board.module').then(
-        (e) => e.ProjectsBoardModule
+    loadComponent: () =>
+      import('./features/projects-board/projects-board.component').then(
+        (e) => e.ProjectsBoardComponent
       ),
     canLoad: [AuthGuard],
   },

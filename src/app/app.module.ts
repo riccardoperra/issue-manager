@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_PROVIDERS } from './app.providers';
 import { UnpatchEventsModule } from '@rx-angular/template';
-import { ProjectsBoardModule } from './features/projects-board/projects-board.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppShellModule } from './app-shell/app-shell.module';

@@ -11,7 +11,7 @@ import { Category } from 'src/app/data/categories.service';
 import { Card } from '../../../data/cards.service';
 import { CdkDragDrop, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { RxState } from '@rx-angular/state';
-import { distinctUntilChanged, of } from 'rxjs';
+import { distinctUntilChanged, map, of } from 'rxjs';
 import { tuiFadeIn } from '@taiga-ui/core';
 
 @Component({
@@ -35,7 +35,11 @@ export class KanbanCardListComponent
     this.connect('cards', of(cards));
   }
 
-  readonly cards$ = this.select('cards').pipe(distinctUntilChanged());
+  readonly cards$ = this.select('cards').pipe(
+    distinctUntilChanged(),
+    map((cards) => cards.filter((card) => !card.archived))
+  );
+
   readonly list$ = this.select('category');
 
   @Output()

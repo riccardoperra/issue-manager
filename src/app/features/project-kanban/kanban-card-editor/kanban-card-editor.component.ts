@@ -20,7 +20,7 @@ export interface KanbanCardEditorContext {
 })
 export class KanbanCardEditorComponent implements OnInit {
   readonly card$ = this.adapter.select('card');
-  readonly title = new FormControl('');
+  readonly title = new FormControl<any>('');
 
   editingTitle: boolean = false;
 

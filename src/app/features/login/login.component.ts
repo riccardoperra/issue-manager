@@ -19,7 +19,7 @@ interface LoginCommands {
 export class LoginComponent {
   readonly actions = this.rxActions.create();
 
-  readonly form = this.fb.group({
+  readonly form = this.fb.group<any>({
     email: this.fb.control('', [Validators.required, Validators.email]),
     password: this.fb.control('', Validators.required),
   });

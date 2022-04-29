@@ -31,7 +31,7 @@ export class KanbanMembershipListComponent {
   @Output()
   removeMember = new EventEmitter<string>();
 
-  addForm = new FormGroup({
+  addForm = new FormGroup<any>({
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 

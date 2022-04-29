@@ -11,7 +11,7 @@ import { AddProjectRequest } from '../../../data/projects.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddProjectDialogComponent {
-  readonly form = this.fb.group({
+  readonly form = this.fb.group<any>({
     name: ['', Validators.required],
     description: [''],
     imageUrl: [null],
@@ -33,6 +33,6 @@ export class AddProjectDialogComponent {
   submit(): void {
     this.form.markAllAsTouched();
     if (!this.form.valid) return;
-    this.context.completeWith(this.form.value);
+    this.context.completeWith(this.form.value as any);
   }
 }

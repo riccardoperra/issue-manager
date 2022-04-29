@@ -59,7 +59,7 @@ import { RouterModule } from '@angular/router';
     TuiLabelModule,
     TuiInputTagModule,
     TuiModeModule,
-    RouterModule,
+    RouterModule.forChild([{ path: '', component: ProjectsBoardComponent }]),
     TuiFieldErrorModule,
     TuiLoaderModule,
   ],

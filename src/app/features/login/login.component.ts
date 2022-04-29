@@ -14,8 +14,7 @@ import {
   TuiInputModule,
   TuiInputPasswordModule,
 } from '@taiga-ui/kit';
-import { provideRoutes, RouterModule } from '@angular/router';
-import { ROUTES } from './login.routes';
+import { RouterModule } from '@angular/router';
 
 interface LoginCommands {
   loginAsGuest: void;

@@ -1,10 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProjectsBoardComponent } from './features/projects-board/projects-board.component';
 import { AuthGuard } from './shared/auth/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: ProjectsBoardComponent, canActivate: [AuthGuard] },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./features/projects-board/projects-board.module').then(
+        (e) => e.ProjectsBoardModule
+      ),
+    canLoad: [AuthGuard],
+  },
   {
     path: 'project/:projectId',
     loadChildren: () =>

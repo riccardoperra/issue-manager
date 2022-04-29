@@ -29,6 +29,7 @@ import { HeaderComponent } from './header/header.component';
 import { AddProjectDialogComponent } from './add-project-dialog/add-project-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { TuiTableModule } from '@taiga-ui/addon-table';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     TuiFieldErrorModule,
     TuiLoaderModule,
+    TuiTableModule,
   ],
 })
 export class ProjectsBoardModule {}

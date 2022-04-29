@@ -1,9 +1,56 @@
-@import '~@taiga-ui/core/styles/mixins/mixins';
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
+:host {
+  background-color: var(--tui-base-02);
+  display: block;
+  margin: 0;
+  height: 100vh;
+}
 
 .board-row {
   row-gap: 2rem;
 }
 
+.board-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .wrapper {
   display: flex;
+}
+
+.table {
+  width: 100%;
+}
+
+table {
+  border-radius: var(--tui-radius-l);
+  border: 1px solid var(--tui-base-04);
+  border-bottom: 0;
+  overflow: hidden;
+  background-color: var(--tui-base-01);
+}
+
+td,
+th {
+  white-space: nowrap;
+  border-color: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--tui-base-04);
+  padding: var(--tui-padding-l);
+  cursor: pointer;
+
+  &:last-child {
+    border-right-color: transparent;
+  }
+}
+
+tbody {
+  border-color: transparent;
+}
+
+tr:hover {
+  background: var(--tui-base-02);
 }

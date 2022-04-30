@@ -657,12 +657,6 @@ select.font-family {
   font-weight: bold;
 }
 
-.actions {
-  position: relative;
-  text-align: right;
-  padding: 10px;
-}
-
 .actions i {
   background-size: contain;
   display: inline-block;
@@ -687,58 +681,6 @@ select.font-family {
   padding: 0;
   margin: 0;
   list-style-type: none;
-}
-
-.actions i.indent {
-  background-image: url(/assets/images/icons/indent.svg);
-}
-
-.actions i.outdent {
-  background-image: url(/assets/images/icons/outdent.svg);
-}
-
-.actions i.lock {
-  background-image: url(/assets/images/icons/lock-fill.svg);
-}
-
-.actions i.image {
-  background-image: url(/assets/images/icons/file-image.svg);
-}
-
-.actions i.table {
-  background-image: url(/assets/images/icons/table.svg);
-}
-
-.actions i.clear {
-  background-image: url(/assets/images/icons/trash.svg);
-}
-
-.actions i.unlock {
-  background-image: url(/assets/images/icons/lock.svg);
-}
-
-.actions i.left-align {
-  background-image: url(/assets/images/icons/text-left.svg);
-}
-
-.actions i.center-align {
-  background-image: url(/assets/images/icons/text-center.svg);
-}
-
-.actions i.right-align {
-  background-image: url(/assets/images/icons/text-right.svg);
-}
-
-.actions i.justify-align {
-  background-image: url(/assets/images/icons/justify.svg);
-}
-
-.actions i.disconnect {
-  background-image: url(/assets/images/icons/plug.svg);
-}
-
-.actions i.connect {
-  background-image: url(/assets/images/icons/plug-fill.svg);
 }
 
 .table-cell-action-button-container {

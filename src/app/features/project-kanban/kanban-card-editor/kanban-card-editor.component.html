@@ -58,7 +58,46 @@
     </div>
   </tui-notification>
 
-  <div class="editor-shell" [style.height.%]="100">
+  <div class="tui-space_top-12">
+    <div class="editor-metadata">
+      <div class="metadata-title">
+        <tui-svg src="tuiIconBookmark" size="s"></tui-svg>
+        Category
+      </div>
+      <div class="metadata-input">
+        <tui-tag value="Categoria" [autoColor]="true"></tui-tag>
+      </div>
+    </div>
+  </div>
+
+  <div class="tui-space_top-6">
+    <div class="editor-metadata">
+      <div class="metadata-title">
+        <tui-svg src="tuiIconTime" size="s"></tui-svg>
+        Expiration date
+      </div>
+      <div class="metadata-input">
+        12 feb
+        <!--      <tui-input-date-time tuiTextfieldSize="s"></tui-input-date-time>-->
+      </div>
+    </div>
+  </div>
+
+  <div class="tui-space_top-6">
+    <div class="editor-metadata">
+      <div class="metadata-title">
+        <tui-svg src="tuiIconFlag" size="s"></tui-svg>
+        Priority
+      </div>
+      <div class="metadata-input">
+        <tui-tag value="HIGH" status="error"></tui-tag>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="tui-space_top-12">Description</h3>
+
+  <div class="editor-shell tui-space_top-12" [style.height.%]="100">
     <app-lexical-editor
       [content]="card.content"
       (editorChange)="editorChange($event)"

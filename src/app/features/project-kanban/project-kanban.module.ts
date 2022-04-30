@@ -12,9 +12,11 @@ import {
   TuiBreadcrumbsModule,
   TuiDropdownContextModule,
   TuiDropdownHoverModule,
+  TuiInputDateTimeModule,
   TuiInputInlineModule,
   TuiInputModule,
   TuiIslandModule,
+  TuiMultiSelectModule,
   TuiTabsModule,
   TuiTagModule,
 } from '@taiga-ui/kit';
@@ -113,6 +115,8 @@ import { KanbanCardEditorComponent } from './kanban-card-editor/kanban-card-edit
     FormsModule,
     TuiNotificationModule,
     TuiDropdownContextModule,
+    TuiMultiSelectModule,
+    TuiInputDateTimeModule,
   ],
 })
 export class ProjectKanbanModule {}

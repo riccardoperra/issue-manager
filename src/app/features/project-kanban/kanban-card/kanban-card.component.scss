@@ -3,6 +3,7 @@
 .list-card {
   min-height: 40px;
   background-color: var(--tui-base-01);
+  box-shadow: rgb(0 0 0 / 10%) 0px 1px 2px 0px;
 
   @include transition(background-color);
 
@@ -12,8 +13,6 @@
 }
 
 .list-title {
-  font: var(--tui-font-text-m);
-  font-weight: bold;
   white-space: normal;
   display: -webkit-box;
   -webkit-line-clamp: 1;

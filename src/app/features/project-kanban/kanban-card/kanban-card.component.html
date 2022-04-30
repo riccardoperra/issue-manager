@@ -5,8 +5,26 @@
   [hoverable]="false"
   (click)="onClick(card)"
 >
-  <span class="tui-island__title list-title">
+  <p class="tui-island__category" *ngIf="card.tags.length > 0">
+    <tui-tag
+      *ngFor="let tag of card.tags"
+      [autoColor]="true"
+      size="s"
+      [value]="tag"
+    >
+    </tui-tag>
+  </p>
+
+  <h3 class="tui-island__title list-title">
     {{ card.name }}
+  </h3>
+
+  <span class="tui-island__paragraph">
+    <ng-container *ngIf="card.expiryDate; else fallback">
+      <tui-svg src="tuiIconTime"></tui-svg>
+      {{ card.expiryDate | date: 'short' }}
+    </ng-container>
+    <ng-template #fallback> No expiration date</ng-template>
   </span>
 </tui-island>
 

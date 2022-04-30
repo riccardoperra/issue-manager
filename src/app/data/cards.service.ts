@@ -12,6 +12,7 @@ export interface Card extends Models.Document {
   readonly archived: boolean;
   readonly categoryId: string;
   readonly rank: string;
+  readonly expiryDate?: string;
 }
 
 export type AddCard = Omit<

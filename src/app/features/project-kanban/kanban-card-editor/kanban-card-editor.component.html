@@ -103,6 +103,15 @@
       (editorChange)="editorChange($event)"
     ></app-lexical-editor>
   </div>
+
+  <h3 class="tui-space_top-12">Attachments</h3>
+
+  <div class="tui-space_top-6" *rxLet="project$; let project">
+    <app-kanban-attachments-table
+      [project]="project"
+      [attachments]="attachments$ | push"
+    ></app-kanban-attachments-table>
+  </div>
 </div>
 
 <ng-template #suspense>

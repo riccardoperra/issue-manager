@@ -1,0 +1,56 @@
+<tui-input-file [multiple]="true" [formControl]="files"></tui-input-file>
+
+<table
+  tuiTable
+  class="table"
+  [columns]="['name', 'createdAt', 'mimeType', 'size', 'actions']"
+>
+  <tbody tuiTbody [data]="attachments">
+    <tr
+      *tuiRow="let item of attachments"
+      tuiTr
+      [routerLink]="['project', item.$id]"
+    >
+      <td *tuiCell="'name'">
+        {{ item.name }}
+      </td>
+
+      <td *tuiCell="'createdAt'">
+        {{ item.dateCreated | date: 'short' }}
+      </td>
+
+      <td *tuiCell="'mimeType'">
+        {{ item.mimeType }}
+      </td>
+
+      <td *tuiCell="'size'">
+        {{ item.sizeOriginal }}
+      </td>
+
+      <td *tuiCell="'actions'">
+        <button
+          tuiIconButton
+          size="s"
+          icon="tuiIconSearch"
+          appearance="flat"
+          class="tui-space_right-2"
+        ></button>
+
+        <button
+          size="s"
+          tuiIconButton
+          icon="tuiIconDownload"
+          appearance="flat"
+          class="tui-space_right-2"
+        ></button>
+
+        <button
+          tuiIconButton
+          size="s"
+          icon="tuiIconTrash"
+          appearance="flat"
+        ></button>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -6,7 +6,8 @@ import { RxActionFactory } from '../../../shared/rxa-custom/actions/actions.fact
 import { TuiDialogContext } from '@taiga-ui/core';
 import { FormControl } from '@angular/forms';
 import { EditorState } from 'lexical';
-import { now } from '@rx-angular/cdk/internals/scheduler/lib/scheduler';
+import { Observable } from 'rxjs';
+import { Models } from 'appwrite';
 
 export interface KanbanCardEditorContext {
   cardId: string;
@@ -20,6 +21,13 @@ export interface KanbanCardEditorContext {
 })
 export class KanbanCardEditorComponent implements OnInit {
   readonly card$ = this.adapter.select('card');
+  readonly project$ = this.adapter.select('project');
+
+  readonly attachments$: Observable<Models.File[]> = this.adapter.select(
+    'attachmentList',
+    'files'
+  );
+
   readonly title = new FormControl('');
 
   editingTitle: boolean = false;

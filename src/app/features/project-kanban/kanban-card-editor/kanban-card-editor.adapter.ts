@@ -2,15 +2,30 @@ import { RxState } from '@rx-angular/state';
 import { Card, CardsService } from '../../../data/cards.service';
 import { Inject, Injectable } from '@angular/core';
 import { RxActionFactory } from '../../../shared/rxa-custom/actions/actions.factory';
-import { concat, debounceTime, of, switchMap, withLatestFrom } from 'rxjs';
+import {
+  concat,
+  debounceTime,
+  filter,
+  of,
+  switchMap,
+  tap,
+  withLatestFrom,
+} from 'rxjs';
 import { patch } from '@rx-angular/cdk/transformations';
+import { Models } from 'appwrite';
+import { BucketService } from '../../../data/bucket.service';
+import { Project, ProjectsService } from '../../../data/projects.service';
 
 interface KanbanCardEditorState {
+  project: Project;
   card: Card;
+  attachmentList: Models.FileList;
 }
 
 interface Actions {
   fetch: { $id: string };
+  fetchAttachments: { $ids: string[] };
+  fetchProject: { $id: string };
   editTitle: string;
   updateContent: string;
   updateArchived: boolean;
@@ -35,6 +50,10 @@ export class KanbanCardEditorAdapter extends RxState<KanbanCardEditorState> {
   constructor(
     @Inject(CardsService)
     private readonly cardsService: CardsService,
+    @Inject(ProjectsService)
+    private readonly projectsService: ProjectsService,
+    @Inject(BucketService)
+    private readonly bucketService: BucketService,
     @Inject(RxActionFactory)
     private readonly rxActionFactory: RxActionFactory<Actions>
   ) {
@@ -43,7 +62,29 @@ export class KanbanCardEditorAdapter extends RxState<KanbanCardEditorState> {
     this.connect(
       'card',
       this.actions.fetch$.pipe(
-        switchMap(({ $id }) => this.cardsService.getById($id))
+        switchMap(({ $id }) =>
+          this.cardsService.getById($id).pipe(
+            tap((card) =>
+              this.actions.fetchAttachments({ $ids: card.attachments || [] })
+            ),
+            tap((card) => this.actions.fetchProject({ $id: card.projectId }))
+          )
+        )
+      )
+    );
+
+    this.connect(
+      'attachmentList',
+      this.actions.fetchAttachments$.pipe(
+        filter(({ $ids }) => $ids.length > 0),
+        switchMap(({ $ids }) => this.bucketService.getAttachments($ids))
+      )
+    );
+
+    this.connect(
+      'project',
+      this.actions.fetchProject$.pipe(
+        switchMap(({ $id }) => this.projectsService.getById($id))
       )
     );
 

@@ -23,10 +23,7 @@ export class KanbanCardEditorComponent implements OnInit {
   readonly card$ = this.adapter.select('card');
   readonly project$ = this.adapter.select('project');
 
-  readonly attachments$: Observable<Models.File[]> = this.adapter.select(
-    'attachmentList',
-    'files'
-  );
+  readonly attachments$ = this.adapter.select('attachmentList');
 
   readonly title = new FormControl('');
 
@@ -54,7 +51,7 @@ export class KanbanCardEditorComponent implements OnInit {
     @Inject(CardsService)
     private readonly cardsService: CardsService,
     @Inject(KanbanCardEditorAdapter)
-    private readonly adapter: KanbanCardEditorAdapter
+    readonly adapter: KanbanCardEditorAdapter
   ) {
     this.adapter.actions.fetch({ $id: this.context.data.cardId });
   }

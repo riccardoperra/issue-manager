@@ -6,11 +6,7 @@
   [columns]="['name', 'createdAt', 'mimeType', 'size', 'actions']"
 >
   <tbody tuiTbody [data]="attachments">
-    <tr
-      *tuiRow="let item of attachments"
-      tuiTr
-      [routerLink]="['project', item.$id]"
-    >
+    <tr *tuiRow="let item of attachments; let index = index" tuiTr>
       <td *tuiCell="'name'">
         {{ item.name }}
       </td>
@@ -33,22 +29,29 @@
           size="s"
           icon="tuiIconSearch"
           appearance="flat"
+          type="button"
           class="tui-space_right-2"
+          (click)="openPreview(item, index)"
         ></button>
 
-        <button
+        <a
           size="s"
           tuiIconButton
           icon="tuiIconDownload"
           appearance="flat"
+          type="button"
           class="tui-space_right-2"
-        ></button>
+          download
+          [href]="item | tuiMapper: getDownloadUrl"
+        ></a>
 
         <button
           tuiIconButton
           size="s"
           icon="tuiIconTrash"
+          type="button"
           appearance="flat"
+          (click)="deleteFile(item)"
         ></button>
       </td>
     </tr>

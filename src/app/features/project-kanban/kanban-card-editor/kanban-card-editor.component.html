@@ -109,7 +109,10 @@
   <div class="tui-space_top-6" *rxLet="project$; let project">
     <app-kanban-attachments-table
       [project]="project"
+      [card]="card"
       [attachments]="attachments$ | push"
+      (addAttachment)="adapter.actions.addAttachment($event)"
+      (deleteAttachment)="adapter.actions.deleteAttachment($event)"
     ></app-kanban-attachments-table>
   </div>
 </div>

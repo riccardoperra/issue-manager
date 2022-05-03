@@ -62,6 +62,8 @@ import { PlaygroundEditorModule } from '../../shared/lexical/editor/editor.modul
 import { KanbanCardEditorComponent } from './kanban-card-editor/kanban-card-editor.component';
 import { KanbanAttachmentsTableComponent } from './kanban-attachments-table/kanban-attachments-table.component';
 import { TuiTableModule } from '@taiga-ui/addon-table';
+import { TuiPreviewModule } from '@taiga-ui/addon-preview';
+import { KanbanAttachmentPreviewComponent } from './kanban-attachments-table/kanban-attachment-preview/kanban-attachment-preview.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,7 @@ import { TuiTableModule } from '@taiga-ui/addon-table';
     KanbanCardListComponent,
     KanbanCardEditorComponent,
     KanbanAttachmentsTableComponent,
+    KanbanAttachmentPreviewComponent,
   ],
   imports: [
     CommonModule,
@@ -125,6 +128,7 @@ import { TuiTableModule } from '@taiga-ui/addon-table';
     TuiInputFileModule,
     TuiFilesModule,
     TuiTableModule,
+    TuiPreviewModule,
   ],
 })
 export class ProjectKanbanModule {}

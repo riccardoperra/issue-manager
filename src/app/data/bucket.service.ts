@@ -1,15 +1,25 @@
 import { Inject, Injectable } from '@angular/core';
 import { APPWRITE } from '../providers/appwrite.provider';
 import { Appwrite, Models, Query } from 'appwrite';
-import { catchError, forkJoin, from, map, Observable, of } from 'rxjs';
-import { Card } from './cards.service';
+import {
+  catchError,
+  forkJoin,
+  from,
+  map,
+  Observable,
+  of,
+  switchMap,
+} from 'rxjs';
+import { Card, CardsService } from './cards.service';
 import { Project } from './projects.service';
 
 @Injectable({ providedIn: 'root' })
 export class BucketService {
   constructor(
     @Inject(APPWRITE)
-    private readonly appwrite: Appwrite
+    private readonly appwrite: Appwrite,
+    @Inject(CardsService)
+    private readonly cardsService: CardsService
   ) {}
 
   addAttachment(
@@ -27,6 +37,22 @@ export class BucketService {
         (update) => onProgress?.(update)
       )
     );
+  }
+
+  getFileView($id: string): URL {
+    return this.appwrite.storage.getFileView('public', $id);
+  }
+
+  getPreview($id: string): URL {
+    return this.appwrite.storage.getFilePreview('public', $id);
+  }
+
+  getDownload($id: string): URL {
+    return this.appwrite.storage.getFileDownload('public', $id);
+  }
+
+  deleteFile($id: string): Observable<{}> {
+    return from(this.appwrite.storage.deleteFile('public', $id));
   }
 
   getAttachments($ids: string[]): Observable<Models.FileList> {

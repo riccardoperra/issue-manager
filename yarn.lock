@@ -1715,6 +1715,13 @@
     "@swc/core-win32-ia32-msvc" "1.2.167"
     "@swc/core-win32-x64-msvc" "1.2.167"
 
+"@taiga-ui/addon-preview@^2.43.0":
+  version "2.43.0"
+  resolved "https://registry.yarnpkg.com/@taiga-ui/addon-preview/-/addon-preview-2.43.0.tgz#a76a610d432b2ec15b5be66640ff09fbb540db8b"
+  integrity sha512-TUZEVOkYEZ40H/aqeoz7gNReIbJwPDYJPzu6TqSApivAjz6P2ghmV4FVfqK41yOv3Etlm1auNL91qaHnjoYpJw==
+  dependencies:
+    tslib "^1.10.0"
+
 "@taiga-ui/addon-table@^2.41.1":
   version "2.41.1"
   resolved "https://registry.yarnpkg.com/@taiga-ui/addon-table/-/addon-table-2.41.1.tgz#9de8ff92b30193585bc613a6fefd91f50f8d5290"

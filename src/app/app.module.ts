@@ -11,6 +11,7 @@ import { ProjectsBoardModule } from './features/projects-board/projects-board.mo
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppShellModule } from './app-shell/app-shell.module';
+import { TuiPreviewModule } from '@taiga-ui/addon-preview';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { AppShellModule } from './app-shell/app-shell.module';
     AppShellModule,
     TuiDialogModule,
     TuiAlertModule,
+    TuiPreviewModule,
     HttpClientModule,
     ProjectsBoardModule,
     ReactiveFormsModule,

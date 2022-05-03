@@ -1,29 +1,46 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Models } from 'appwrite';
 import { FormBuilder } from '@angular/forms';
 import {
-  catchError,
-  combineLatestWith,
+  BehaviorSubject,
+  combineLatest,
   filter,
   map,
-  mapTo,
   mergeScan,
   Observable,
-  of,
   pairwise,
   share,
   startWith,
+  switchMap,
   takeUntil,
+  tap,
 } from 'rxjs';
 import { BucketService } from '../../../data/bucket.service';
 import { Project } from '../../../data/projects.service';
-import { combineLatest } from 'rxjs';
-import { isPresent } from '@taiga-ui/cdk';
+import { isPresent, tuiPure } from '@taiga-ui/cdk';
+import {
+  CardAttachment,
+  CardAttachmentsService,
+} from '../../../data/cards-attachments.service';
+import { Card } from '../../../data/cards.service';
+import { PreviewDialogService } from '@taiga-ui/addon-preview';
+import { DomSanitizer } from '@angular/platform-browser';
+import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { KanbanAttachmentPreviewComponent } from './kanban-attachment-preview/kanban-attachment-preview.component';
 
 @Component({
   selector: 'app-kanban-attachments-table',
   templateUrl: './kanban-attachments-table.component.html',
   styleUrls: ['./kanban-attachments-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanAttachmentsTableComponent implements OnInit {
   readonly files = this.fb.control([]);
@@ -32,7 +49,28 @@ export class KanbanAttachmentsTableComponent implements OnInit {
   project!: Project;
 
   @Input()
-  attachments: readonly Models.File[] = [];
+  card!: Card;
+
+  @Input()
+  attachments: readonly (Models.File & {
+    attachment: CardAttachment;
+  })[] = [];
+
+  @Output()
+  deleteAttachment = new EventEmitter<
+    Models.File & {
+      attachment: CardAttachment;
+    }
+  >();
+
+  @Output()
+  addAttachment = new EventEmitter<
+    Models.File & {
+      attachment: CardAttachment;
+    }
+  >();
+
+  readonly previewItem$ = new BehaviorSubject<Models.File | null>(null);
 
   private readonly files$ = this.files.valueChanges.pipe(
     startWith<File[]>([]),
@@ -43,6 +81,10 @@ export class KanbanAttachmentsTableComponent implements OnInit {
       return combineLatest(
         curr.map((file) =>
           this.addFile(file).pipe(
+            tap((file) => {
+              if (!file || file instanceof Error) return;
+              this.addAttachment.emit(file);
+            }),
             startWith(file),
             takeUntil(
               // Cancel upload if file is removed from control
@@ -57,20 +99,60 @@ export class KanbanAttachmentsTableComponent implements OnInit {
     share()
   );
 
-  private addFile(file: File): Observable<Models.File | Error | null> {
-    return this.bucketService
-      .addAttachment(this.project, file)
-      .pipe(catchError((e) => of(e)));
-    // .pipe(map(() => file));
-  }
-
   constructor(
     @Inject(BucketService)
     private readonly bucketService: BucketService,
-    private readonly fb: FormBuilder
+    @Inject(CardAttachmentsService)
+    private readonly cardAttachmentsService: CardAttachmentsService,
+    @Inject(PreviewDialogService)
+    private readonly previewDialogService: PreviewDialogService,
+    @Inject(FormBuilder)
+    private readonly fb: FormBuilder,
+    @Inject(DomSanitizer)
+    private readonly domSanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
     this.files$.subscribe(console.log);
+  }
+
+  @tuiPure
+  getDownloadUrl(item: Models.File): string {
+    return this.bucketService.getDownload(item.$id).href;
+  }
+
+  openPreview(item: Models.File, index: number): void {
+    const component = new PolymorpheusComponent(
+      KanbanAttachmentPreviewComponent
+    );
+    const files = this.attachments;
+
+    this.previewDialogService
+      .open(component, { data: { files, item, index } })
+      .subscribe();
+  }
+
+  deleteFile(item: Models.File & { attachment: CardAttachment }): void {
+    this.bucketService
+      .deleteFile(item.$id)
+      .pipe(
+        switchMap(() => this.cardAttachmentsService.deleteAttachment(item.$id))
+      )
+      .subscribe(() => this.deleteAttachment.emit(item));
+  }
+
+  private addFile(
+    file: File
+  ): Observable<(Models.File & { attachment: CardAttachment }) | Error | null> {
+    return this.bucketService.addAttachment(this.project, file).pipe(
+      switchMap((ref) =>
+        this.cardAttachmentsService.addAttachment(this.card, ref).pipe(
+          map((attachment) => ({
+            ...ref,
+            attachment,
+          }))
+        )
+      )
+    );
   }
 }

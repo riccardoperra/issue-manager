@@ -5,7 +5,7 @@ import { RxActionFactory } from '../../../shared/rxa-custom/actions/actions.fact
 import {
   concat,
   debounceTime,
-  filter,
+  map,
   of,
   switchMap,
   tap,
@@ -15,11 +15,17 @@ import { patch } from '@rx-angular/cdk/transformations';
 import { Models } from 'appwrite';
 import { BucketService } from '../../../data/bucket.service';
 import { Project, ProjectsService } from '../../../data/projects.service';
+import {
+  CardAttachment,
+  CardAttachmentsService,
+} from '../../../data/cards-attachments.service';
 
 interface KanbanCardEditorState {
   project: Project;
   card: Card;
-  attachmentList: Models.FileList;
+  attachmentList: readonly (Models.File & {
+    attachment: CardAttachment;
+  })[];
 }
 
 interface Actions {
@@ -29,6 +35,8 @@ interface Actions {
   editTitle: string;
   updateContent: string;
   updateArchived: boolean;
+  addAttachment: Models.File & { attachment: CardAttachment };
+  deleteAttachment: Models.File & { attachment: CardAttachment };
 }
 
 @Injectable()
@@ -47,9 +55,15 @@ export class KanbanCardEditorAdapter extends RxState<KanbanCardEditorState> {
     withLatestFrom(this.select('card'))
   );
 
+  private readonly fetchAttachmentsEvent$ = this.actions.fetchAttachments$.pipe(
+    withLatestFrom(this.select('card'))
+  );
+
   constructor(
     @Inject(CardsService)
     private readonly cardsService: CardsService,
+    @Inject(CardAttachmentsService)
+    private readonly cardAttachmentsService: CardAttachmentsService,
     @Inject(ProjectsService)
     private readonly projectsService: ProjectsService,
     @Inject(BucketService)
@@ -64,20 +78,14 @@ export class KanbanCardEditorAdapter extends RxState<KanbanCardEditorState> {
       this.actions.fetch$.pipe(
         switchMap(({ $id }) =>
           this.cardsService.getById($id).pipe(
-            tap((card) =>
-              this.actions.fetchAttachments({ $ids: card.attachments || [] })
-            ),
-            tap((card) => this.actions.fetchProject({ $id: card.projectId }))
+            tap((card) => {
+              setTimeout(() => {
+                this.actions.fetchProject({ $id: card.projectId });
+                this.actions.fetchAttachments({ $ids: card.attachments || [] });
+              });
+            })
           )
         )
-      )
-    );
-
-    this.connect(
-      'attachmentList',
-      this.actions.fetchAttachments$.pipe(
-        filter(({ $ids }) => $ids.length > 0),
-        switchMap(({ $ids }) => this.bucketService.getAttachments($ids))
       )
     );
 
@@ -85,6 +93,51 @@ export class KanbanCardEditorAdapter extends RxState<KanbanCardEditorState> {
       'project',
       this.actions.fetchProject$.pipe(
         switchMap(({ $id }) => this.projectsService.getById($id))
+      )
+    );
+
+    this.connect(
+      'attachmentList',
+      this.fetchAttachmentsEvent$.pipe(
+        switchMap(([, { $id }]) => {
+          return this.cardAttachmentsService.getAttachments($id).pipe(
+            map((attachments) => attachments.documents),
+            switchMap((attachments) =>
+              this.bucketService
+                .getAttachments(attachments.map((doc) => doc.ref))
+                .pipe(
+                  map((fileList) =>
+                    fileList.files.map((file) => ({
+                      ...file,
+                      attachment: attachments.find(
+                        (attachment) => attachment.$id === file.$id
+                      )!,
+                    }))
+                  )
+                )
+            )
+          );
+        })
+      )
+    );
+
+    this.connect(
+      'attachmentList',
+      this.actions.addAttachment$.pipe(
+        withLatestFrom(this.select('attachmentList')),
+        map(([newAttachment, attachments]) => {
+          return [newAttachment, ...attachments];
+        })
+      )
+    );
+
+    this.connect(
+      'attachmentList',
+      this.actions.deleteAttachment$.pipe(
+        withLatestFrom(this.select('attachmentList')),
+        map(([{ $id }, attachments]) => {
+          return attachments.filter((file) => file.$id !== $id);
+        })
       )
     );
 

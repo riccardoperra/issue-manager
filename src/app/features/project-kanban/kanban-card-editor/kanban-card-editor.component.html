@@ -10,7 +10,7 @@
         icon="tuiIconEditLarge"
         appearance="flat"
         class="action"
-        (click)="editingTitle = !editingTitle"
+        (click)="editingTitle = !editingTitle; title.setValue(card.name)"
       ></button>
     </h1>
     <div class="header-actions" *ngIf="!card.archived">

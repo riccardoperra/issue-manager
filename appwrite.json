@@ -119,15 +119,6 @@
                     "default": null
                 },
                 {
-                    "key": "content",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
                     "key": "tags",
                     "type": "string",
                     "status": "available",
@@ -178,6 +169,15 @@
                     "required": false,
                     "array": false,
                     "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "content",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 99999999,
                     "default": null
                 }
             ],

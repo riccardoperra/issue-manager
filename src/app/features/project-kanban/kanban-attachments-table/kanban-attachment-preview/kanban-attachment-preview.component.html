@@ -1,0 +1,30 @@
+<tui-preview [rotatable]="true" [zoomable]="true">
+  <tui-preview-title>{{ title$ | async }}</tui-preview-title>
+  <tui-preview-pagination
+    [length]="files.length"
+    [index]="index$.value"
+    (indexChange)="index$.next($event)"
+  ></tui-preview-pagination>
+
+  <a
+    tuiPreviewAction
+    tuiLink
+    [href]="downloadLink$ | push"
+    download
+    class="tui-space_all-0"
+  >
+    <button tuiIconButton icon="tuiIconDownload" title="Download"></button>
+  </a>
+
+  <button
+    tuiIconButton
+    tuiPreviewAction
+    icon="tuiIconCloseLarge"
+    title="Close"
+    (click)="close()"
+  ></button>
+
+  <img *ngIf="imageSrc$ | async as src" [src]="src" />
+
+  <tui-loader *ngIf="loading$ | async" size="xl" class="t-loader"></tui-loader>
+</tui-preview>

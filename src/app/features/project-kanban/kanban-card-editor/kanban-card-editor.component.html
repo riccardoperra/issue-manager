@@ -10,7 +10,7 @@
         icon="tuiIconEditLarge"
         appearance="flat"
         class="action"
-        (click)="editingTitle = !editingTitle"
+        (click)="editingTitle = !editingTitle; title.setValue(card.name)"
       ></button>
     </h1>
     <div class="header-actions" *ngIf="!card.archived">
@@ -41,20 +41,16 @@
 
   <tui-notification
     status="warning"
-    class="tui-space_bottom-4"
+    class="tui-space_vertical-4 archived-notification"
     *ngIf="card.archived"
   >
-    <div style="display: flex; justify-content: space-between">
+    <div class="notification-content">
       This card is archived.
-      <button
-        tuiButton
-        size="xs"
-        appearance="accent"
-        class="tui-space_left-auto"
-        (click)="undoArchive()"
-      >
-        Undo
-      </button>
+      <div class="notification-actions">
+        <button tuiButton size="xs" appearance="accent" (click)="undoArchive()">
+          Undo
+        </button>
+      </div>
     </div>
   </tui-notification>
 
@@ -102,6 +98,18 @@
       [content]="card.content"
       (editorChange)="editorChange($event)"
     ></app-lexical-editor>
+  </div>
+
+  <h3 class="tui-space_top-12">Attachments</h3>
+
+  <div class="tui-space_top-6" *rxLet="project$; let project">
+    <app-kanban-attachments-table
+      [project]="project"
+      [card]="card"
+      [attachments]="attachments$ | push"
+      (addAttachment)="adapter.actions.addAttachment($event)"
+      (deleteAttachment)="adapter.actions.deleteAttachment($event)"
+    ></app-kanban-attachments-table>
   </div>
 </div>
 

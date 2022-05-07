@@ -2,9 +2,10 @@
 
 :host {
   background-color: var(--tui-base-02);
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   display: block;
+  padding-bottom: 2rem;
 }
 
 .suspense-loader {
@@ -46,7 +47,6 @@
 }
 
 .editor-shell {
-  min-height: 600px;
 }
 
 .editor-metadata {
@@ -61,5 +61,16 @@
   }
 
   .metadata-input {
+  }
+}
+
+.archived-notification {
+  .notification-content {
+    display: flex;
+  }
+
+  .notification-actions {
+    margin-left: auto;
+    display: flex;
   }
 }

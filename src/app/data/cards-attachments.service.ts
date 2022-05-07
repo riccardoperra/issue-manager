@@ -4,25 +4,30 @@ import { APPWRITE } from '../providers/appwrite.provider';
 import { from, Observable } from 'rxjs';
 import { realtimeListener } from '../shared/utils/realtime';
 import { Card } from './cards.service';
+import { Project } from './projects.service';
 
 export interface CardAttachment extends Models.Document {
-  readonly cardId: string;
   readonly projectId: string;
   readonly ref: string;
+  readonly bucketId: string;
 }
 
 export type AddCardAttachment = Omit<CardAttachment, keyof Models.Document>;
 
 @Injectable({ providedIn: 'root' })
 export class CardAttachmentsService {
-  static collectionId = '62716cf0c3363422b66a';
+  static collectionId = '62762b0405e1a79b02fb';
 
   constructor(
     @Inject(APPWRITE)
     private readonly appwrite: Appwrite
   ) {}
 
-  addAttachment(card: Card, ref: Models.File): Observable<CardAttachment> {
+  addAttachment(
+    project: Project,
+    card: Card,
+    ref: Models.File
+  ): Observable<CardAttachment> {
     return from(
       this.appwrite.database.createDocument<CardAttachment>(
         CardAttachmentsService.collectionId,
@@ -31,6 +36,7 @@ export class CardAttachmentsService {
           ref: ref.$id,
           cardId: card.$id,
           projectId: card.projectId,
+          bucketId: project.bucketId,
         } as AddCardAttachment,
         ref.$read,
         ref.$write

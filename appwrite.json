@@ -1,6 +1,6 @@
 {
-    "projectId": "6267091f55e56f032bea",
-    "projectName": "hackathon",
+    "projectId": "6276291d13e8cb0d8003",
+    "projectName": "appwrite2",
     "collections": [
         {
             "$id": "6260423eee67978fa0da",
@@ -15,6 +15,15 @@
             "permission": "collection",
             "attributes": [
                 {
+                    "key": "description",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
                     "key": "name",
                     "type": "string",
                     "status": "available",
@@ -24,12 +33,21 @@
                     "default": null
                 },
                 {
-                    "key": "description",
+                    "key": "tags",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": true,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "imageUrl",
                     "type": "string",
                     "status": "available",
                     "required": false,
                     "array": false,
-                    "size": 255,
+                    "format": "url",
                     "default": null
                 },
                 {
@@ -47,20 +65,11 @@
                     "default": null
                 },
                 {
-                    "key": "imageUrl",
+                    "key": "bucketId",
                     "type": "string",
                     "status": "available",
-                    "required": false,
+                    "required": true,
                     "array": false,
-                    "format": "url",
-                    "default": null
-                },
-                {
-                    "key": "tags",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": true,
                     "size": 255,
                     "default": null
                 }
@@ -92,6 +101,15 @@
             "permission": "collection",
             "attributes": [
                 {
+                    "key": "name",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
                     "key": "categoryId",
                     "type": "string",
                     "status": "available",
@@ -101,10 +119,10 @@
                     "default": null
                 },
                 {
-                    "key": "name",
+                    "key": "content",
                     "type": "string",
                     "status": "available",
-                    "required": true,
+                    "required": false,
                     "array": false,
                     "size": 255,
                     "default": null
@@ -119,7 +137,7 @@
                     "default": null
                 },
                 {
-                    "key": "content",
+                    "key": "rank",
                     "type": "string",
                     "status": "available",
                     "required": false,
@@ -145,7 +163,16 @@
                     "default": false
                 },
                 {
-                    "key": "rank",
+                    "key": "expiryDate",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "priority",
                     "type": "string",
                     "status": "available",
                     "required": false,
@@ -199,14 +226,6 @@
                     "default": null
                 },
                 {
-                    "key": "archived",
-                    "type": "boolean",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "default": false
-                },
-                {
                     "key": "rank",
                     "type": "string",
                     "status": "available",
@@ -214,6 +233,14 @@
                     "array": false,
                     "size": 255,
                     "default": null
+                },
+                {
+                    "key": "archived",
+                    "type": "boolean",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "default": false
                 }
             ],
             "indexes": [
@@ -223,6 +250,80 @@
                     "status": "available",
                     "attributes": [
                         "projectId"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "62762b0405e1a79b02fb",
+            "$read": [
+                "role:member"
+            ],
+            "$write": [
+                "role:member"
+            ],
+            "name": "card_attachments",
+            "enabled": true,
+            "permission": "collection",
+            "attributes": [
+                {
+                    "key": "ref",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "cardId",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "projectId",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "bucketId",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "ref",
+                    "type": "unique",
+                    "status": "available",
+                    "attributes": [
+                        "ref"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "key": "cardId",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "cardId"
                     ],
                     "orders": [
                         "ASC"

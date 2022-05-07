@@ -118,7 +118,7 @@ export class KanbanAttachmentsTableComponent implements OnInit {
 
   @tuiPure
   getDownloadUrl(item: Models.File): string {
-    return this.bucketService.getDownload(item.$id).href;
+    return this.bucketService.getDownload(item.bucketId, item.$id).href;
   }
 
   openPreview(item: Models.File, index: number): void {
@@ -134,7 +134,7 @@ export class KanbanAttachmentsTableComponent implements OnInit {
 
   deleteFile(item: Models.File & { attachment: CardAttachment }): void {
     this.bucketService
-      .deleteFile(item.$id)
+      .deleteFile(item.attachment.projectId, item.$id)
       .pipe(
         switchMap(() => this.cardAttachmentsService.deleteAttachment(item.$id))
       )
@@ -146,12 +146,14 @@ export class KanbanAttachmentsTableComponent implements OnInit {
   ): Observable<(Models.File & { attachment: CardAttachment }) | Error | null> {
     return this.bucketService.addAttachment(this.project, file).pipe(
       switchMap((ref) =>
-        this.cardAttachmentsService.addAttachment(this.card, ref).pipe(
-          map((attachment) => ({
-            ...ref,
-            attachment,
-          }))
-        )
+        this.cardAttachmentsService
+          .addAttachment(this.project, this.card, ref)
+          .pipe(
+            map((attachment) => ({
+              ...ref,
+              attachment,
+            }))
+          )
       )
     );
   }

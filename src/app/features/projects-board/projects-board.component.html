@@ -10,6 +10,7 @@
     <div class="tui-space_top-12">
       <div class="board-title" *rxLet="boardMode$; let boardMode">
         <h1>Projects board</h1>
+
         <button
           tuiIconButton
           size="s"
@@ -22,6 +23,12 @@
           (click)="toggleBoard()"
         ></button>
       </div>
+
+      <ng-container *rxLet="projects$; let projects">
+        <ng-container *ngIf="!projects || projects.length === 0">
+          <img src="/assets/empty_projects.svg" />
+        </ng-container>
+      </ng-container>
 
       <div class="tui-space_top-4">
         <ng-container *ngIf="(boardMode$ | push) === 'grid'; else cardMode">

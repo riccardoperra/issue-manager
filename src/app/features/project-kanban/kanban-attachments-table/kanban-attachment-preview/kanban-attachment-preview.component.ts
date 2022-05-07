@@ -37,7 +37,7 @@ export class KanbanAttachmentPreviewComponent {
   );
 
   readonly downloadLink$ = this.item$.pipe(
-    map((file) => this.bucketService.getDownload(file.$id))
+    map((file) => this.bucketService.getDownload(file.bucketId, file.$id))
   );
 
   readonly title$ = this.item$.pipe(map((item) => item.name));
@@ -46,7 +46,7 @@ export class KanbanAttachmentPreviewComponent {
 
   readonly imageSrc$ = this.item$.pipe(
     switchMap((item) =>
-      of(this.bucketService.getPreview(item.$id)).pipe(
+      of(this.bucketService.getPreview(item.bucketId, item.$id)).pipe(
         delay(500),
         map(({ href }) => href),
         startWith(null)

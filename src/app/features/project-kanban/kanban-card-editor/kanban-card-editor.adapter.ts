@@ -104,7 +104,12 @@ export class KanbanCardEditorAdapter extends RxState<KanbanCardEditorState> {
             map((attachments) => attachments.documents),
             switchMap((attachments) =>
               this.bucketService
-                .getAttachments(attachments.map((doc) => doc.ref))
+                .getAttachments(
+                  attachments.map((doc) => ({
+                    id: doc.ref,
+                    bucket: doc.bucketId,
+                  }))
+                )
                 .pipe(
                   map((fileList) =>
                     fileList.files.map((file) => ({

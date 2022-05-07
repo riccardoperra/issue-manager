@@ -29,7 +29,7 @@ export class BucketService {
   ): Observable<Models.File> {
     return from(
       this.appwrite.storage.createFile(
-        'public',
+        currentProject.bucketId,
         'unique()',
         file,
         currentProject.$read,
@@ -39,30 +39,32 @@ export class BucketService {
     );
   }
 
-  getFileView($id: string): URL {
-    return this.appwrite.storage.getFileView('public', $id);
+  getFileView(bucket: string, $id: string): URL {
+    return this.appwrite.storage.getFileView(bucket, $id);
   }
 
-  getPreview($id: string): URL {
-    return this.appwrite.storage.getFilePreview('public', $id);
+  getPreview(bucket: string, $id: string): URL {
+    return this.appwrite.storage.getFilePreview(bucket, $id);
   }
 
-  getDownload($id: string): URL {
-    return this.appwrite.storage.getFileDownload('public', $id);
+  getDownload(bucket: string, $id: string): URL {
+    return this.appwrite.storage.getFileDownload(bucket, $id);
   }
 
-  deleteFile($id: string): Observable<{}> {
-    return from(this.appwrite.storage.deleteFile('public', $id));
+  deleteFile(bucket: string, $id: string): Observable<{}> {
+    return from(this.appwrite.storage.deleteFile(bucket, $id));
   }
 
-  getAttachments($ids: string[]): Observable<Models.FileList> {
-    if ($ids.length === 0) {
+  getAttachments(
+    refs: { id: string; bucket: string }[]
+  ): Observable<Models.FileList> {
+    if (refs.length === 0) {
       return of({ total: 0, files: [] });
     }
 
     return forkJoin(
-      $ids.map((id) =>
-        from(this.appwrite.storage.getFile('public', id)).pipe(
+      refs.map(({ id, bucket }) =>
+        from(this.appwrite.storage.getFile(bucket, id)).pipe(
           catchError(() => of(null))
         )
       )

@@ -1,11 +1,5 @@
 const sdk = require('node-appwrite');
 
-if (!process.env.env['APPWRITE_FUNCTION_ENDPOINT']) {
-  console.warn(
-    'Environment variables are not set. Function cannot use Appwrite SDK.'
-  );
-}
-
 const adminClient = new sdk.Client()
   .setEndpoint(process.env['APPWRITE_FUNCTION_ENDPOINT'])
   .setKey(process.env['APPWRITE_FUNCTION_API_KEY'])

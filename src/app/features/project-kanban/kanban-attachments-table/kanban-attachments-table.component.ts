@@ -133,11 +133,8 @@ export class KanbanAttachmentsTableComponent implements OnInit {
   }
 
   deleteFile(item: Models.File & { attachment: CardAttachment }): void {
-    this.bucketService
-      .deleteFile(item.attachment.bucketId, item.$id)
-      .pipe(
-        switchMap(() => this.cardAttachmentsService.deleteAttachment(item.$id))
-      )
+    this.cardAttachmentsService
+      .deleteAttachment(item.attachment)
       .subscribe(() => this.deleteAttachment.emit(item));
   }
 

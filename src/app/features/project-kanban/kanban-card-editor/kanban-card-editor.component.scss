@@ -63,3 +63,14 @@
   .metadata-input {
   }
 }
+
+.archived-notification {
+  .notification-content {
+    display: flex;
+  }
+
+  .notification-actions {
+    margin-left: auto;
+    display: flex;
+  }
+}

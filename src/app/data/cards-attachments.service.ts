@@ -44,11 +44,17 @@ export class CardAttachmentsService {
     );
   }
 
-  deleteAttachment($id: string): Observable<{}> {
+  deleteAttachment(attachment: CardAttachment): Observable<{}> {
     return from(
-      this.appwrite.database.deleteDocument(
-        CardAttachmentsService.collectionId,
-        $id
+      this.appwrite.functions.createExecution(
+        'delete-card-attachment',
+        JSON.stringify({
+          $collection: attachment.$collection,
+          $id: attachment.$id,
+          bucketId: attachment.bucketId,
+          ref: attachment.ref,
+        }),
+        false
       )
     );
   }

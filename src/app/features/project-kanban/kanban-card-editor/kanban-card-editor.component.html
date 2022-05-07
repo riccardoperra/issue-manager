@@ -41,20 +41,16 @@
 
   <tui-notification
     status="warning"
-    class="tui-space_bottom-4"
+    class="tui-space_vertical-4 archived-notification"
     *ngIf="card.archived"
   >
-    <div style="display: flex; justify-content: space-between">
+    <div class="notification-content">
       This card is archived.
-      <button
-        tuiButton
-        size="xs"
-        appearance="accent"
-        class="tui-space_left-auto"
-        (click)="undoArchive()"
-      >
-        Undo
-      </button>
+      <div class="notification-actions">
+        <button tuiButton size="xs" appearance="accent" (click)="undoArchive()">
+          Undo
+        </button>
+      </div>
     </div>
   </tui-notification>
 

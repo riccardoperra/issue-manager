@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { AuthState } from './auth.state';
 import { TuiAlertService } from '@taiga-ui/core';
 import { Router } from '@angular/router';
-import { catchError, combineLatestWith, from, map, of, tap } from 'rxjs';
+import { catchError, combineLatestWith, defer, from, map, of, tap } from 'rxjs';
 import { APPWRITE } from '../../providers/appwrite.provider';
 import { Appwrite } from 'appwrite';
 import { AccountService } from '../../data/account.service';
@@ -46,7 +46,7 @@ export class AuthEffects {
   }) => {
     from(this.appwrite.account.createSession(email, password))
       .pipe(
-        combineLatestWith(this.appwrite.account.get()),
+        combineLatestWith(defer(() => this.appwrite.account.get())),
         map(([session, account]) => ({ session, account })),
         tap(() => this.router.navigate(['/'])),
         catchError(() =>

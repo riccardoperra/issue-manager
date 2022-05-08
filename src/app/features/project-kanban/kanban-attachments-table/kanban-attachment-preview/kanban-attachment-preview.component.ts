@@ -10,9 +10,17 @@ import {
 } from 'rxjs';
 import { isPresent } from '@taiga-ui/cdk';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
-import { TuiDialogContext } from '@taiga-ui/core';
+import {
+  TuiButtonModule,
+  TuiDialogContext,
+  TuiLinkModule,
+  TuiLoaderModule,
+} from '@taiga-ui/core';
 import { Models } from 'appwrite';
 import { BucketService } from '../../../../data/bucket.service';
+import { TuiPreviewModule } from '@taiga-ui/addon-preview';
+import { CommonModule } from '@angular/common';
+import { PushModule } from '@rx-angular/template';
 
 interface AttachmentPreviewContext {
   files: readonly Models.File[];
@@ -23,6 +31,15 @@ interface AttachmentPreviewContext {
   templateUrl: 'kanban-attachment-preview.component.html',
   styleUrls: ['./kanban-attachment-preview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    TuiPreviewModule,
+    CommonModule,
+    TuiLinkModule,
+    PushModule,
+    TuiButtonModule,
+    TuiLoaderModule,
+  ],
 })
 export class KanbanAttachmentPreviewComponent {
   get files() {

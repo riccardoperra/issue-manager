@@ -8,7 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import { Models } from 'appwrite';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import {
   BehaviorSubject,
   combineLatest,
@@ -25,7 +25,7 @@ import {
 } from 'rxjs';
 import { BucketService } from '../../../data/bucket.service';
 import { Project } from '../../../data/projects.service';
-import { isPresent, tuiPure } from '@taiga-ui/cdk';
+import { isPresent, TuiMapperPipeModule, tuiPure } from '@taiga-ui/cdk';
 import {
   CardAttachment,
   CardAttachmentsService,
@@ -35,12 +35,25 @@ import { PreviewDialogService } from '@taiga-ui/addon-preview';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { KanbanAttachmentPreviewComponent } from './kanban-attachment-preview/kanban-attachment-preview.component';
+import { TuiInputFileModule } from '@taiga-ui/kit';
+import { TuiTableModule } from '@taiga-ui/addon-table';
+import { CommonModule } from '@angular/common';
+import { TuiButtonModule } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-kanban-attachments-table',
   templateUrl: './kanban-attachments-table.component.html',
   styleUrls: ['./kanban-attachments-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    TuiInputFileModule,
+    ReactiveFormsModule,
+    TuiTableModule,
+    CommonModule,
+    TuiButtonModule,
+    TuiMapperPipeModule,
+  ],
 })
 export class KanbanAttachmentsTableComponent implements OnInit {
   readonly files = this.fb.control([] as File[]);

@@ -16,12 +16,11 @@
   display: flex;
   align-items: center;
 
-  .welcome__title {
-    .welcome__title-label {
+  &__title {
+    &-label {
       font-weight: 500;
     }
-
-    .welcome__title-name {
+    &-name {
       margin: 0;
     }
   }

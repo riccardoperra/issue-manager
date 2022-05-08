@@ -1,7 +1,7 @@
 import { RxState } from '@rx-angular/state';
-import { Card, CardsService } from '../../../data/cards.service';
+import { Card, CardsService } from '../../data/cards.service';
 import { Inject, Injectable } from '@angular/core';
-import { RxActionFactory } from '../../../shared/rxa-custom/actions/actions.factory';
+import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
 import {
   concat,
   debounceTime,
@@ -13,12 +13,12 @@ import {
 } from 'rxjs';
 import { patch } from '@rx-angular/cdk/transformations';
 import { Models } from 'appwrite';
-import { BucketService } from '../../../data/bucket.service';
-import { Project, ProjectsService } from '../../../data/projects.service';
+import { BucketService } from '../../data/bucket.service';
+import { Project, ProjectsService } from '../../data/projects.service';
 import {
   CardAttachment,
   CardAttachmentsService,
-} from '../../../data/cards-attachments.service';
+} from '../../data/cards-attachments.service';
 
 interface KanbanCardEditorState {
   project: Project;

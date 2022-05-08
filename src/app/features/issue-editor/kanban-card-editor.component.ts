@@ -1,13 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
-import { CardsService } from '../../../data/cards.service';
+import { CardsService } from '../../data/cards.service';
 import { KanbanCardEditorAdapter } from './kanban-card-editor.adapter';
-import { RxActionFactory } from '../../../shared/rxa-custom/actions/actions.factory';
 import { TuiDialogContext } from '@taiga-ui/core';
 import { FormControl } from '@angular/forms';
 import { EditorState } from 'lexical';
-import { Observable } from 'rxjs';
-import { Models } from 'appwrite';
+import {
+  ISSUE_EDITOR_IMPORTS,
+  ISSUE_EDITOR_PROVIDERS,
+} from './issue-editor.metadata';
 
 export interface KanbanCardEditorContext {
   cardId: string;
@@ -17,7 +18,9 @@ export interface KanbanCardEditorContext {
   selector: 'app-kanban-card-editor',
   templateUrl: './kanban-card-editor.component.html',
   styleUrls: ['./kanban-card-editor.component.scss'],
-  providers: [KanbanCardEditorAdapter, RxActionFactory],
+  standalone: true,
+  providers: [ISSUE_EDITOR_PROVIDERS],
+  imports: [ISSUE_EDITOR_IMPORTS],
 })
 export class KanbanCardEditorComponent implements OnInit {
   readonly card$ = this.adapter.select('card');

@@ -10,15 +10,6 @@ import { tuiTagOptionsProvider } from '@taiga-ui/kit';
 export const APP_PROVIDERS: Provider[] = [
   RxActionFactory,
   RXA_PROVIDER,
-  { provide: TUI_DATE_FORMAT, useValue: 'MDY' },
-  { provide: TUI_DATE_SEPARATOR, useValue: '/' },
-  tuiButtonOptionsProvider({
-    size: 'm',
-    appearance: 'primary',
-  }),
-  tuiTagOptionsProvider({
-    autoColor: true,
-  }),
   {
     provide: APP_INITIALIZER,
     useFactory: (projectsState: ProjectsState, authState: AuthState) => {

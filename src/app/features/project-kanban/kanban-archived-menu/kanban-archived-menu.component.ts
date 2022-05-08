@@ -13,7 +13,7 @@ import { Card } from '../../../data/cards.service';
 })
 export class KanbanArchivedMenuComponent implements OnInit {
   @HostBinding('@tuiSlideIn')
-  readonly options = { value: 'right', duration: 100 };
+  readonly options = { value: 'right', duration: 50 };
 
   activeIndex = 0;
 

@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
+  appwriteProject: '6276291d13e8cb0d8003',
   appwriteEndpoint: 'http://localhost/v1',
-  appwriteProject: '6267091f55e56f032bea',
 };

@@ -7,6 +7,7 @@ import { from, switchMap } from 'rxjs';
 @Component({
   selector: 'app-accept-membership',
   template: ``,
+  standalone: true,
 })
 export class AcceptMembershipComponent implements OnInit {
   constructor(

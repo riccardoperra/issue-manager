@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { ROUTES } from './team.routes';
 
 @NgModule({
-  declarations: [AcceptMembershipComponent],
   imports: [CommonModule, RouterModule.forChild(ROUTES)],
 })
 export class TeamModule {}

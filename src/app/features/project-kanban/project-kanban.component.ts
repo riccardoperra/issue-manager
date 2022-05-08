@@ -7,7 +7,7 @@ import {
   TrackByFunction,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, pluck, switchMap, tap, withLatestFrom } from 'rxjs';
+import { map, tap, withLatestFrom } from 'rxjs';
 import { Category } from '../../data/categories.service';
 import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
 import { Card } from '../../data/cards.service';

@@ -13,9 +13,9 @@
     class="card-wrapper"
   >
     <app-kanban-card
+      [tuiDropdownContext]="contextMenu"
       [@tuiFadeIn]="{ duration: 200 }"
       [card]="card"
-      [tuiDropdownContext]="contextMenu"
       (click)="openIssue(card)"
     ></app-kanban-card>
 

@@ -5,7 +5,16 @@ import {
   Inject,
   Output,
 } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  TuiButtonModule,
+  TuiExpandModule,
+  TuiSvgModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/core';
+import { CommonModule } from '@angular/common';
+import { TuiInputInlineModule, TuiIslandModule } from '@taiga-ui/kit';
+import { TuiActiveZoneModule, TuiAutoFocusModule } from '@taiga-ui/cdk';
 
 interface Actions {
   close: void;
@@ -18,6 +27,19 @@ interface Actions {
   templateUrl: './kanban-add-card.component.html',
   styleUrls: ['./kanban-add-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    TuiButtonModule,
+    CommonModule,
+    TuiSvgModule,
+    TuiExpandModule,
+    TuiIslandModule,
+    TuiInputInlineModule,
+    TuiTextfieldControllerModule,
+    TuiAutoFocusModule,
+    TuiActiveZoneModule,
+  ],
 })
 export class KanbanAddCardComponent {
   readonly form = this.fb.group({

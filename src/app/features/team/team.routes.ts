@@ -1,5 +1,11 @@
-import { AcceptMembershipComponent } from './accept-membership/accept-membership.component';
+import { Routes } from '@angular/router';
 
-export const ROUTES = [
-  { path: 'memberships/accept', component: AcceptMembershipComponent },
+export const ROUTES: Routes = [
+  {
+    path: 'memberships/accept',
+    loadComponent: () =>
+      import('./accept-membership/accept-membership.component').then(
+        (m) => m.AcceptMembershipComponent
+      ),
+  },
 ];

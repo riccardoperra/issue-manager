@@ -3,16 +3,32 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   TrackByFunction,
 } from '@angular/core';
 import { Category } from 'src/app/data/categories.service';
 import { Card } from '../../../data/cards.service';
-import { CdkDragDrop, CdkDropListGroup } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  CdkDropListGroup,
+  DragDropModule,
+} from '@angular/cdk/drag-drop';
 import { RxState, selectSlice } from '@rx-angular/state';
 import { distinctUntilChanged, of } from 'rxjs';
-import { tuiFadeIn } from '@taiga-ui/core';
+import {
+  TuiButtonModule,
+  TuiDataListModule,
+  TuiDropdownControllerModule,
+  tuiFadeIn,
+  TuiHostedDropdownModule,
+  TuiScrollbarModule,
+  TuiSvgModule,
+} from '@taiga-ui/core';
+import { KanbanCardListComponent } from '../kanban-card-list/kanban-card-list.component';
+import { TuiIslandModule } from '@taiga-ui/kit';
+import { TuiElementModule } from '@taiga-ui/cdk';
+import { KanbanAddCardComponent } from '../kanban-add-card/kanban-add-card.component';
+import { LetModule } from '@rx-angular/template';
 
 @Component({
   selector: 'app-kanban-list',
@@ -20,6 +36,21 @@ import { tuiFadeIn } from '@taiga-ui/core';
   styleUrls: ['./kanban-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [tuiFadeIn],
+  standalone: true,
+  imports: [
+    LetModule,
+    TuiScrollbarModule,
+    TuiIslandModule,
+    DragDropModule,
+    TuiElementModule,
+    TuiHostedDropdownModule,
+    TuiDropdownControllerModule,
+    TuiButtonModule,
+    TuiSvgModule,
+    TuiDataListModule,
+    KanbanAddCardComponent,
+    KanbanCardListComponent,
+  ],
 })
 export class KanbanListComponent extends RxState<{
   list: Category;

@@ -1,4 +1,4 @@
-<tui-island *ngIf="card" class="list-card" size="s" [hoverable]="false">
+<tui-island *ngIf="card" class="card" size="s" [hoverable]="false">
   <p class="tui-island__category" *ngIf="card.tags.length > 0">
     <tui-tag
       *ngFor="let tag of card.tags"
@@ -9,7 +9,7 @@
     </tui-tag>
   </p>
 
-  <h3 class="tui-island__title list-title">
+  <h3 class="tui-island__title title">
     {{ card.name }}
   </h3>
 
@@ -21,9 +21,3 @@
     <ng-template #fallback> No expiration date</ng-template>
   </span>
 </tui-island>
-
-<ng-template #header>
-  <h2 class="tui-text">
-    {{ card!.name }}
-  </h2>
-</ng-template>

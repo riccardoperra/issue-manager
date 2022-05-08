@@ -33,7 +33,6 @@ import {
   TuiSvgModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core';
-import { KanbanCardComponent } from './kanban-card/kanban-card.component';
 import {
   TuiActiveZoneModule,
   TuiAutoFocusModule,
@@ -46,26 +45,20 @@ import {
   TuiOverscrollModule,
 } from '@taiga-ui/cdk';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { KanbanListComponent } from './kanban-list/kanban-list.component';
 import { LetModule, PushModule } from '@rx-angular/template';
 import { KanbanAddListComponent } from './kanban-add-list/kanban-add-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KanbanArchivedMenuComponent } from './kanban-archived-menu/kanban-archived-menu.component';
-import { KanbanAddCardComponent } from './kanban-add-card/kanban-add-card.component';
 import { KanbanMembershipListComponent } from './kanban-membership-list/kanban-membership-list.component';
-import { KanbanCardListComponent } from './kanban-card-list/kanban-card-list.component';
 import { PlaygroundEditorModule } from '../../shared/lexical/editor/editor.module';
+import { KanbanListComponent } from './kanban-list/kanban-list.component';
 
 @NgModule({
   declarations: [
     ProjectKanbanComponent,
-    KanbanCardComponent,
-    KanbanListComponent,
     KanbanAddListComponent,
     KanbanArchivedMenuComponent,
-    KanbanAddCardComponent,
     KanbanMembershipListComponent,
-    KanbanCardListComponent,
   ],
   imports: [
     CommonModule,
@@ -111,6 +104,7 @@ import { PlaygroundEditorModule } from '../../shared/lexical/editor/editor.modul
     FormsModule,
     TuiNotificationModule,
     TuiDropdownContextModule,
+    KanbanListComponent,
   ],
 })
 export class ProjectKanbanModule {}

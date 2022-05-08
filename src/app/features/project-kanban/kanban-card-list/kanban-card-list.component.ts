@@ -9,11 +9,22 @@ import {
 } from '@angular/core';
 import { Category } from 'src/app/data/categories.service';
 import { Card } from '../../../data/cards.service';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { RxState } from '@rx-angular/state';
 import { distinctUntilChanged, from, map, of, switchMap } from 'rxjs';
-import { TuiDialogService, tuiFadeIn } from '@taiga-ui/core';
+import {
+  TuiDataListModule,
+  TuiDialogService,
+  tuiFadeIn,
+  TuiSvgModule,
+} from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { LetModule } from '@rx-angular/template';
+import { ForModule } from '@rx-angular/template/experimental/for';
+import { KanbanCardComponent } from '../kanban-card/kanban-card.component';
+import { TuiDropdownContextModule } from '@taiga-ui/kit';
+import { TuiActiveZoneModule } from '@taiga-ui/cdk';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-kanban-card-list',
@@ -21,6 +32,18 @@ import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
   styleUrls: ['./kanban-card-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [tuiFadeIn],
+  standalone: true,
+  imports: [
+    CommonModule,
+    LetModule,
+    DragDropModule,
+    ForModule,
+    TuiDropdownContextModule,
+    TuiDataListModule,
+    TuiActiveZoneModule,
+    TuiSvgModule,
+    KanbanCardComponent,
+  ],
 })
 export class KanbanCardListComponent extends RxState<{
   category: Category;

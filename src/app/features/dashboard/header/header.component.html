@@ -12,8 +12,13 @@
       <h1 class="welcome__title-name">{{ account.name || 'Guest' }}</h1>
     </div>
   </div>
-  <div class="actions">
-    <button tuiButton size="m" (click)="createProject.emit()">
+  <div class="actions" *rxLet="canAddNewProject$; let canAddNewProject">
+    <button
+      *ngIf="canAddNewProject"
+      tuiButton
+      size="m"
+      (click)="createProject.emit()"
+    >
       Add new project
     </button>
   </div>

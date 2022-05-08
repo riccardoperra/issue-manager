@@ -1,6 +1,6 @@
 <ng-container *rxLet="currentUser$; let currentUser">
   <tui-hosted-dropdown
-    *rxFor="let member of members$"
+    *rxFor="let member of members"
     tuiDropdownAlign="left"
     tuiDropdownDirection="bottom"
     [content]="dropdownContent"
@@ -73,7 +73,6 @@
       </ng-template>
     </tui-avatar>
   </tui-hosted-dropdown>
-
   <tui-hosted-dropdown
     tuiDropdownAlign="right"
     [tuiDropdownSided]="true"

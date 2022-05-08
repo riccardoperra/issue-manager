@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Inject,
+  Input,
   OnInit,
   Output,
 } from '@angular/core';
@@ -20,10 +21,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanMembershipListComponent {
-  readonly members$: Observable<readonly Models.Membership[]> =
-    this.adapter.members$;
-
   readonly currentUser$ = this.authState.account$;
+
+  @Input()
+  members: readonly Models.Membership[] = [];
 
   @Output()
   addMember = new EventEmitter<string>();

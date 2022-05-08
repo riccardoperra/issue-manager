@@ -10,7 +10,7 @@ export type ProjectKanbanPageModel = {
   categories: readonly Category[];
   cards: readonly Card[];
   workspace: {
-    readonly team: Models.Team;
+    readonly team: Models.Team | null;
     readonly members: readonly Models.Membership[];
   };
 };

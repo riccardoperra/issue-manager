@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { APPWRITE } from '../providers/appwrite.provider';
 import { Appwrite, Models } from 'appwrite';
-import { defer, from, map, Observable, of, switchMap } from 'rxjs';
+import { catchError, defer, from, map, Observable, of, switchMap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TeamsService {
@@ -14,9 +14,10 @@ export class TeamsService {
     return defer(() => from(this.appwrite.account.get()));
   }
 
-  getTeamDetail(
-    $projectId: string
-  ): Observable<{ team: Models.Team; members: readonly Models.Membership[] }> {
+  getTeamDetail($projectId: string): Observable<{
+    team: Models.Team | null;
+    members: readonly Models.Membership[];
+  }> {
     return from(this.appwrite.teams.get($projectId)).pipe(
       switchMap((team) => {
         if (team.total === 0) return of({ team, members: [] });
@@ -26,7 +27,13 @@ export class TeamsService {
             members: members.memberships,
           }))
         );
-      })
+      }),
+      catchError(() =>
+        of({
+          members: [],
+          team: null,
+        } as unknown as { team: Models.Team; members: readonly Models.Membership[] })
+      )
     );
   }
 

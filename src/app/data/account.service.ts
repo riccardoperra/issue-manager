@@ -1,7 +1,15 @@
 import { Inject, Injectable } from '@angular/core';
 import { APPWRITE } from '../providers/appwrite.provider';
 import { Appwrite, Models } from 'appwrite';
-import { defer, from, map, Observable, switchMap } from 'rxjs';
+import {
+  defer,
+  from,
+  map,
+  Observable,
+  switchMap,
+  tap,
+  withLatestFrom,
+} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -18,13 +26,21 @@ export class AccountService {
     account: Models.User<{}>;
     session: Models.Session;
   }> {
+    const updatePrefs$ = defer(() =>
+      this.appwrite.account.updatePrefs({ guest: true })
+    );
+
     return from(this.appwrite.account.createAnonymousSession()).pipe(
       switchMap((session) =>
-        from(this.appwrite.account.get()).pipe(
-          map((account) => ({
-            session,
-            account,
-          }))
+        updatePrefs$.pipe(
+          switchMap(() =>
+            from(this.appwrite.account.get()).pipe(
+              map((account) => ({
+                session,
+                account,
+              }))
+            )
+          )
         )
       )
     );

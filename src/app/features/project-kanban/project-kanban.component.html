@@ -25,10 +25,14 @@
 
       <div class="tui-row tui-space_all-0 tui-row_align_center">
         <h1 class="tui-space_right-4">{{ project.name }}</h1>
-        <app-kanban-membership-list
-          (removeMember)="adapter.ui.removeMember($event)"
-          (addMember)="adapter.ui.addMember($event)"
-        ></app-kanban-membership-list>
+        <ng-container *rxLet="adapter.workspace$; let workspace">
+          <app-kanban-membership-list
+            *ngIf="workspace && workspace.team"
+            [members]="workspace.members"
+            (removeMember)="adapter.ui.removeMember($event)"
+            (addMember)="adapter.ui.addMember($event)"
+          ></app-kanban-membership-list>
+        </ng-container>
         <div class="project-kanban-actions">
           <button
             tuiButton

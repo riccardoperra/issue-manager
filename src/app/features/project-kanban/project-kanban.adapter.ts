@@ -49,7 +49,7 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
   private readonly categories$ = this.select('categories');
 
   readonly project$ = this.select('project');
-  readonly members$ = this.select('workspace', 'members');
+  readonly workspace$ = this.select('workspace');
 
   readonly sortedCategories$: Observable<readonly Category[]> =
     this.categories$.pipe(

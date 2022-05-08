@@ -11,8 +11,8 @@ module.exports = async function (req, res) {
     .setJWT(process.env['APPWRITE_FUNCTION_JWT'])
     .setProject(process.env['APPWRITE_FUNCTION_PROJECT_ID']);
 
-  const database = new sdk.Database(client);
   const teams = new sdk.Teams(client);
+  const database = new sdk.Database(adminClient);
   const storage = new sdk.Storage(adminClient);
 
   const payload = JSON.parse(req.payload ? req.payload : '{}');
@@ -29,11 +29,16 @@ module.exports = async function (req, res) {
 
     const { name, description, tags, visibility } = payload;
 
+    const readPermissions = [
+      ...(visibility === 'public' ? ['role:guest', 'role:member'] : []),
+      teamPermission,
+    ];
+
     const bucket = await storage.createBucket(
       'unique()',
       `bucket_${name}`,
       'bucket',
-      [teamPermission],
+      readPermissions,
       [teamPermission],
       true,
       undefined,
@@ -46,7 +51,7 @@ module.exports = async function (req, res) {
       payload.$collectionId,
       team.$id,
       { name, description, tags, visibility, bucketId: bucket.$id },
-      [teamPermission],
+      readPermissions,
       [teamPermission]
     );
 

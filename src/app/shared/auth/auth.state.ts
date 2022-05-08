@@ -4,7 +4,7 @@ import { AuthStateModel } from './auth-state.model';
 import { WithInitializer } from '../rxa-custom/initializer';
 import { AccountService } from '../../data/account.service';
 import { RxActionFactory } from '../rxa-custom/actions/actions.factory';
-import { catchError, exhaustMap, of } from 'rxjs';
+import { catchError, exhaustMap, map, of } from 'rxjs';
 
 export interface AuthCommand {
   fetchAccount: void;
@@ -20,6 +20,14 @@ export class AuthState
   readonly actions = this.rxAction.create();
   readonly session$ = this.select('session');
   readonly account$ = this.select('account');
+
+  readonly preferences$ = this.account$.pipe(
+    map((account) => (account ? account.prefs : {}))
+  );
+
+  readonly isGuest$ = this.preferences$.pipe(
+    map((prefs) => prefs.hasOwnProperty('guest') && prefs.guest === true)
+  );
 
   constructor(
     @Inject(AccountService) private readonly accountService: AccountService,

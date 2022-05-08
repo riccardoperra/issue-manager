@@ -1,4 +1,8 @@
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
 .wrapper {
+  @include createStackingContext();
+
   display: flex;
   width: 100%;
 

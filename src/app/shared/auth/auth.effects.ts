@@ -1,10 +1,21 @@
-import { Inject, Injectable } from '@angular/core';
+import { ApplicationRef, Inject, Injectable } from '@angular/core';
 import { AuthState } from './auth.state';
 import { TuiAlertService } from '@taiga-ui/core';
 import { Router } from '@angular/router';
-import { catchError, combineLatestWith, defer, from, map, of, tap } from 'rxjs';
+import {
+  catchError,
+  combineLatestWith,
+  defer,
+  delay,
+  from,
+  map,
+  of,
+  switchMap,
+  tap,
+  withLatestFrom,
+} from 'rxjs';
 import { APPWRITE } from '../../providers/appwrite.provider';
-import { Appwrite } from 'appwrite';
+import { Appwrite, Models } from 'appwrite';
 import { AccountService } from '../../data/account.service';
 
 @Injectable({
@@ -21,7 +32,9 @@ export class AuthEffects {
     @Inject(TuiAlertService)
     private readonly alertService: TuiAlertService,
     @Inject(Router)
-    private readonly router: Router
+    private readonly router: Router,
+    @Inject(ApplicationRef)
+    private readonly appRef: ApplicationRef
   ) {}
 
   loginAsGuest = () => {
@@ -46,7 +59,14 @@ export class AuthEffects {
   }) => {
     from(this.appwrite.account.createSession(email, password))
       .pipe(
-        combineLatestWith(defer(() => this.appwrite.account.get())),
+        switchMap((session) =>
+          from(this.appwrite.account.get()).pipe(
+            map(
+              (account) =>
+                [session, account] as [Models.Session, Models.User<{}>]
+            )
+          )
+        ),
         map(([session, account]) => ({ session, account })),
         tap(() => this.router.navigate(['/'])),
         catchError(() =>
@@ -62,5 +82,20 @@ export class AuthEffects {
         )
       )
       .subscribe();
+  };
+
+  logout = () => {
+    from(this.appwrite.account.deleteSession('current'))
+      .pipe(
+        tap(() =>
+          this.authState.set({
+            account: null,
+            session: null,
+          })
+        )
+      )
+      .subscribe(() => {
+        this.router.navigate(['/login']).then((e) => console.log(e));
+      });
   };
 }

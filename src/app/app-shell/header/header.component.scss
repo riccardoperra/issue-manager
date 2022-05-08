@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  z-index: 1;
+  padding: 0 1.25rem;
+  background: var(--tui-base-01);
+  border-bottom: 1px solid var(--tui-base-03);
+  height: var(--header-height, 54px);
+}
+
+.title {
+  font: var(--tui-font-text-l);
+  font-weight: 600;
+}
+
+.avatar {
+  margin-left: auto;
+}

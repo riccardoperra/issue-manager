@@ -1,1 +1,4 @@
-<router-outlet></router-outlet>
+<header shellHeader *ngIf="authenticated$ | push"></header>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

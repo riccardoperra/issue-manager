@@ -1,0 +1,16 @@
+<ng-container *rxLet="user$; let user">
+  <div class="title">IssueManager</div>
+
+  <tui-avatar
+    size="s"
+    [rounded]="false"
+    [autoColor]="true"
+    [text]="user?.name ?? ''"
+    class="avatar tui-space_right-2"
+  >
+  </tui-avatar>
+
+  <button size="s" appearance="secondary" tuiButton (click)="logout()">
+    Logout
+  </button>
+</ng-container>

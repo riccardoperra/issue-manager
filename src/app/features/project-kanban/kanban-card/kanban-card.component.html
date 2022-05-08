@@ -1,10 +1,4 @@
-<tui-island
-  *ngIf="card"
-  class="list-card"
-  size="s"
-  [hoverable]="false"
-  (click)="onClick(card)"
->
+<tui-island *ngIf="card" class="list-card" size="s" [hoverable]="false">
   <p class="tui-island__category" *ngIf="card.tags.length > 0">
     <tui-tag
       *ngFor="let tag of card.tags"

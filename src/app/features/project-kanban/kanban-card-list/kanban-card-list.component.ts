@@ -2,17 +2,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Inject,
   Input,
-  OnInit,
   Output,
   TrackByFunction,
 } from '@angular/core';
 import { Category } from 'src/app/data/categories.service';
 import { Card } from '../../../data/cards.service';
-import { CdkDragDrop, CdkDropListGroup } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { RxState } from '@rx-angular/state';
-import { distinctUntilChanged, map, of } from 'rxjs';
-import { tuiFadeIn } from '@taiga-ui/core';
+import { distinctUntilChanged, from, map, of, switchMap } from 'rxjs';
+import { TuiDialogService, tuiFadeIn } from '@taiga-ui/core';
+import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 
 @Component({
   selector: 'app-kanban-card-list',
@@ -21,10 +22,10 @@ import { tuiFadeIn } from '@taiga-ui/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [tuiFadeIn],
 })
-export class KanbanCardListComponent
-  extends RxState<{ category: Category; cards: readonly Card[] }>
-  implements OnInit
-{
+export class KanbanCardListComponent extends RxState<{
+  category: Category;
+  cards: readonly Card[];
+}> {
   @Input()
   set list(category: Category) {
     this.connect('category', of(category));
@@ -52,9 +53,27 @@ export class KanbanCardListComponent
 
   readonly cardTrackBy: TrackByFunction<Card> = (index, card) => card.$id;
 
-  constructor(readonly c: CdkDropListGroup<any>) {
+  constructor(
+    @Inject(TuiDialogService)
+    private readonly dialogService: TuiDialogService
+  ) {
     super();
   }
 
-  ngOnInit(): void {}
+  openIssue(card: Card): void {
+    const detail = import('../../issue-detail/issue-detail.component').then(
+      (m) => m.IssueDetailComponent
+    );
+
+    from(detail)
+      .pipe(
+        switchMap((component) =>
+          this.dialogService.open(new PolymorpheusComponent(component), {
+            size: 'page',
+            data: { cardId: card.$id },
+          })
+        )
+      )
+      .subscribe();
+  }
 }

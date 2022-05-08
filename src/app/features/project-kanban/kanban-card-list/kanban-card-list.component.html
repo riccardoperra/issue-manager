@@ -16,6 +16,7 @@
       [@tuiFadeIn]="{ duration: 200 }"
       [card]="card"
       [tuiDropdownContext]="contextMenu"
+      (click)="openIssue(card)"
     ></app-kanban-card>
 
     <ng-template #contextMenu let-close="close" let-activeZone="activeZone">

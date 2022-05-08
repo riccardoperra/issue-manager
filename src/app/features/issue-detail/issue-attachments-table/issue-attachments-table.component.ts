@@ -14,11 +14,11 @@ import { CardAttachmentsService } from '../../../data/cards-attachments.service'
 import { PreviewDialogService } from '@taiga-ui/addon-preview';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
-import { IssueAttachmentPreviewComponent } from '../issue-attachment-preview/issue-attachment-preview.component';
 import { TuiTableModule } from '@taiga-ui/addon-table';
 import { CommonModule } from '@angular/common';
 import { TuiButtonModule } from '@taiga-ui/core';
 import { UploadedAttachment } from '../issue-detail.model';
+import { from, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-issue-attachments-table',
@@ -60,13 +60,18 @@ export class IssueAttachmentsTableComponent {
   }
 
   openPreview(item: Models.File, index: number): void {
-    const component = new PolymorpheusComponent(
-      IssueAttachmentPreviewComponent
-    );
-    const files = this.attachments;
+    const preview = import(
+      '../issue-attachment-preview/issue-attachment-preview.component'
+    ).then((m) => m.IssueAttachmentPreviewComponent);
 
-    this.previewDialogService
-      .open(component, { data: { files, item, index } })
+    from(preview)
+      .pipe(
+        switchMap((component) =>
+          this.previewDialogService.open(new PolymorpheusComponent(component), {
+            data: { files: this.attachments, item, index },
+          })
+        )
+      )
       .subscribe();
   }
 

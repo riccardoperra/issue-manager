@@ -7,17 +7,10 @@ import {
 } from '@angular/core';
 import { ProjectsState } from '../../shared/state/projects.state';
 import {
-  TuiButtonComponent,
   TuiButtonModule,
   TuiDialogService,
   tuiFadeIn,
-  TuiGroupModule,
-  TuiLabelModule,
-  TuiLinkModule,
   TuiLoaderModule,
-  TuiModeModule,
-  TuiTextfieldControllerModule,
-  TuiTooltipModule,
 } from '@taiga-ui/core';
 import { AddProjectRequest, Project } from '../../data/projects.service';
 import { AuthState } from '../../shared/auth/auth.state';
@@ -25,19 +18,10 @@ import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory
 import { RxState } from '@rx-angular/state';
 import { AddProjectDialogComponent } from './add-project-dialog/add-project-dialog.component';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
-import { startWith } from 'rxjs';
+import { from, startWith, switchMap } from 'rxjs';
 import { ForModule } from '@rx-angular/template/experimental/for';
-import {
-  TuiFieldErrorModule,
-  TuiInputTagModule,
-  TuiIslandModule,
-  TuiRadioBlockModule,
-  TuiTagModule,
-  TuiTextAreaModule,
-} from '@taiga-ui/kit';
+import { TuiTagModule } from '@taiga-ui/kit';
 import { LetModule, PushModule } from '@rx-angular/template';
-import { TuiAutoFocusModule } from '@taiga-ui/cdk';
-import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { ProjectCardComponent } from './project-card/project-card.component';
@@ -53,9 +37,9 @@ interface ProjectsBoardState {
 }
 
 @Component({
-  selector: 'app-projects-board',
-  templateUrl: './projects-board.component.html',
-  styleUrls: ['./projects-board.component.scss'],
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss'],
   animations: [tuiFadeIn],
   standalone: true,
   imports: [
@@ -74,7 +58,7 @@ interface ProjectsBoardState {
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [RxActionFactory],
 })
-export class ProjectsBoardComponent
+export class DashboardComponent
   extends RxState<ProjectsBoardState>
   implements OnInit
 {
@@ -115,14 +99,23 @@ export class ProjectsBoardComponent
   }
 
   openDialog(): void {
-    const content = new PolymorpheusComponent(AddProjectDialogComponent);
+    const dialog = import(
+      './add-project-dialog/add-project-dialog.component'
+    ).then((m) => m.AddProjectDialogComponent);
 
-    this.dialogService
-      .open<AddProjectRequest | null>(content, {
-        size: 'l',
-        closeable: true,
-        dismissible: true,
-      })
+    from(dialog)
+      .pipe(
+        switchMap((component) =>
+          this.dialogService.open<AddProjectRequest | null>(
+            new PolymorpheusComponent(component),
+            {
+              size: 'l',
+              closeable: true,
+              dismissible: true,
+            }
+          )
+        )
+      )
       .subscribe((result) => {
         if (!result) return;
         return this.projectsState.actions.addProject(result);

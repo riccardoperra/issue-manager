@@ -1,9 +1,9 @@
 <tui-loader [showLoader]="loading$ | push" [overlay]="true" size="xl">
   <div class="tui-container tui-container_adaptive tui-space_top-5">
-    <app-projects-board-header
+    <app-dashboard-header
       [account]="account$ | push"
       (createProject)="actions.openCreateProjectDialog()"
-    ></app-projects-board-header>
+    ></app-dashboard-header>
 
     <hr class="tui-space_top-6 tui-space_bottom-6" />
 

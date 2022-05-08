@@ -6,8 +6,8 @@ const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./features/projects-board/projects-board.component').then(
-        (e) => e.ProjectsBoardComponent
+      import('./features/dashboard/dashboard.component').then(
+        (e) => e.DashboardComponent
       ),
     canLoad: [AuthGuard],
   },

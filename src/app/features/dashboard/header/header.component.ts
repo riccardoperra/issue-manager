@@ -13,7 +13,7 @@ import { TuiButtonModule } from '@taiga-ui/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-projects-board-header',
+  selector: 'app-dashboard-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

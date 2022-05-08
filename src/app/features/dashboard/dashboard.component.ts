@@ -30,6 +30,7 @@ import { CommonModule } from '@angular/common';
 
 interface ProjectsBoardActions {
   openCreateProjectDialog: void;
+  deleteProject: string;
 }
 
 interface ProjectsBoardState {
@@ -96,6 +97,9 @@ export class DashboardComponent
 
   ngOnInit(): void {
     this.hold(this.actions.openCreateProjectDialog$, () => this.openDialog());
+    this.hold(this.actions.deleteProject$, ($id) =>
+      this.projectsState.actions.deleteProject({ $id })
+    );
   }
 
   openDialog(): void {

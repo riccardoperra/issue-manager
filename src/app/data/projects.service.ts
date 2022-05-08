@@ -63,6 +63,12 @@ export class ProjectsService {
     ).pipe(map((x) => JSON.parse(x.stdout)));
   }
 
+  deleteProject($id: Project['$id']): Observable<{}> {
+    return from(
+      this.appwrite.database.deleteDocument(ProjectsService.collectionId, $id)
+    );
+  }
+
   readonly changes$ = realtimeListener<Project>(
     this.appwrite,
     `collections.${ProjectsService.collectionId}.documents`

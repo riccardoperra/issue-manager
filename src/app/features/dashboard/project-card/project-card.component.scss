@@ -7,7 +7,21 @@
 
 .card {
   width: 100%;
-  min-height: 150px;
+  min-height: 125px;
+  padding: 1.5rem;
+  border: none;
+
+  &::before {
+    box-shadow: rgba(0, 0, 0, 0.1) 0 1px 2px 0;
+    border: 0;
+  }
+
+  &-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   > .card__skeleton {
     width: 70%;

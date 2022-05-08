@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KanbanAttachmentsTableComponent } from './kanban-attachments-table.component';
+import { IssueAttachmentsTableComponent } from './issue-attachments-table.component';
 
 describe('KanbanAttachmentsTableComponent', () => {
-  let component: KanbanAttachmentsTableComponent;
-  let fixture: ComponentFixture<KanbanAttachmentsTableComponent>;
+  let component: IssueAttachmentsTableComponent;
+  let fixture: ComponentFixture<IssueAttachmentsTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KanbanAttachmentsTableComponent ]
-    })
-    .compileComponents();
+      declarations: [IssueAttachmentsTableComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KanbanAttachmentsTableComponent);
+    fixture = TestBed.createComponent(IssueAttachmentsTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

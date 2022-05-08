@@ -1,5 +1,5 @@
 import { RxState } from '@rx-angular/state';
-import { Card, CardsService } from '../../data/cards.service';
+import { CardsService } from '../../data/cards.service';
 import { Inject, Injectable } from '@angular/core';
 import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
 import {
@@ -12,21 +12,13 @@ import {
   withLatestFrom,
 } from 'rxjs';
 import { patch } from '@rx-angular/cdk/transformations';
-import { Models } from 'appwrite';
 import { BucketService } from '../../data/bucket.service';
-import { Project, ProjectsService } from '../../data/projects.service';
+import { ProjectsService } from '../../data/projects.service';
+import { CardAttachmentsService } from '../../data/cards-attachments.service';
 import {
-  CardAttachment,
-  CardAttachmentsService,
-} from '../../data/cards-attachments.service';
-
-interface KanbanCardEditorState {
-  project: Project;
-  card: Card;
-  attachmentList: readonly (Models.File & {
-    attachment: CardAttachment;
-  })[];
-}
+  KanbanCardEditorState,
+  UploadedAttachment,
+} from './issue-detail.model';
 
 interface Actions {
   fetch: { $id: string };
@@ -35,12 +27,12 @@ interface Actions {
   editTitle: string;
   updateContent: string;
   updateArchived: boolean;
-  addAttachment: Models.File & { attachment: CardAttachment };
-  deleteAttachment: Models.File & { attachment: CardAttachment };
+  addAttachment: UploadedAttachment;
+  deleteAttachment: UploadedAttachment;
 }
 
 @Injectable()
-export class KanbanCardEditorAdapter extends RxState<KanbanCardEditorState> {
+export class IssueEditorAdapter extends RxState<KanbanCardEditorState> {
   readonly actions = this.rxActionFactory.create();
 
   private readonly updateTitleEvent$ = this.actions.editTitle$.pipe(

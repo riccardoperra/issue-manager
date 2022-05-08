@@ -2,7 +2,7 @@ import { Component, ElementRef, Inject, Input, OnInit } from '@angular/core';
 import { Card } from '../../../data/cards.service';
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
-import { KanbanCardEditorComponent } from '../../issue-editor/kanban-card-editor.component';
+import { IssueEditorComponent } from '../../issue-editor/issue-editor.component';
 
 @Component({
   selector: 'app-kanban-card',
@@ -16,7 +16,7 @@ export class KanbanCardComponent implements OnInit {
 
   onClick(card: Card): void {
     this.dialogService
-      .open(new PolymorpheusComponent(KanbanCardEditorComponent), {
+      .open(new PolymorpheusComponent(IssueEditorComponent), {
         size: 'page',
         data: {
           cardId: card.$id,

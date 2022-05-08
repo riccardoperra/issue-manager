@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KanbanCardEditorComponent } from './kanban-card-editor.component';
+import { IssueDetailComponent } from './issue-detail.component';
 
 describe('EditCardComponent', () => {
-  let component: KanbanCardEditorComponent;
-  let fixture: ComponentFixture<KanbanCardEditorComponent>;
+  let component: IssueDetailComponent;
+  let fixture: ComponentFixture<IssueDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [KanbanCardEditorComponent],
+      declarations: [IssueDetailComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KanbanCardEditorComponent);
+    fixture = TestBed.createComponent(IssueDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

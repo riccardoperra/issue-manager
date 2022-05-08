@@ -17,7 +17,7 @@ import {
   TuiLoaderModule,
 } from '@taiga-ui/core';
 import { Models } from 'appwrite';
-import { BucketService } from '../../../../data/bucket.service';
+import { BucketService } from '../../../data/bucket.service';
 import { TuiPreviewModule } from '@taiga-ui/addon-preview';
 import { CommonModule } from '@angular/common';
 import { PushModule } from '@rx-angular/template';
@@ -27,21 +27,21 @@ interface AttachmentPreviewContext {
 }
 
 @Component({
-  selector: 'app-kanban-attachment-preview',
-  templateUrl: 'kanban-attachment-preview.component.html',
-  styleUrls: ['./kanban-attachment-preview.component.scss'],
+  selector: 'app-issue-attachment-preview',
+  templateUrl: 'issue-attachment-preview.component.html',
+  styleUrls: ['./issue-attachment-preview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    TuiPreviewModule,
     CommonModule,
-    TuiLinkModule,
     PushModule,
+    TuiPreviewModule,
+    TuiLinkModule,
     TuiButtonModule,
     TuiLoaderModule,
   ],
 })
-export class KanbanAttachmentPreviewComponent {
+export class IssueAttachmentPreviewComponent {
   get files() {
     return this.context.data.files;
   }
@@ -59,8 +59,6 @@ export class KanbanAttachmentPreviewComponent {
 
   readonly title$ = this.item$.pipe(map((item) => item.name));
 
-  readonly contentUnavailable$ = this.item$.pipe(map(() => false));
-
   readonly imageSrc$ = this.item$.pipe(
     switchMap((item) =>
       of(this.bucketService.getPreview(item.bucketId, item.$id)).pipe(
@@ -70,7 +68,6 @@ export class KanbanAttachmentPreviewComponent {
       )
     )
   );
-
   close(): void {
     this.context.completeWith();
   }

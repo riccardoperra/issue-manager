@@ -1,14 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { CardsService } from '../../data/cards.service';
-import { KanbanCardEditorAdapter } from './kanban-card-editor.adapter';
+import { IssueEditorAdapter } from './issue-detail-adapter.service';
 import { TuiDialogContext } from '@taiga-ui/core';
 import { FormControl } from '@angular/forms';
 import { EditorState } from 'lexical';
 import {
-  ISSUE_EDITOR_IMPORTS,
-  ISSUE_EDITOR_PROVIDERS,
-} from './issue-editor.metadata';
+  ISSUE_DETAIL_IMPORTS,
+  ISSUE_DETAIL_PROVIDERS,
+} from './issue-detail.metadata';
 
 export interface KanbanCardEditorContext {
   cardId: string;
@@ -16,13 +16,13 @@ export interface KanbanCardEditorContext {
 
 @Component({
   selector: 'app-kanban-card-editor',
-  templateUrl: './kanban-card-editor.component.html',
-  styleUrls: ['./kanban-card-editor.component.scss'],
+  templateUrl: './issue-detail.component.html',
+  styleUrls: ['./issue-detail.component.scss'],
   standalone: true,
-  providers: [ISSUE_EDITOR_PROVIDERS],
-  imports: [ISSUE_EDITOR_IMPORTS],
+  providers: [ISSUE_DETAIL_PROVIDERS],
+  imports: [ISSUE_DETAIL_IMPORTS],
 })
-export class KanbanCardEditorComponent implements OnInit {
+export class IssueDetailComponent implements OnInit {
   readonly card$ = this.adapter.select('card');
   readonly title = new FormControl<any>('');
   readonly project$ = this.adapter.select('project');
@@ -51,8 +51,8 @@ export class KanbanCardEditorComponent implements OnInit {
     private readonly context: TuiDialogContext<void, KanbanCardEditorContext>,
     @Inject(CardsService)
     private readonly cardsService: CardsService,
-    @Inject(KanbanCardEditorAdapter)
-    readonly adapter: KanbanCardEditorAdapter
+    @Inject(IssueEditorAdapter)
+    readonly adapter: IssueEditorAdapter
   ) {
     this.adapter.actions.fetch({ $id: this.context.data.cardId });
   }

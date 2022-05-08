@@ -103,13 +103,15 @@
   <h3 class="tui-space_top-12">Attachments</h3>
 
   <div class="tui-space_top-6" *rxLet="project$; let project">
-    <app-kanban-attachments-table
+    <app-issue-attachments-uploader
       [project]="project"
       [card]="card"
-      [attachments]="attachments$ | push"
       (addAttachment)="adapter.actions.addAttachment($event)"
+    ></app-issue-attachments-uploader>
+    <app-issue-attachments-table
+      [attachments]="attachments$ | push"
       (deleteAttachment)="adapter.actions.deleteAttachment($event)"
-    ></app-kanban-attachments-table>
+    ></app-issue-attachments-table>
   </div>
 </div>
 

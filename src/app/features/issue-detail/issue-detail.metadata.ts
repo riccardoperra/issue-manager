@@ -1,4 +1,4 @@
-import { KanbanCardEditorAdapter } from './kanban-card-editor.adapter';
+import { IssueEditorAdapter } from './issue-detail-adapter.service';
 import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
 import { LetModule, PushModule } from '@rx-angular/template';
 import { CommonModule } from '@angular/common';
@@ -13,14 +13,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TuiInputModule, TuiTagModule } from '@taiga-ui/kit';
 import { TuiActiveZoneModule, TuiAutoFocusModule } from '@taiga-ui/cdk';
 import { PlaygroundEditorModule } from '../../shared/lexical/editor/editor.module';
-import { KanbanAttachmentsTableComponent } from '../project-kanban/kanban-attachments-table/kanban-attachments-table.component';
+import { IssueAttachmentsUploaderComponent } from './issue-attachments-uploader/issue-attachments-uploader.component';
+import { IssueAttachmentsTableComponent } from './issue-attachments-table/issue-attachments-table.component';
 
-export const ISSUE_EDITOR_PROVIDERS = [
-  KanbanCardEditorAdapter,
-  RxActionFactory,
-];
+export const ISSUE_DETAIL_PROVIDERS = [IssueEditorAdapter, RxActionFactory];
 
-export const ISSUE_EDITOR_IMPORTS = [
+export const ISSUE_DETAIL_IMPORTS = [
   LetModule,
   CommonModule,
   TuiButtonModule,
@@ -34,11 +32,7 @@ export const ISSUE_EDITOR_IMPORTS = [
   TuiSvgModule,
   PlaygroundEditorModule,
   TuiLoaderModule,
-  KanbanAttachmentsTableComponent,
   PushModule,
+  IssueAttachmentsTableComponent,
+  IssueAttachmentsUploaderComponent,
 ];
-
-export const ISSUES_EDITOR_METADATA = {
-  imports: ISSUE_EDITOR_IMPORTS,
-  providers: ISSUE_EDITOR_PROVIDERS,
-};

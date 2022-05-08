@@ -40,9 +40,19 @@
           class="list"
         >
           <tui-island *rxFor="let card of vm.cards">
-            {{ card.name }}
+            <div class="tui-island__content">
+              <span> {{ card.name }} </span>
+              <button
+                tuiButton
+                tuiIconButton
+                size="s"
+                appearance="secondary"
+                (click)="undoArchiveList(card)"
+              >
+                <tui-svg src="tuiIconUndo"></tui-svg>
+              </button>
+            </div>
           </tui-island>
-          <span>No archived cards</span>
         </div>
       </div>
     </div>

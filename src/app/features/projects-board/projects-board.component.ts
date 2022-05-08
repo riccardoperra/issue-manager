@@ -45,6 +45,10 @@ interface ProjectsBoardActions {
   openCreateProjectDialog: void;
 }
 
+interface ProjectsBoardState {
+  boardMode: 'grid' | 'card';
+}
+
 @Component({
   selector: 'app-projects-board',
   templateUrl: './projects-board.component.html',
@@ -63,11 +67,16 @@ interface ProjectsBoardActions {
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [RxActionFactory],
 })
-export class ProjectsBoardComponent extends RxState<never> implements OnInit {
+export class ProjectsBoardComponent
+  extends RxState<ProjectsBoardState>
+  implements OnInit
+{
   readonly actions = this.rxActions.create();
   readonly projects$ = this.projectsState.projects$;
   readonly loading$ = this.projectsState.loading$.pipe(startWith(false));
   readonly account$ = this.authState.account$;
+
+  readonly boardMode$ = this.select('boardMode');
 
   readonly projectTrackBy: TrackByFunction<Project> = (index, { $id }) => $id;
 
@@ -82,6 +91,16 @@ export class ProjectsBoardComponent extends RxState<never> implements OnInit {
     private readonly dialogService: TuiDialogService
   ) {
     super();
+
+    this.set({
+      boardMode: 'card',
+    });
+  }
+
+  toggleBoard(): void {
+    this.set('boardMode', (state) =>
+      state.boardMode === 'grid' ? 'card' : 'grid'
+    );
   }
 
   ngOnInit(): void {

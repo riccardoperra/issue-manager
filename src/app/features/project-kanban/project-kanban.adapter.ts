@@ -36,6 +36,7 @@ interface Actions {
   updateCardCategory: { $id: string; rank: string; categoryId: string };
   addCategory: { name: string; rank: string; $projectId: string };
   updateArchivedCategory: { $id: string; archived: boolean };
+  updateArchivedCard: { $id: string; archived: boolean };
   addCard: { name: string; rank: string; $categoryId: string };
   addMember: string;
   removeMember: string;
@@ -113,6 +114,11 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
         this.categoriesService.archiveCategory($id, archived)
       )
     ),
+    this.ui.updateArchivedCard$.pipe(
+      switchMap(({ $id, archived }) =>
+        this.cardsService.updateArchived($id, archived)
+      )
+    ),
     this.ui.addCard$.pipe(
       withLatestFrom(this.project$.pipe(pluck('$id'))),
       switchMap(([{ name, rank, $categoryId }, $projectId]) =>
@@ -129,7 +135,6 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
       switchMap(([email, $projectId]) =>
         this.teamsService.addMembership($projectId, email).pipe(
           tap((membership) => {
-            console.log('workspace', membership);
             return this.set('workspace', (state) =>
               patch(state.workspace, {
                 members: [...state.workspace.members, membership],
@@ -208,6 +213,15 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
       state.cards.map((card) =>
         card.$id === $id ? patch(card, { rank }) : card
       )
+    );
+
+    this.connect(
+      'cards',
+      this.ui.updateArchivedCard$,
+      (state, { $id, archived }) =>
+        state.cards.map((card) =>
+          card.$id === $id ? patch(card, { archived }) : card
+        )
     );
 
     this.connect(

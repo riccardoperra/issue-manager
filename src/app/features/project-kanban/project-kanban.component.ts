@@ -24,6 +24,7 @@ interface LocalActions {
   addCategory: { name: string; scrollRef: Element };
   addCard: { name: string; $categoryId: string };
   archiveCategory: { $id: string };
+  archiveCard: { $id: string };
 }
 
 @Component({
@@ -123,6 +124,20 @@ export class ProjectKanbanComponent {
         )
       ),
       this.adapter.ui.updateArchivedCategory
+    );
+
+    this.adapter.hold(
+      this.ui.archiveCard$.pipe(
+        map(({ $id }) => ({ $id: $id, archived: true })),
+        tap(() =>
+          this.alertService
+            .open('Card archived successfully', {
+              status: TuiNotification.Success,
+            })
+            .subscribe()
+        )
+      ),
+      this.adapter.ui.updateArchivedCard
     );
 
     this.adapter.hold(

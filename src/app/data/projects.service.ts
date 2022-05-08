@@ -16,6 +16,7 @@ export interface Project extends Models.Document {
   readonly imageUrl: string | null;
   readonly tags: string[];
   readonly visibility: ProjectVisibility;
+  readonly bucketId: string;
 }
 
 export type AddProjectRequest = Pick<

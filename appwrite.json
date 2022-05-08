@@ -1,260 +1,374 @@
 {
-    "projectId": "6267091f55e56f032bea",
-    "projectName": "hackathon",
-    "collections": [
+  "projectId": "6276291d13e8cb0d8003",
+  "projectName": "appwrite2",
+  "collections": [
+    {
+      "$id": "6260423eee67978fa0da",
+      "$read": [
+        "role:all"
+      ],
+      "$write": [
+        "role:all"
+      ],
+      "name": "projects",
+      "enabled": true,
+      "permission": "collection",
+      "attributes": [
         {
-            "$id": "6260423eee67978fa0da",
-            "$read": [
-                "role:all"
-            ],
-            "$write": [
-                "role:all"
-            ],
-            "name": "projects",
-            "enabled": true,
-            "permission": "collection",
-            "attributes": [
-                {
-                    "key": "name",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 40,
-                    "default": null
-                },
-                {
-                    "key": "description",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "visibility",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "elements": [
-                        "public",
-                        "private",
-                        "notListed"
-                    ],
-                    "format": "enum",
-                    "default": null
-                },
-                {
-                    "key": "imageUrl",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "format": "url",
-                    "default": null
-                },
-                {
-                    "key": "tags",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": true,
-                    "size": 255,
-                    "default": null
-                }
-            ],
-            "indexes": [
-                {
-                    "key": "name",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "name"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                }
-            ]
+          "key": "description",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 255,
+          "default": null
         },
         {
-            "$id": "626044d20dbc091c2598",
-            "$read": [
-                "role:all"
-            ],
-            "$write": [
-                "role:all"
-            ],
-            "name": "cards",
-            "enabled": true,
-            "permission": "collection",
-            "attributes": [
-                {
-                    "key": "categoryId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "name",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "tags",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": true,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "content",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "projectId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "archived",
-                    "type": "boolean",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "default": false
-                },
-                {
-                    "key": "rank",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                }
-            ],
-            "indexes": [
-                {
-                    "key": "projectId",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "projectId"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                }
-            ]
+          "key": "name",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 40,
+          "default": null
         },
         {
-            "$id": "62604a098cb45c928e5b",
-            "$read": [
-                "role:all"
-            ],
-            "$write": [
-                "role:all"
-            ],
-            "name": "lists",
-            "enabled": true,
-            "permission": "collection",
-            "attributes": [
-                {
-                    "key": "projectId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "name",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "archived",
-                    "type": "boolean",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "default": false
-                },
-                {
-                    "key": "rank",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                }
-            ],
-            "indexes": [
-                {
-                    "key": "projectId",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "projectId"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                }
-            ]
+          "key": "tags",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": true,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "imageUrl",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "format": "url",
+          "default": null
+        },
+        {
+          "key": "visibility",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "elements": [
+            "public",
+            "private",
+            "notListed"
+          ],
+          "format": "enum",
+          "default": null
+        },
+        {
+          "key": "bucketId",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
         }
-    ],
-    "functions": [
+      ],
+      "indexes": [
         {
-            "$id": "6266e0c44e3090e5a22b",
-            "name": "on-delete-project",
-            "runtime": "node-16.0",
-            "path": "functions/on-delete-project",
-            "entrypoint": "src/index.js",
-            "execute": [],
-            "events": [],
-            "schedule": "",
-            "timeout": 15
+          "key": "name",
+          "type": "key",
+          "status": "available",
+          "attributes": [
+            "name"
+          ],
+          "orders": [
+            "ASC"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "626044d20dbc091c2598",
+      "$read": [
+        "role:all"
+      ],
+      "$write": [
+        "role:all"
+      ],
+      "name": "cards",
+      "enabled": true,
+      "permission": "collection",
+      "attributes": [
+        {
+          "key": "name",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
         },
         {
-            "$id": "create-project",
-            "name": "create-project",
-            "runtime": "node-16.0",
-            "path": "functions/create-project",
-            "entrypoint": "src/index.js",
-            "execute": [
-                "role:member"
-            ],
-            "events": [],
-            "schedule": "",
-            "timeout": 15
+          "key": "categoryId",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "tags",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": true,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "rank",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "projectId",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "archived",
+          "type": "boolean",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "default": false
+        },
+        {
+          "key": "expiryDate",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "priority",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "content",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 99999999,
+          "default": null
         }
-    ]
+      ],
+      "indexes": [
+        {
+          "key": "projectId",
+          "type": "key",
+          "status": "available",
+          "attributes": [
+            "projectId"
+          ],
+          "orders": [
+            "ASC"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "62604a098cb45c928e5b",
+      "$read": [
+        "role:all"
+      ],
+      "$write": [
+        "role:all"
+      ],
+      "name": "lists",
+      "enabled": true,
+      "permission": "collection",
+      "attributes": [
+        {
+          "key": "projectId",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "rank",
+          "type": "string",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "archived",
+          "type": "boolean",
+          "status": "available",
+          "required": false,
+          "array": false,
+          "default": false
+        }
+      ],
+      "indexes": [
+        {
+          "key": "projectId",
+          "type": "key",
+          "status": "available",
+          "attributes": [
+            "projectId"
+          ],
+          "orders": [
+            "ASC"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "62762b0405e1a79b02fb",
+      "$read": [
+        "role:member"
+      ],
+      "$write": [
+        "role:member"
+      ],
+      "name": "card_attachments",
+      "enabled": true,
+      "permission": "collection",
+      "attributes": [
+        {
+          "key": "ref",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "cardId",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "projectId",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "bucketId",
+          "type": "string",
+          "status": "available",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
+        }
+      ],
+      "indexes": [
+        {
+          "key": "ref",
+          "type": "unique",
+          "status": "available",
+          "attributes": [
+            "ref"
+          ],
+          "orders": [
+            "ASC"
+          ]
+        },
+        {
+          "key": "cardId",
+          "type": "key",
+          "status": "available",
+          "attributes": [
+            "cardId"
+          ],
+          "orders": [
+            "ASC"
+          ]
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "$id": "6266e0c44e3090e5a22b",
+      "name": "on-delete-project",
+      "runtime": "node-16.0",
+      "path": "functions/on-delete-project",
+      "entrypoint": "src/index.js",
+      "execute": [],
+      "events": [],
+      "schedule": "",
+      "timeout": 15
+    },
+    {
+      "$id": "create-project",
+      "name": "create-project",
+      "runtime": "node-16.0",
+      "path": "functions/create-project",
+      "entrypoint": "src/index.js",
+      "execute": [
+        "role:member"
+      ],
+      "events": [],
+      "schedule": "",
+      "timeout": 15
+    },
+    {
+      "$id": "delete-card-attachment",
+      "name": "delete-card-attachment",
+      "runtime": "node-16.0",
+      "path": "functions/delete-card-attachment",
+      "entrypoint": "src/index.js",
+      "execute": [
+        "role:member"
+      ],
+      "events": [],
+      "schedule": "",
+      "timeout": 15
+    }
+  ]
 }

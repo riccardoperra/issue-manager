@@ -10,7 +10,7 @@
         icon="tuiIconEditLarge"
         appearance="flat"
         class="action"
-        (click)="editingTitle = !editingTitle"
+        (click)="editingTitle = !editingTitle; title.setValue(card.name)"
       ></button>
     </h1>
     <div class="header-actions" *ngIf="!card.archived">
@@ -41,28 +41,75 @@
 
   <tui-notification
     status="warning"
-    class="tui-space_bottom-4"
+    class="tui-space_vertical-4 archived-notification"
     *ngIf="card.archived"
   >
-    <div style="display: flex; justify-content: space-between">
+    <div class="notification-content">
       This card is archived.
-      <button
-        tuiButton
-        size="xs"
-        appearance="accent"
-        class="tui-space_left-auto"
-        (click)="undoArchive()"
-      >
-        Undo
-      </button>
+      <div class="notification-actions">
+        <button tuiButton size="xs" appearance="accent" (click)="undoArchive()">
+          Undo
+        </button>
+      </div>
     </div>
   </tui-notification>
 
-  <div class="editor-shell" [style.height.%]="100">
+  <div class="tui-space_top-12">
+    <div class="editor-metadata">
+      <div class="metadata-title">
+        <tui-svg src="tuiIconBookmark" size="s"></tui-svg>
+        Category
+      </div>
+      <div class="metadata-input">
+        <tui-tag value="Categoria" [autoColor]="true"></tui-tag>
+      </div>
+    </div>
+  </div>
+
+  <div class="tui-space_top-6">
+    <div class="editor-metadata">
+      <div class="metadata-title">
+        <tui-svg src="tuiIconTime" size="s"></tui-svg>
+        Expiration date
+      </div>
+      <div class="metadata-input">
+        12 feb
+        <!--      <tui-input-date-time tuiTextfieldSize="s"></tui-input-date-time>-->
+      </div>
+    </div>
+  </div>
+
+  <div class="tui-space_top-6">
+    <div class="editor-metadata">
+      <div class="metadata-title">
+        <tui-svg src="tuiIconFlag" size="s"></tui-svg>
+        Priority
+      </div>
+      <div class="metadata-input">
+        <tui-tag value="HIGH" status="error"></tui-tag>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="tui-space_top-12">Description</h3>
+
+  <div class="editor-shell tui-space_top-12" [style.height.%]="100">
     <app-lexical-editor
       [content]="card.content"
       (editorChange)="editorChange($event)"
     ></app-lexical-editor>
+  </div>
+
+  <h3 class="tui-space_top-12">Attachments</h3>
+
+  <div class="tui-space_top-6" *rxLet="project$; let project">
+    <app-kanban-attachments-table
+      [project]="project"
+      [card]="card"
+      [attachments]="attachments$ | push"
+      (addAttachment)="adapter.actions.addAttachment($event)"
+      (deleteAttachment)="adapter.actions.deleteAttachment($event)"
+    ></app-kanban-attachments-table>
   </div>
 </div>
 

@@ -1,26 +1,3 @@
-@import '~@taiga-ui/core/styles/taiga-ui-local';
-
-:host {
-  background-color: var(--tui-base-02);
-  display: block;
-  margin: 0;
-  height: 100vh;
-}
-
-.board-row {
-  row-gap: 2rem;
-}
-
-.board-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.wrapper {
-  display: flex;
-}
-
 .table {
   width: 100%;
 }

@@ -49,6 +49,9 @@ export class KanbanListComponent extends RxState<{
   archiveCategory = new EventEmitter<any>();
 
   @Output()
+  archiveCard = new EventEmitter<string>();
+
+  @Output()
   addCard = new EventEmitter<any>();
 
   @Output()

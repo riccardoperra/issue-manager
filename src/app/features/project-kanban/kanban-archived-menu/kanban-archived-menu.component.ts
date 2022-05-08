@@ -3,6 +3,7 @@ import { tuiFadeIn, tuiSlideIn } from '@taiga-ui/core';
 import { combineLatest, map } from 'rxjs';
 import { ProjectKanbanAdapter } from '../project-kanban.adapter';
 import { Category } from '../../../data/categories.service';
+import { Card } from '../../../data/cards.service';
 
 @Component({
   selector: 'app-kanban-archived-menu',
@@ -37,6 +38,10 @@ export class KanbanArchivedMenuComponent implements OnInit {
 
   undoArchiveCategory(list: Category): void {
     this.adapter.ui.updateArchivedCategory({ $id: list.$id, archived: false });
+  }
+
+  undoArchiveList(card: Card): void {
+    this.adapter.ui.updateArchivedCard({ $id: card.$id, archived: false });
   }
 
   ngOnInit(): void {}

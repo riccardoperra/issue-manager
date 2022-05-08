@@ -1,9 +1,20 @@
 import { Component, Inject } from '@angular/core';
 import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RxEffects } from '@rx-angular/state/effects';
 import { AuthEffects } from '../../shared/auth/auth.effects';
 import { filter } from 'rxjs';
+import {
+  TuiButtonModule,
+  TuiLinkModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/core';
+import {
+  TuiFieldErrorModule,
+  TuiInputModule,
+  TuiInputPasswordModule,
+} from '@taiga-ui/kit';
+import { RouterModule } from '@angular/router';
 
 interface LoginCommands {
   loginAsGuest: void;
@@ -15,11 +26,22 @@ interface LoginCommands {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   providers: [RxActionFactory, RxEffects],
+  imports: [
+    ReactiveFormsModule,
+    TuiLinkModule,
+    TuiInputModule,
+    TuiTextfieldControllerModule,
+    TuiFieldErrorModule,
+    TuiInputPasswordModule,
+    TuiButtonModule,
+    RouterModule,
+  ],
+  standalone: true,
 })
 export class LoginComponent {
   readonly actions = this.rxActions.create();
 
-  readonly form = this.fb.group({
+  readonly form = this.fb.group<any>({
     email: this.fb.control('', [Validators.required, Validators.email]),
     password: this.fb.control('', Validators.required),
   });

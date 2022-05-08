@@ -21,11 +21,9 @@ export interface KanbanCardEditorContext {
 })
 export class KanbanCardEditorComponent implements OnInit {
   readonly card$ = this.adapter.select('card');
+  readonly title = new FormControl<any>('');
   readonly project$ = this.adapter.select('project');
-
   readonly attachments$ = this.adapter.select('attachmentList');
-
-  readonly title = new FormControl('');
 
   editingTitle: boolean = false;
 

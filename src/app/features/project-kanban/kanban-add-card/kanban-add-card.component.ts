@@ -52,7 +52,7 @@ export class KanbanAddCardComponent {
   confirm(): void {
     if (this.form.invalid) return;
     this.edit = false;
-    this.confirmEvent.emit(this.form.value.name);
+    this.confirmEvent.emit(this.form.value.name as string);
     this.form.reset({ name: '' });
   }
 }

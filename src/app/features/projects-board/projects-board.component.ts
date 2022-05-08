@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { ProjectsState } from '../../shared/state/projects.state';
 import {
+  TuiButtonComponent,
   TuiButtonModule,
   TuiDialogService,
   tuiFadeIn,
@@ -40,6 +41,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { ProjectCardComponent } from './project-card/project-card.component';
+import { TuiTableModule } from '@taiga-ui/addon-table';
+import { CommonModule } from '@angular/common';
 
 interface ProjectsBoardActions {
   openCreateProjectDialog: void;
@@ -57,12 +60,16 @@ interface ProjectsBoardState {
   standalone: true,
   imports: [
     RouterModule,
+    CommonModule,
     ForModule,
     LetModule,
     PushModule,
     TuiLoaderModule,
     HeaderComponent,
     ProjectCardComponent,
+    TuiButtonModule,
+    TuiTagModule,
+    TuiTableModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [RxActionFactory],

@@ -43,7 +43,7 @@ import { KanbanAttachmentPreviewComponent } from './kanban-attachment-preview/ka
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanAttachmentsTableComponent implements OnInit {
-  readonly files = this.fb.control([]);
+  readonly files = this.fb.control([] as File[]);
 
   @Input()
   project!: Project;
@@ -73,13 +73,13 @@ export class KanbanAttachmentsTableComponent implements OnInit {
   readonly previewItem$ = new BehaviorSubject<Models.File | null>(null);
 
   private readonly files$ = this.files.valueChanges.pipe(
-    startWith<File[]>([]),
+    startWith([] as File[]),
     pairwise(),
-    map(([prev, curr]) => curr.filter((item) => !prev.includes(item))),
+    map(([prev, curr]) => curr?.filter((item) => !prev?.includes(item))),
     // @ts-ignore
     mergeScan((acc, curr) => {
       return combineLatest(
-        curr.map((file) =>
+        curr!.map((file) =>
           this.addFile(file).pipe(
             tap((file) => {
               if (!file || file instanceof Error) return;
@@ -89,7 +89,7 @@ export class KanbanAttachmentsTableComponent implements OnInit {
             takeUntil(
               // Cancel upload if file is removed from control
               this.files.valueChanges.pipe(
-                filter((files) => !files.includes(file))
+                filter((files) => !files?.includes(file))
               )
             )
           )

@@ -9,7 +9,7 @@
   <div class="list-header" cdkDragHandle>
     {{ vm.list.name }}
 
-    <div class="list-header-actions">
+    <div class="list-header-actions" *hasWorkspaceAuthorization>
       <tui-hosted-dropdown tuiDropdownAlign="right" [content]="listActionMenu">
         <button size="s" tuiIconButton appearance="flat">
           <tui-svg src="tuiIconMoreHorLarge"></tui-svg>
@@ -41,6 +41,7 @@
 
   <div class="tui-island__content tui-space_all-4 list-add-card">
     <app-kanban-add-card
+      *hasWorkspaceAuthorization
       (confirmEvent)="addCard.emit({ name: $event, $categoryId: vm.list.$id })"
     ></app-kanban-add-card>
   </div>

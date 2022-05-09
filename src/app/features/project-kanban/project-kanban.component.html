@@ -25,13 +25,16 @@
 
       <div class="tui-row tui-space_all-0 tui-row_align_center">
         <h1 class="tui-space_right-4">{{ project.name }}</h1>
-        <ng-container *rxLet="adapter.workspace$; let workspace">
-          <app-kanban-membership-list
-            *ngIf="workspace && workspace.team"
-            [members]="workspace.members"
-            (removeMember)="adapter.ui.removeMember($event)"
-            (addMember)="adapter.ui.addMember($event)"
-          ></app-kanban-membership-list>
+
+        <ng-container *hasWorkspaceAuthorization>
+          <ng-container *rxLet="adapter.workspace$; let workspace">
+            <app-kanban-membership-list
+              *ngIf="workspace && workspace.team"
+              [members]="workspace.members"
+              (removeMember)="adapter.ui.removeMember($event)"
+              (addMember)="adapter.ui.addMember($event)"
+            ></app-kanban-membership-list>
+          </ng-container>
         </ng-container>
         <div class="project-kanban-actions">
           <button
@@ -82,6 +85,7 @@
               ></app-kanban-list>
 
               <app-kanban-add-list
+                *hasWorkspaceAuthorization
                 class="list-wrapper"
                 (confirmEvent)="
                   ui.addCategory({

@@ -52,6 +52,7 @@ import { KanbanArchivedMenuComponent } from './kanban-archived-menu/kanban-archi
 import { KanbanMembershipListComponent } from './kanban-membership-list/kanban-membership-list.component';
 import { PlaygroundEditorModule } from '../../shared/lexical/editor/editor.module';
 import { KanbanListComponent } from './kanban-list/kanban-list.component';
+import { HasAuthorizationDirective } from '../../shared/permissions/has-authorization.directive';
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import { KanbanListComponent } from './kanban-list/kanban-list.component';
     TuiNotificationModule,
     TuiDropdownContextModule,
     KanbanListComponent,
+    HasAuthorizationDirective,
   ],
 })
 export class ProjectKanbanModule {}

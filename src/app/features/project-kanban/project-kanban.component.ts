@@ -17,6 +17,8 @@ import { ProjectKanbanAdapter } from './project-kanban.adapter';
 import { TuiAlertService, TuiDialogService, tuiSlideIn } from '@taiga-ui/core';
 import { TuiNotification } from '@taiga-ui/core/enums/notification';
 import { TuiScrollService } from '@taiga-ui/cdk';
+import { CURRENT_WORKSPACE_CONTEXT } from '../../shared/permissions/current-team-context';
+import { withWorkspaceContext } from '../../shared/permissions/context.provider';
 
 interface LocalActions {
   moveCategory: CdkDragDrop<readonly Category[], readonly Category[], Category>;
@@ -32,7 +34,7 @@ interface LocalActions {
   templateUrl: './project-kanban.component.html',
   styleUrls: ['./project-kanban.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [RxActionFactory, ProjectKanbanAdapter],
+  providers: [RxActionFactory, ProjectKanbanAdapter, withWorkspaceContext()],
   animations: [tuiSlideIn],
 })
 export class ProjectKanbanComponent {
@@ -40,11 +42,7 @@ export class ProjectKanbanComponent {
   readonly breadcrumb = [{ caption: 'Dashboard', routerLink: '/' }];
   readonly project$ = this.adapter.project$;
   readonly categories$ = this.adapter.sortedCategories$;
-  readonly archivedCount$ = this.adapter
-    .select('categories')
-    .pipe(map((cat) => cat.filter(({ archived }) => archived).length));
   readonly groupedCards$ = this.adapter.cardsByCategory$;
-
   showArchived = false;
 
   readonly categoriesTrackBy: TrackByFunction<Category> = (index, category) =>

@@ -5,4 +5,5 @@ export interface AuthStateModel {
     guest?: boolean;
   }> | null;
   session: Models.Session | null;
+  teams: Models.Team[] | null;
 }

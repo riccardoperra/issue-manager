@@ -6,16 +6,20 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CategoriesService, Category } from '../../data/categories.service';
 import { ActivatedRoute } from '@angular/router';
 import {
+  BehaviorSubject,
   distinctUntilChanged,
   exhaustMap,
   filter,
   forkJoin,
+  iif,
   map,
   merge,
   Observable,
   of,
   pluck,
+  ReplaySubject,
   switchMap,
+  take,
   tap,
   withLatestFrom,
 } from 'rxjs';
@@ -25,6 +29,8 @@ import { patch } from '@rx-angular/cdk/transformations';
 import { sortArrayByRankProperty } from '../../shared/utils/ranking';
 import { TeamsService } from '../../data/team.service';
 import { ProjectsState } from '../../shared/state/projects.state';
+import { PermissionsService } from '../../shared/permissions/permissions.service';
+import { CURRENT_WORKSPACE_CONTEXT } from '../../shared/permissions/current-team-context';
 
 interface Actions {
   fetch: { $projectId: string };
@@ -174,11 +180,19 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
     @Inject(TeamsService)
     private readonly teamsService: TeamsService,
     @Inject(ProjectsState)
-    private readonly projectsState: ProjectsState
+    private readonly projectsState: ProjectsState,
+    @Inject(CURRENT_WORKSPACE_CONTEXT)
+    private readonly workspaceContext: ReplaySubject<string>,
+    @Inject(PermissionsService)
+    private readonly permissionsService: PermissionsService
   ) {
     super();
 
     this.connect('projectId', this.routeProjectId$);
+
+    this.hold(this.routeProjectId$, (projectId) => {
+      this.workspaceContext.next(projectId);
+    });
 
     this.connect(
       this.ui.fetch$.pipe(
@@ -290,7 +304,19 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
     this.projectsService.getById(projectId).pipe(
       exhaustMap((project) =>
         forkJoin([
-          this.teamsService.getTeamDetail(projectId),
+          this.permissionsService.canWriteOnWorkspace$.pipe(
+            switchMap((allowed) =>
+              iif(
+                () => allowed,
+                this.teamsService.getTeamDetail(projectId),
+                of({
+                  members: [],
+                  team: null,
+                })
+              )
+            ),
+            take(1)
+          ),
           this.loadCategoriesAndCards(project),
         ]).pipe(
           map(([workspace, { categories, cards }]) => ({

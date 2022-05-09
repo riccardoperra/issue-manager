@@ -18,23 +18,29 @@ export class TeamsService {
     team: Models.Team | null;
     members: readonly Models.Membership[];
   }> {
-    return from(this.appwrite.teams.get($projectId)).pipe(
-      switchMap((team) => {
-        if (team.total === 0) return of({ team, members: [] });
-        return from(this.appwrite.teams.getMemberships(team.$id)).pipe(
-          map((members) => ({
-            team,
-            members: members.memberships,
-          }))
-        );
-      }),
-      catchError(() =>
-        of({
-          members: [],
-          team: null,
-        } as unknown as { team: Models.Team; members: readonly Models.Membership[] })
+    return defer(() =>
+      from(this.appwrite.teams.get($projectId)).pipe(
+        switchMap((team) => {
+          if (team.total === 0) return of({ team, members: [] });
+          return from(this.appwrite.teams.getMemberships(team.$id)).pipe(
+            map((members) => ({
+              team,
+              members: members.memberships,
+            }))
+          );
+        }),
+        catchError(() =>
+          of({
+            members: [],
+            team: null,
+          } as unknown as { team: Models.Team; members: readonly Models.Membership[] })
+        )
       )
     );
+  }
+
+  getCurrentTeams(): Observable<Models.Team[]> {
+    return from(this.appwrite.teams.list()).pipe(map((teams) => teams.teams));
   }
 
   addMembership($projectId: string, email: string) {

@@ -29,6 +29,7 @@ import { TuiIslandModule } from '@taiga-ui/kit';
 import { TuiElementModule } from '@taiga-ui/cdk';
 import { KanbanAddCardComponent } from '../kanban-add-card/kanban-add-card.component';
 import { LetModule } from '@rx-angular/template';
+import { HasAuthorizationDirective } from '../../../shared/permissions/has-authorization.directive';
 
 @Component({
   selector: 'app-kanban-list',
@@ -50,6 +51,7 @@ import { LetModule } from '@rx-angular/template';
     TuiDataListModule,
     KanbanAddCardComponent,
     KanbanCardListComponent,
+    HasAuthorizationDirective,
   ],
 })
 export class KanbanListComponent extends RxState<{

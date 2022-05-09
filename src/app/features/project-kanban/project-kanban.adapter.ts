@@ -10,6 +10,7 @@ import {
   distinctUntilChanged,
   exhaustMap,
   filter,
+  finalize,
   forkJoin,
   iif,
   map,
@@ -55,6 +56,7 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
   private readonly categories$ = this.select('categories');
 
   readonly project$ = this.select('project');
+  readonly loading$ = this.select('loading');
   readonly workspace$ = this.select('workspace');
 
   readonly sortedCategories$: Observable<readonly Category[]> =
@@ -196,7 +198,12 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
 
     this.connect(
       this.ui.fetch$.pipe(
-        switchMap(({ $projectId }) => this.loadResources($projectId))
+        tap(() => this.set({ loading: true })),
+        switchMap(({ $projectId }) =>
+          this.loadResources($projectId).pipe(
+            finalize(() => this.set({ loading: false }))
+          )
+        )
       ),
       (state, resources) => patch(state, resources)
     );

@@ -7,7 +7,12 @@ import {
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
 import { ProjectKanbanAdapter } from './project-kanban.adapter';
-import { TuiButtonModule, TuiLinkModule, tuiSlideIn } from '@taiga-ui/core';
+import {
+  TuiButtonModule,
+  TuiLinkModule,
+  TuiLoaderModule,
+  tuiSlideIn,
+} from '@taiga-ui/core';
 import { withWorkspaceContext } from '../../shared/permissions/context.provider';
 import { TuiBreadcrumbsModule } from '@taiga-ui/kit';
 import { HasAuthorizationDirective } from '../../shared/permissions/has-authorization.directive';
@@ -15,7 +20,7 @@ import { KanbanMembershipListComponent } from './kanban-membership-list/kanban-m
 import { IssuesKanbanComponent } from '../issues-kanban/issues-kanban.component';
 import { KanbanArchivedMenuComponent } from './kanban-archived-menu/kanban-archived-menu.component';
 import { CommonModule } from '@angular/common';
-import { LetModule } from '@rx-angular/template';
+import { LetModule, PushModule } from '@rx-angular/template';
 
 @Component({
   selector: 'app-project-kanban',
@@ -32,6 +37,8 @@ import { LetModule } from '@rx-angular/template';
     TuiBreadcrumbsModule,
     TuiLinkModule,
     RouterModule,
+    TuiLoaderModule,
+    PushModule,
     HasAuthorizationDirective,
     KanbanMembershipListComponent,
     IssuesKanbanComponent,
@@ -41,6 +48,7 @@ import { LetModule } from '@rx-angular/template';
 export class ProjectKanbanComponent {
   readonly breadcrumb = [{ caption: 'Dashboard', routerLink: '/' }];
   readonly project$ = this.adapter.project$;
+  readonly loading$ = this.adapter.loading$;
   showArchived = false;
 
   constructor(

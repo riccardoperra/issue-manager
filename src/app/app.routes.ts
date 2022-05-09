@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AuthGuard } from './shared/auth/auth.guard';
 
-const routes: Routes = [
+export const ROUTES: Routes = [
   {
     path: '',
     loadComponent: () =>
@@ -30,14 +29,3 @@ const routes: Routes = [
       import('./features/team/team.module').then((m) => m.TeamModule),
   },
 ];
-
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      enableTracing: false,
-      initialNavigation: 'disabled',
-    }),
-  ],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}

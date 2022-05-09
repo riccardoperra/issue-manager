@@ -84,6 +84,8 @@ export class DashboardComponent
   ) {
     super();
 
+    this.projectsState.initialize();
+
     this.set({
       boardMode: 'card',
     });

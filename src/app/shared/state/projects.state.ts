@@ -6,7 +6,7 @@ import {
   ProjectsService,
 } from '../../data/projects.service';
 import { Inject, Injectable } from '@angular/core';
-import { finalize, map, merge, startWith, switchMap, tap } from 'rxjs';
+import { finalize, map, merge, switchMap, tap } from 'rxjs';
 import { patch } from '@rx-angular/cdk/transformations';
 import { RxActionFactory } from '../rxa-custom/actions/actions.factory';
 import { TuiAlertService } from '@taiga-ui/core';

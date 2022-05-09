@@ -13,9 +13,9 @@ const routes: Routes = [
   },
   {
     path: 'project/:projectId',
-    loadChildren: () =>
-      import('./features/project-kanban/project-kanban.module').then(
-        (m) => m.ProjectKanbanModule
+    loadComponent: () =>
+      import('./features/project-kanban/project-kanban.component').then(
+        (m) => m.ProjectKanbanComponent
       ),
     canActivate: [AuthGuard],
   },

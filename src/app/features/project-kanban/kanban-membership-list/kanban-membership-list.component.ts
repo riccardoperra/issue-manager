@@ -4,21 +4,53 @@ import {
   EventEmitter,
   Inject,
   Input,
-  OnInit,
   Output,
 } from '@angular/core';
 import { ProjectKanbanAdapter } from '../project-kanban.adapter';
-import { tuiPure } from '@taiga-ui/cdk';
+import { TuiAutoFocusModule, tuiPure } from '@taiga-ui/cdk';
 import { Models } from 'appwrite';
-import { Observable } from 'rxjs';
 import { AuthState } from '../../../shared/auth/auth.state';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import {
+  TuiButtonModule,
+  TuiDropdownControllerModule,
+  TuiHostedDropdownModule,
+  TuiLabelModule,
+  TuiSvgModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/core';
+import { TuiAvatarModule, TuiBadgeModule, TuiInputModule } from '@taiga-ui/kit';
+import { CommonModule } from '@angular/common';
+import { LetModule } from '@rx-angular/template';
+import { ForModule } from '@rx-angular/template/experimental/for';
 
 @Component({
   selector: 'app-kanban-membership-list',
   templateUrl: './kanban-membership-list.component.html',
   styleUrls: ['./kanban-membership-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    TuiTextfieldControllerModule,
+    TuiAutoFocusModule,
+    ReactiveFormsModule,
+    TuiInputModule,
+    TuiLabelModule,
+    TuiHostedDropdownModule,
+    TuiDropdownControllerModule,
+    TuiButtonModule,
+    TuiBadgeModule,
+    CommonModule,
+    TuiAvatarModule,
+    TuiSvgModule,
+    LetModule,
+    ForModule,
+  ],
 })
 export class KanbanMembershipListComponent {
   readonly currentUser$ = this.authState.account$;
@@ -32,7 +64,7 @@ export class KanbanMembershipListComponent {
   @Output()
   removeMember = new EventEmitter<string>();
 
-  addForm = new FormGroup<any>({
+  addForm = this.fb.group({
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 
@@ -40,7 +72,9 @@ export class KanbanMembershipListComponent {
     @Inject(ProjectKanbanAdapter)
     private readonly adapter: ProjectKanbanAdapter,
     @Inject(AuthState)
-    private readonly authState: AuthState
+    private readonly authState: AuthState,
+    @Inject(FormBuilder)
+    private readonly fb: FormBuilder
   ) {}
 
   @tuiPure

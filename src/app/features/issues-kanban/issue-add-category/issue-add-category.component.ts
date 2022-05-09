@@ -5,21 +5,37 @@ import {
   Inject,
   Output,
 } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-
-interface Actions {
-  close: void;
-  edit: void;
-  confirm: string;
-}
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  TuiButtonModule,
+  TuiExpandModule,
+  TuiSvgModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/core';
+import { TuiInputModule, TuiIslandModule } from '@taiga-ui/kit';
+import { CommonModule } from '@angular/common';
+import { TuiActiveZoneModule, TuiAutoFocusModule } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-kanban-add-list',
-  templateUrl: './kanban-add-list.component.html',
-  styleUrls: ['./kanban-add-list.component.scss'],
+  templateUrl: './issue-add-category.component.html',
+  styleUrls: ['./issue-add-category.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    TuiExpandModule,
+    TuiIslandModule,
+    TuiInputModule,
+    CommonModule,
+    TuiAutoFocusModule,
+    TuiTextfieldControllerModule,
+    TuiButtonModule,
+    TuiSvgModule,
+    TuiActiveZoneModule,
+  ],
 })
-export class KanbanAddListComponent {
+export class IssueAddCategoryComponent {
   readonly form = this.fb.group({
     name: this.fb.control('', Validators.required),
   });

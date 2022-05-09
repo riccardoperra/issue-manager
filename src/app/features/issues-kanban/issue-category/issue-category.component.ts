@@ -8,13 +8,9 @@ import {
 } from '@angular/core';
 import { Category } from 'src/app/data/categories.service';
 import { Card } from '../../../data/cards.service';
-import {
-  CdkDragDrop,
-  CdkDropListGroup,
-  DragDropModule,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { RxState, selectSlice } from '@rx-angular/state';
-import { distinctUntilChanged, of } from 'rxjs';
+import { of } from 'rxjs';
 import {
   TuiButtonModule,
   TuiDataListModule,
@@ -24,17 +20,17 @@ import {
   TuiScrollbarModule,
   TuiSvgModule,
 } from '@taiga-ui/core';
-import { KanbanCardListComponent } from '../kanban-card-list/kanban-card-list.component';
 import { TuiIslandModule } from '@taiga-ui/kit';
 import { TuiElementModule } from '@taiga-ui/cdk';
-import { KanbanAddCardComponent } from '../kanban-add-card/kanban-add-card.component';
 import { LetModule } from '@rx-angular/template';
 import { HasAuthorizationDirective } from '../../../shared/permissions/has-authorization.directive';
+import { IssueCardListComponent } from '../issue-card-list/issue-card-list.component';
+import { AddIssueCardComponent } from '../issue-add-issue-card/add-issue-card.component';
 
 @Component({
   selector: 'app-kanban-list',
-  templateUrl: './kanban-list.component.html',
-  styleUrls: ['./kanban-list.component.scss'],
+  templateUrl: './issue-category.component.html',
+  styleUrls: ['./issue-category.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [tuiFadeIn],
   standalone: true,
@@ -49,12 +45,12 @@ import { HasAuthorizationDirective } from '../../../shared/permissions/has-autho
     TuiButtonModule,
     TuiSvgModule,
     TuiDataListModule,
-    KanbanAddCardComponent,
-    KanbanCardListComponent,
+    AddIssueCardComponent,
+    IssueCardListComponent,
     HasAuthorizationDirective,
   ],
 })
-export class KanbanListComponent extends RxState<{
+export class IssueCategoryComponent extends RxState<{
   list: Category;
   cards: readonly Card[];
 }> {
@@ -67,9 +63,6 @@ export class KanbanListComponent extends RxState<{
   set cards(cards: readonly Card[]) {
     this.connect('cards', of(cards));
   }
-
-  readonly cards$ = this.select('cards').pipe(distinctUntilChanged());
-  readonly list$ = this.select('list');
 
   readonly vm$ = this.select(selectSlice(['cards', 'list']));
 
@@ -92,7 +85,7 @@ export class KanbanListComponent extends RxState<{
 
   readonly cardTrackBy: TrackByFunction<Card> = (index, card) => card.$id;
 
-  constructor(readonly c: CdkDropListGroup<any>) {
+  constructor() {
     super();
   }
 }

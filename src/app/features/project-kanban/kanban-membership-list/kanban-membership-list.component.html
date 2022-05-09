@@ -93,7 +93,7 @@
       <form
         [formGroup]="addForm"
         (ngSubmit)="
-          addMember.emit(addForm.value.email); dropdown.updateOpen(false)
+          addMember.emit(addForm.value.email!); dropdown.updateOpen(false)
         "
       >
         <div class="add-member-dropdown">

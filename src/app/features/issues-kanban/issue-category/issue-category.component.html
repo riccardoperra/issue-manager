@@ -30,20 +30,20 @@
       class="tui-island__content"
       [class.tui-space_all-4]="vm.cards.length > 0"
     >
-      <app-kanban-card-list
+      <app-issue-card-list
         [cards]="vm.cards"
         [list]="vm.list"
         (dropEvent)="moveCard.emit($event)"
         (archiveCard)="archiveCard.emit($event)"
-      ></app-kanban-card-list>
+      ></app-issue-card-list>
     </div>
   </tui-scrollbar>
 
   <div class="tui-island__content tui-space_all-4 list-add-card">
-    <app-kanban-add-card
+    <app-add-issue-card
       *hasWorkspaceAuthorization
       (confirmEvent)="addCard.emit({ name: $event, $categoryId: vm.list.$id })"
-    ></app-kanban-add-card>
+    ></app-add-issue-card>
   </div>
 
   <div

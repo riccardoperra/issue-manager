@@ -12,12 +12,12 @@
     *rxFor="let card of cards$; trackBy: cardTrackBy; strategy: 'native'"
     class="card-wrapper"
   >
-    <app-kanban-card
+    <app-issue-card
       [tuiDropdownContext]="contextMenu"
       [@tuiFadeIn]="{ duration: 200 }"
       [card]="card"
       (click)="openIssue(card)"
-    ></app-kanban-card>
+    ></app-issue-card>
 
     <ng-template #contextMenu let-close="close" let-activeZone="activeZone">
       <tui-data-list

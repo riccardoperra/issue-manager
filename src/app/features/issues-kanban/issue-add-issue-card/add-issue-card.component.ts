@@ -16,16 +16,10 @@ import { CommonModule } from '@angular/common';
 import { TuiInputInlineModule, TuiIslandModule } from '@taiga-ui/kit';
 import { TuiActiveZoneModule, TuiAutoFocusModule } from '@taiga-ui/cdk';
 
-interface Actions {
-  close: void;
-  edit: void;
-  confirm: string;
-}
-
 @Component({
-  selector: 'app-kanban-add-card',
-  templateUrl: './kanban-add-card.component.html',
-  styleUrls: ['./kanban-add-card.component.scss'],
+  selector: 'app-add-issue-card',
+  templateUrl: './add-issue-card.component.html',
+  styleUrls: ['./add-issue-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -41,7 +35,7 @@ interface Actions {
     TuiActiveZoneModule,
   ],
 })
-export class KanbanAddCardComponent {
+export class AddIssueCardComponent {
   readonly form = this.fb.group({
     name: this.fb.control('', Validators.required),
   });

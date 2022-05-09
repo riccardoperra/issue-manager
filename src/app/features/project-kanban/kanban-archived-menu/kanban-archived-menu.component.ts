@@ -1,15 +1,37 @@
 import { Component, HostBinding, Inject, OnInit } from '@angular/core';
-import { tuiFadeIn, tuiSlideIn } from '@taiga-ui/core';
+import {
+  TuiButtonModule,
+  tuiFadeIn,
+  TuiScrollbarModule,
+  tuiSlideIn,
+  TuiSvgModule,
+} from '@taiga-ui/core';
 import { combineLatest, map } from 'rxjs';
 import { ProjectKanbanAdapter } from '../project-kanban.adapter';
 import { Category } from '../../../data/categories.service';
 import { Card } from '../../../data/cards.service';
+import { TuiBadgeModule, TuiIslandModule, TuiTabsModule } from '@taiga-ui/kit';
+import { CommonModule } from '@angular/common';
+import { ForModule } from '@rx-angular/template/experimental/for';
+import { LetModule } from '@rx-angular/template';
 
 @Component({
   selector: 'app-kanban-archived-menu',
   templateUrl: './kanban-archived-menu.component.html',
   styleUrls: ['./kanban-archived-menu.component.scss'],
   animations: [tuiSlideIn, tuiFadeIn],
+  standalone: true,
+  imports: [
+    TuiScrollbarModule,
+    TuiTabsModule,
+    TuiBadgeModule,
+    CommonModule,
+    TuiIslandModule,
+    ForModule,
+    TuiButtonModule,
+    TuiSvgModule,
+    LetModule,
+  ],
 })
 export class KanbanArchivedMenuComponent implements OnInit {
   @HostBinding('@tuiSlideIn')

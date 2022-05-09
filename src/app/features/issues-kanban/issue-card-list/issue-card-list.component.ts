@@ -21,15 +21,15 @@ import {
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { LetModule } from '@rx-angular/template';
 import { ForModule } from '@rx-angular/template/experimental/for';
-import { KanbanCardComponent } from '../kanban-card/kanban-card.component';
 import { TuiDropdownContextModule } from '@taiga-ui/kit';
 import { TuiActiveZoneModule } from '@taiga-ui/cdk';
 import { CommonModule } from '@angular/common';
+import { IssueCardComponent } from '../issue-card/issue-card.component';
 
 @Component({
-  selector: 'app-kanban-card-list',
-  templateUrl: './kanban-card-list.component.html',
-  styleUrls: ['./kanban-card-list.component.scss'],
+  selector: 'app-issue-card-list',
+  templateUrl: './issue-card-list.component.html',
+  styleUrls: ['./issue-card-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [tuiFadeIn],
   standalone: true,
@@ -42,10 +42,10 @@ import { CommonModule } from '@angular/common';
     TuiDataListModule,
     TuiActiveZoneModule,
     TuiSvgModule,
-    KanbanCardComponent,
+    IssueCardComponent,
   ],
 })
-export class KanbanCardListComponent extends RxState<{
+export class IssueCardListComponent extends RxState<{
   category: Category;
   cards: readonly Card[];
 }> {

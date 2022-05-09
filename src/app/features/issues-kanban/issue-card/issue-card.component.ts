@@ -5,13 +5,13 @@ import { TuiSvgModule } from '@taiga-ui/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-kanban-card',
-  templateUrl: './kanban-card.component.html',
-  styleUrls: ['./kanban-card.component.scss'],
+  selector: 'app-issue-card',
+  templateUrl: './issue-card.component.html',
+  styleUrls: ['./issue-card.component.scss'],
   imports: [CommonModule, TuiTagModule, TuiIslandModule, TuiSvgModule],
   standalone: true,
 })
-export class KanbanCardComponent {
+export class IssueCardComponent {
   @Input()
   card: Card | null = null;
 

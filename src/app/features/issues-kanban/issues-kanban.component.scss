@@ -1,0 +1,69 @@
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
+:host {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  flex: 1;
+}
+
+.wrapper {
+  height: 100%;
+  flex: 1;
+
+  .scrollbar {
+    height: 100%;
+
+    .content {
+      height: 100%;
+    }
+  }
+}
+
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+
+  ::ng-deep .scrollbar {
+    height: 100%;
+    .content {
+      height: 100%;
+    }
+  }
+}
+
+.list-grid-wrapper {
+  display: flex;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  vertical-align: top;
+  margin-bottom: 1rem;
+
+  .list-grid {
+    flex: 1;
+    padding-left: var(--tui-padding-l);
+    padding-right: var(--tui-padding-l);
+    display: flex;
+    gap: 2rem;
+  }
+}
+
+.cdk-drag-preview {
+  will-change: auto;
+  box-sizing: border-box;
+  border-radius: 4px;
+  @include shadow(1);
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-dragging .list-wrapper:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

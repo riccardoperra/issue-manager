@@ -98,4 +98,12 @@ export class AuthEffects {
         this.router.navigate(['/login']).then((e) => console.log(e));
       });
   };
+
+  loginWithGoogle = () => {
+    this.appwrite.account.createOAuth2Session(
+      'google',
+      'http://localhost/',
+      'http://localhost/login'
+    );
+  };
 }

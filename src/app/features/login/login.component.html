@@ -46,9 +46,19 @@
                   size="l"
                   appearance="secondary"
                   type="button"
+                  class="tui-space_right-3"
                   (click)="actions.loginAsGuest()"
                 >
                   Login as guest
+                </button>
+                <button
+                  tuiButton
+                  size="l"
+                  appearance="accent"
+                  type="button"
+                  (click)="actions.loginWithGoogle()"
+                >
+                  Login with google
                 </button>
               </div>
             </div>

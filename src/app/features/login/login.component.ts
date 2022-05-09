@@ -18,6 +18,7 @@ import { RouterModule } from '@angular/router';
 
 interface LoginCommands {
   loginAsGuest: void;
+  loginWithGoogle: void;
   login: { email: string; password: string };
 }
 
@@ -64,6 +65,11 @@ export class LoginComponent {
     this.rxEffects.register(
       this.actions.loginAsGuest$,
       authEffects.loginAsGuest
+    );
+
+    this.rxEffects.register(
+      this.actions.loginWithGoogle$,
+      authEffects.loginWithGoogle
     );
   }
 

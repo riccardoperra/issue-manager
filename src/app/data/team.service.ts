@@ -49,7 +49,7 @@ export class TeamsService {
         $projectId,
         email,
         ['member'],
-        `http://localhost:4200/team/memberships/accept`
+        `http://localhost/team/memberships/accept`
       )
     );
   }

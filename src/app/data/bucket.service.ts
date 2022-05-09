@@ -32,8 +32,8 @@ export class BucketService {
         currentProject.bucketId,
         'unique()',
         file,
-        currentProject.$read,
-        currentProject.$write,
+        undefined,
+        undefined,
         (update) => onProgress?.(update)
       )
     );

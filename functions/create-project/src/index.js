@@ -11,9 +11,9 @@ module.exports = async function (req, res) {
     .setJWT(process.env['APPWRITE_FUNCTION_JWT'])
     .setProject(process.env['APPWRITE_FUNCTION_PROJECT_ID']);
 
-  const teams = new sdk.Teams(client);
   const database = new sdk.Database(adminClient);
   const storage = new sdk.Storage(adminClient);
+  const teams = new sdk.Teams(client);
 
   const payload = JSON.parse(req.payload ? req.payload : '{}');
 

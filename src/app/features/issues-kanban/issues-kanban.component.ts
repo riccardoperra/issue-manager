@@ -23,6 +23,7 @@ import {
 import { IssueAddCategoryComponent } from './issue-add-category/issue-add-category.component';
 import { LetModule } from '@rx-angular/template';
 import { ForModule } from '@rx-angular/template/experimental/for';
+import { HasAuthorizationDirective } from '../../shared/permissions/has-authorization.directive';
 
 interface LocalActions {
   moveCategory: CdkDragDrop<readonly Category[], readonly Category[], Category>;
@@ -50,6 +51,7 @@ interface LocalActions {
     DragDropModule,
     LetModule,
     ForModule,
+    HasAuthorizationDirective,
   ],
 })
 export class IssuesKanbanComponent {

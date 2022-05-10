@@ -8,7 +8,12 @@ import {
 } from '@angular/core';
 import { Category } from 'src/app/data/categories.service';
 import { Card } from '../../../data/cards.service';
-import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  CdkDragEnd,
+  CdkDragStart,
+  DragDropModule,
+} from '@angular/cdk/drag-drop';
 import { RxState, selectSlice } from '@rx-angular/state';
 import { of } from 'rxjs';
 import {
@@ -28,7 +33,7 @@ import { IssueCardListComponent } from '../issue-card-list/issue-card-list.compo
 import { AddIssueCardComponent } from '../issue-add-issue-card/add-issue-card.component';
 
 @Component({
-  selector: 'app-kanban-list',
+  selector: 'app-issue-category',
   templateUrl: './issue-category.component.html',
   styleUrls: ['./issue-category.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -82,6 +87,12 @@ export class IssueCategoryComponent extends RxState<{
 
   @Output()
   moveCard = new EventEmitter<any>();
+
+  @Output()
+  dragStartEvent = new EventEmitter<CdkDragStart>();
+
+  @Output()
+  dragEndEvent = new EventEmitter<CdkDragEnd>();
 
   readonly cardTrackBy: TrackByFunction<Card> = (index, card) => card.$id;
 

@@ -25,9 +25,22 @@
   border-radius: var(--tui-radius-l);
   border: dotted 3px var(--tui-secondary-active);
   width: auto;
-  height: auto;
+  height: 40px;
   z-index: 999;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.empty-list-placeholder {
+  background: var(--tui-base-03);
+  border-radius: var(--tui-radius-l);
+  border: dotted 3px var(--tui-base-04);
+  width: auto;
+  height: 80px;
+  z-index: 999;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cdk-drag-animating {

@@ -9,7 +9,11 @@ import {
 } from '@angular/core';
 import { Category } from 'src/app/data/categories.service';
 import { Card } from '../../../data/cards.service';
-import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  CdkDragStart,
+  DragDropModule,
+} from '@angular/cdk/drag-drop';
 import { RxState } from '@rx-angular/state';
 import { distinctUntilChanged, from, map, of, switchMap } from 'rxjs';
 import {

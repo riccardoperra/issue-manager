@@ -2,18 +2,7 @@ import { ApplicationRef, Inject, Injectable } from '@angular/core';
 import { AuthState } from './auth.state';
 import { TuiAlertService } from '@taiga-ui/core';
 import { Router } from '@angular/router';
-import {
-  catchError,
-  combineLatestWith,
-  defer,
-  delay,
-  from,
-  map,
-  of,
-  switchMap,
-  tap,
-  withLatestFrom,
-} from 'rxjs';
+import { catchError, defer, from, map, of, switchMap, tap } from 'rxjs';
 import { APPWRITE } from '../../providers/appwrite.provider';
 import { Appwrite, Models } from 'appwrite';
 import { AccountService } from '../../data/account.service';
@@ -80,6 +69,45 @@ export class AuthEffects {
             session,
           })
         )
+      )
+      .subscribe();
+  };
+
+  registerWithCredentials = ({
+    name,
+    email,
+    password,
+  }: {
+    email: string;
+    name: string | undefined | null;
+    password: string;
+  }) => {
+    defer(() =>
+      this.appwrite.account.create(
+        'unique()',
+        email,
+        password,
+        name ?? undefined
+      )
+    )
+      .pipe(
+        switchMap((account) =>
+          defer(() =>
+            this.appwrite.account.createSession(email, password)
+          ).pipe(map((session) => ({ session, account })))
+        ),
+        catchError(() =>
+          of({ session: null, account: null }).pipe(
+            tap(() => this.router.navigate(['/login']))
+          )
+        ),
+        tap(({ account, session }) =>
+          this.authState.set({
+            account,
+            session,
+          })
+        ),
+        tap(() => this.router.navigate(['/']))
       )
       .subscribe();
   };

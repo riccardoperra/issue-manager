@@ -7,9 +7,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventPluginsModule } from '@tinkoff/ng-event-plugins';
 import { RouterModule } from '@angular/router';
 import { ROUTES } from './app/app.routes';
+import { iconsPathFactory, TUI_ICONS, TUI_ICONS_PATH } from '@taiga-ui/core';
 
 if (environment.production) {
   enableProdMode();
+}
+
+// This assumes that icons were properly processed
+export function iconsPath(name: string): string {
+  return `assets/icons/${name}.svg#}`;
 }
 
 document.addEventListener('DOMContentLoaded', () =>
@@ -23,6 +29,16 @@ document.addEventListener('DOMContentLoaded', () =>
           initialNavigation: 'disabled',
         })
       ),
+      {
+        provide: TUI_ICONS,
+        useValue: {
+          google: 'google.svg',
+        },
+      },
+      {
+        provide: TUI_ICONS_PATH,
+        useValue: iconsPathFactory('assets/icons'),
+      },
     ],
   }).catch((err) => console.error(err))
 );

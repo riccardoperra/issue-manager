@@ -9,3 +9,19 @@
 .login-image {
   width: 100%;
 }
+
+.alternative-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .login-buttons-wrapper {
+    width: 100%;
+    column-gap: 12px;
+  }
+
+  .login-button-wrapper {
+    flex: 1;
+  }
+}

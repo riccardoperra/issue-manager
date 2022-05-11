@@ -109,9 +109,9 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
       )
     ),
     this.ui.addCategory$.pipe(
-      switchMap(({ $projectId, rank, name }) =>
-        this.categoriesService.addCategory({
-          projectId: $projectId,
+      withLatestFrom(this.project$),
+      switchMap(([{ $projectId, rank, name }, project]) =>
+        this.categoriesService.addCategory(project, {
           rank,
           name,
         })
@@ -128,13 +128,12 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
       )
     ),
     this.ui.addCard$.pipe(
-      withLatestFrom(this.project$.pipe(pluck('$id'))),
-      switchMap(([{ name, rank, $categoryId }, $projectId]) =>
-        this.cardsService.addCard({
+      withLatestFrom(this.project$),
+      switchMap(([{ name, rank, $categoryId }, $project]) =>
+        this.cardsService.addCard($project, {
           name,
           rank,
           categoryId: $categoryId,
-          projectId: $projectId,
         })
       )
     ),

@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { APPWRITE } from '../providers/appwrite.provider';
 import { from, Observable } from 'rxjs';
 import { realtimeListener } from '../shared/utils/realtime';
+import { Project } from './projects.service';
 
 export interface Card extends Models.Document {
   readonly name: string;
@@ -19,7 +20,7 @@ export interface Card extends Models.Document {
 
 export type AddCard = Omit<
   Card,
-  keyof Models.Document | 'tags' | 'archived' | 'content'
+  keyof Models.Document | 'tags' | 'archived' | 'content' | 'projectId'
 >;
 
 @Injectable({ providedIn: 'root' })
@@ -45,12 +46,14 @@ export class CardsService {
     );
   }
 
-  addCard(card: AddCard): Observable<Card> {
+  addCard(project: Project, card: AddCard): Observable<Card> {
     return from(
       this.appwrite.database.createDocument<Card>(
         CardsService.collectionId,
         'unique()',
-        card
+        { ...card, projectId: project.$id } as Card,
+        project.$read,
+        project.$write
       )
     );
   }

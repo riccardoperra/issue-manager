@@ -13,11 +13,23 @@
     {{ card.name }}
   </h4>
 
-  <span class="tui-island__paragraph">
-    <ng-container *ngIf="card.expiryDate; else fallback">
-      <tui-svg src="tuiIconTime"></tui-svg>
-      {{ card.expiryDate | date: 'short' }}
+  <span class="tui-island__paragraph field-description">
+    <tui-svg src="tuiIconTime"></tui-svg>
+    <ng-container *ngIf="card.expiryDate; else expiryDateFallback">
+      <span>Expiry on</span
+      ><strong>{{ card.expiryDate | date: 'dd.MM.yyyy' }}</strong>
     </ng-container>
-    <ng-template #fallback> No expiration date</ng-template>
+    <ng-template #expiryDateFallback> No expiration date</ng-template>
+  </span>
+
+  <span
+    class="tui-island__paragraph field-description"
+    [ngClass]="card | issuePriorityColor"
+  >
+    <tui-svg src="tuiIconFlag"></tui-svg>
+    <ng-container *ngIf="card.priority; else priorityFallback">
+      <strong>{{ card.priority }}</strong>
+    </ng-container>
+    <ng-template #priorityFallback> No priority</ng-template>
   </span>
 </tui-island>

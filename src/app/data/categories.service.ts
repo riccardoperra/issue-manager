@@ -4,6 +4,7 @@ import { APPWRITE } from '../providers/appwrite.provider';
 import { from, Observable } from 'rxjs';
 import { realtimeListener } from '../shared/utils/realtime';
 import { Card } from './cards.service';
+import { Project } from './projects.service';
 
 export interface Category extends Models.Document {
   readonly name: string;
@@ -12,7 +13,7 @@ export interface Category extends Models.Document {
   readonly rank: string;
 }
 
-export type AddCategory = Pick<Category, 'name' | 'rank' | 'projectId'>;
+export type AddCategory = Pick<Category, 'name' | 'rank'>;
 
 @Injectable({ providedIn: 'root' })
 export class CategoriesService {
@@ -44,12 +45,14 @@ export class CategoriesService {
     );
   }
 
-  addCategory(request: AddCategory): Observable<Category> {
+  addCategory(project: Project, request: AddCategory): Observable<Category> {
     return from(
       this.appwrite.database.createDocument<Category>(
         CategoriesService.collectionId,
         'unique()',
-        { ...request, archived: false }
+        { ...request, projectId: project.$id, archived: false },
+        project.$read,
+        project.$write
       )
     );
   }

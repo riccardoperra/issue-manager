@@ -1,4 +1,4 @@
-@import '../../../../../node_modules/@taiga-ui/core/styles/taiga-ui-local';
+@import '~@taiga-ui/core/styles/taiga-ui-local';
 
 .card {
   min-height: 40px;
@@ -20,4 +20,28 @@
   overflow: hidden;
   font-size: 1rem !important;
   font-weight: 600;
+}
+
+.field-description {
+  display: flex;
+  column-gap: 4px;
+  align-items: center;
+}
+
+$priorities: (
+  low: (
+    color: var(--tui-positive),
+  ),
+  medium: (
+    color: var(--tui-support-07),
+  ),
+  high: (
+    color: var(--tui-negative),
+  ),
+);
+
+@each $key, $priority in $priorities {
+  .priority-#{$key} {
+    color: map-get($priority, 'color');
+  }
 }

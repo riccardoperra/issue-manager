@@ -1,49 +1,46 @@
 <div
   cdkDropListGroup
   class="tui-space_top-4 wrapper"
-  style="overflow: hidden"
   *rxLet="categories$; let categories; strategy: 'native'"
 >
   <tui-scrollbar #scrollEl="elementRef" tuiElement class="scrollbar">
-    <div class="content">
+    <div
+      class="list-grid-wrapper"
+      cdkDropList
+      [cdkDropListOrientation]="'horizontal'"
+      [cdkDropListData]="categories"
+      (cdkDropListDropped)="onCategoryDrop($event)"
+    >
       <div
-        class="list-grid-wrapper"
-        cdkDropList
-        [cdkDropListOrientation]="'horizontal'"
-        [cdkDropListData]="categories"
-        (cdkDropListDropped)="onCategoryDrop($event)"
+        cdkDropListGroup
+        class="list-grid"
+        *rxLet="groupedCards$; let groupedCards"
       >
-        <div
-          cdkDropListGroup
-          class="list-grid"
-          *rxLet="groupedCards$; let groupedCards"
-        >
-          <app-issue-category
-            *rxFor="
-              let list of categories;
-              strategy: 'native';
-              trackBy: categoriesTrackBy;
-              let index = index
-            "
-            [list]="list"
-            [cards]="groupedCards[list.$id]"
-            (addCard)="ui.addCard($event)"
-            (moveCard)="ui.moveCard($event)"
-            (archiveCard)="ui.archiveCard({ $id: $event })"
-            (archiveCategory)="ui.archiveCategory({ $id: $event })"
-          ></app-issue-category>
+        <app-issue-category
+          *rxFor="
+            let list of categories;
+            strategy: 'native';
+            trackBy: categoriesTrackBy;
+            let index = index
+          "
+          [list]="list"
+          [cards]="groupedCards[list.$id]"
+          (addCard)="ui.addCard($event)"
+          (moveCard)="ui.moveCard($event)"
+          (archiveCard)="ui.archiveCard({ $id: $event })"
+          (archiveCategory)="ui.archiveCategory({ $id: $event })"
+        ></app-issue-category>
 
-          <app-kanban-add-list
-            *hasWorkspaceAuthorization
-            class="list-wrapper"
-            (confirmEvent)="
-              ui.addCategory({
-                name: $event,
-                scrollRef: scrollEl.nativeElement
-              })
-            "
-          ></app-kanban-add-list>
-        </div>
+        <app-kanban-add-list
+          *hasWorkspaceAuthorization
+          class="list-wrapper"
+          (confirmEvent)="
+            ui.addCategory({
+              name: $event,
+              scrollRef: scrollEl.nativeElement
+            })
+          "
+        ></app-kanban-add-list>
       </div>
     </div>
   </tui-scrollbar>

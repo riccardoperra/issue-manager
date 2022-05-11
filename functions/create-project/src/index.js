@@ -1,17 +1,17 @@
 const sdk = require('node-appwrite');
 
-const adminClient = new sdk.Client()
-  .setEndpoint(process.env['APPWRITE_FUNCTION_ENDPOINT'])
-  .setKey(process.env['APPWRITE_FUNCTION_API_KEY'])
-  .setProject(process.env['APPWRITE_FUNCTION_PROJECT_ID']);
-
 module.exports = async function (req, res) {
-  const client = new sdk.Client()
+  const adminClient = new sdk.Client()
     .setEndpoint(process.env['APPWRITE_FUNCTION_ENDPOINT'])
-    .setJWT(process.env['APPWRITE_FUNCTION_JWT'])
+    .setKey(process.env['APPWRITE_FUNCTION_API_KEY'])
     .setProject(process.env['APPWRITE_FUNCTION_PROJECT_ID']);
 
-  const database = new sdk.Database(adminClient);
+  const client = new sdk.Client()
+    .setEndpoint(req.env['APPWRITE_FUNCTION_ENDPOINT'])
+    .setJWT(req.env['APPWRITE_FUNCTION_JWT'])
+    .setProject(req.env['APPWRITE_FUNCTION_PROJECT_ID']);
+
+  const database = new sdk.Database(client);
   const storage = new sdk.Storage(adminClient);
   const teams = new sdk.Teams(client);
 

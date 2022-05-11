@@ -4,11 +4,12 @@ import { AuthStateModel } from './auth-state.model';
 import { WithInitializer } from '../rxa-custom/initializer';
 import { AccountService } from '../../data/account.service';
 import { RxActionFactory } from '../rxa-custom/actions/actions.factory';
-import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
+import { catchError, exhaustMap, map, of, switchMap, tap } from 'rxjs';
 import { TeamsService } from '../../data/team.service';
 
 export interface AuthCommand {
   fetchAccount: void;
+  fetchTeams: void;
 }
 
 @Injectable({
@@ -31,6 +32,9 @@ export class AuthState
     map((prefs) => prefs.hasOwnProperty('guest') && prefs.guest === true)
   );
 
+  readonly fetchTeams$ = this.actions.fetchTeams$;
+  readonly fetchTeams = this.actions.fetchTeams;
+
   constructor(
     @Inject(AccountService) private readonly accountService: AccountService,
     @Inject(TeamsService) private readonly teamService: TeamsService,
@@ -40,19 +44,20 @@ export class AuthState
     super();
 
     this.connect(
+      'account',
       this.actions.fetchAccount$.pipe(
-        exhaustMap(() =>
-          this.accountService.getAccount().pipe(
-            switchMap((account) =>
-              this.teamService.getCurrentTeams().pipe(
-                map((teams) => ({
-                  teams,
-                  account,
-                }))
-              )
-            ),
-            catchError(() => of({ teams: null, account: null }))
-          )
+        switchMap(() => this.accountService.getAccount()),
+        tap(() => this.fetchTeams()),
+        catchError(() => of(null))
+      )
+    );
+
+    this.connect(
+      'teams',
+      this.actions.fetchTeams$.pipe(
+        tap((x) => console.log('fetch team')),
+        switchMap(() =>
+          this.teamService.getCurrentTeams().pipe(catchError(() => of(null)))
         )
       )
     );

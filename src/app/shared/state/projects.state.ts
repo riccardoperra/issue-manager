@@ -10,6 +10,7 @@ import { finalize, map, merge, switchMap, tap } from 'rxjs';
 import { patch } from '@rx-angular/cdk/transformations';
 import { RxActionFactory } from '../rxa-custom/actions/actions.factory';
 import { TuiAlertService } from '@taiga-ui/core';
+import { AuthState } from '../auth/auth.state';
 
 export interface ProjectsModel {
   readonly projects: readonly Project[];
@@ -23,6 +24,7 @@ export interface ProjectsActions {
   updateProjectSync: { $id: Project['$id']; data: Project };
   removeProjectSync: string;
   fetchProjects: void;
+  refetchTeams: void;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -51,15 +53,19 @@ export class ProjectsState
           .deleteProject(project)
           .pipe(finalize(() => this.set({ loading: false })))
       )
-    )
+    ),
+    this.actions.refetchTeams$.pipe(tap(() => this.authState.fetchTeams()))
   );
 
   constructor(
+    @Inject(ProjectsService)
     private readonly projectsService: ProjectsService,
     @Inject(TuiAlertService)
     private readonly alertService: TuiAlertService,
     @Inject(RxActionFactory)
-    private readonly rxActions: RxActionFactory<ProjectsActions>
+    private readonly rxActions: RxActionFactory<ProjectsActions>,
+    @Inject(AuthState)
+    private readonly authState: AuthState
   ) {
     super();
 
@@ -102,6 +108,7 @@ export class ProjectsState
       addProjectSync,
       updateProjectSync,
       fetchProjects,
+      refetchTeams,
     } = this.actions;
 
     fetchProjects();
@@ -114,6 +121,7 @@ export class ProjectsState
       } else if (event.event === 'database.documents.update') {
         updateProjectSync({ $id: event.payload.$id, data: event.payload });
       }
+      refetchTeams();
     });
   }
 }

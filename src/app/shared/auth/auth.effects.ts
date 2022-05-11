@@ -95,6 +95,8 @@ export class AuthEffects {
         )
       )
       .subscribe(() => {
+        localStorage.clear();
+        sessionStorage.clear();
         this.router.navigate(['/login']).then((e) => console.log(e));
       });
   };

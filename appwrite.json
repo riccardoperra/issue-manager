@@ -12,7 +12,7 @@
             ],
             "name": "projects",
             "enabled": true,
-            "permission": "collection",
+            "permission": "document",
             "attributes": [
                 {
                     "key": "description",
@@ -24,12 +24,12 @@
                     "default": null
                 },
                 {
-                    "key": "name",
+                    "key": "bucketId",
                     "type": "string",
                     "status": "available",
                     "required": true,
                     "array": false,
-                    "size": 40,
+                    "size": 255,
                     "default": null
                 },
                 {
@@ -65,12 +65,12 @@
                     "default": null
                 },
                 {
-                    "key": "bucketId",
+                    "key": "name",
                     "type": "string",
                     "status": "available",
                     "required": true,
                     "array": false,
-                    "size": 255,
+                    "size": 40,
                     "default": null
                 }
             ],
@@ -90,21 +90,52 @@
         },
         {
             "$id": "626044d20dbc091c2598",
-            "$read": [
-                "role:all"
-            ],
-            "$write": [
-                "role:all"
-            ],
+            "$read": [],
+            "$write": [],
             "name": "cards",
             "enabled": true,
-            "permission": "collection",
+            "permission": "document",
             "attributes": [
                 {
-                    "key": "name",
+                    "key": "archived",
+                    "type": "boolean",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "default": false
+                },
+                {
+                    "key": "projectId",
                     "type": "string",
                     "status": "available",
                     "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "priority",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "expiryDate",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "rank",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
                     "array": false,
                     "size": 255,
                     "default": null
@@ -128,56 +159,21 @@
                     "default": null
                 },
                 {
-                    "key": "rank",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "projectId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "archived",
-                    "type": "boolean",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "default": false
-                },
-                {
-                    "key": "expiryDate",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "priority",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
                     "key": "content",
                     "type": "string",
                     "status": "available",
                     "required": false,
                     "array": false,
                     "size": 99999999,
+                    "default": null
+                },
+                {
+                    "key": "name",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
                     "default": null
                 }
             ],
@@ -197,16 +193,21 @@
         },
         {
             "$id": "62604a098cb45c928e5b",
-            "$read": [
-                "role:all"
-            ],
-            "$write": [
-                "role:all"
-            ],
+            "$read": [],
+            "$write": [],
             "name": "lists",
             "enabled": true,
-            "permission": "collection",
+            "permission": "document",
             "attributes": [
+                {
+                    "key": "rank",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
                 {
                     "key": "projectId",
                     "type": "string",
@@ -221,15 +222,6 @@
                     "type": "string",
                     "status": "available",
                     "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "rank",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
                     "array": false,
                     "size": 255,
                     "default": null
@@ -270,24 +262,6 @@
             "permission": "collection",
             "attributes": [
                 {
-                    "key": "ref",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "cardId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
                     "key": "projectId",
                     "type": "string",
                     "status": "available",
@@ -298,6 +272,24 @@
                 },
                 {
                     "key": "bucketId",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "ref",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "cardId",
                     "type": "string",
                     "status": "available",
                     "required": true,

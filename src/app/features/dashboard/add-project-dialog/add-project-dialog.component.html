@@ -54,8 +54,9 @@
           <div class="inner">
             Private
             <div class="text">
-              Your project is private. Only authenticated users with the right
-              permissions will be able to view the board.
+              Your project is <strong>private</strong>. Only authenticated users
+              with the right permissions will be able to view and update the
+              board.
             </div>
           </div>
         </tui-radio-block>
@@ -70,8 +71,9 @@
           <div class="inner">
             Public
             <div class="text">
-              Your project is public. Everyone can view the board listed in the
-              homepage.
+              Your project is <strong>public</strong>. Everyone can view the
+              board listed in the homepage. Only owner and team members can
+              update the board.
             </div>
           </div>
         </tui-radio-block>
@@ -79,6 +81,8 @@
           formControlName="visibility"
           contentAlign="left"
           [item]="'notVisible'"
+          [readOnly]="true"
+          [pseudoDisabled]="true"
           nativeId="example4"
           size="l"
           class="control"
@@ -88,6 +92,10 @@
             <div class="text">
               Your project is public. Only users that have access to the project
               link are able to open the board.
+
+              <p>
+                <strong>Currently disabled</strong>
+              </p>
             </div>
           </div>
         </tui-radio-block>

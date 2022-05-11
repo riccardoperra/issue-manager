@@ -4,7 +4,7 @@ import { AuthStateModel } from './auth-state.model';
 import { WithInitializer } from '../rxa-custom/initializer';
 import { AccountService } from '../../data/account.service';
 import { RxActionFactory } from '../rxa-custom/actions/actions.factory';
-import { catchError, exhaustMap, map, of } from 'rxjs';
+import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
 import { TeamsService } from '../../data/team.service';
 
 export interface AuthCommand {
@@ -40,18 +40,20 @@ export class AuthState
     super();
 
     this.connect(
-      'account',
       this.actions.fetchAccount$.pipe(
         exhaustMap(() =>
-          this.accountService.getAccount().pipe(catchError(() => of(null)))
+          this.accountService.getAccount().pipe(
+            switchMap((account) =>
+              this.teamService.getCurrentTeams().pipe(
+                map((teams) => ({
+                  teams,
+                  account,
+                }))
+              )
+            ),
+            catchError(() => of({ teams: null, account: null }))
+          )
         )
-      )
-    );
-
-    this.connect(
-      'teams',
-      this.actions.fetchAccount$.pipe(
-        exhaustMap(() => this.teamService.getCurrentTeams())
       )
     );
   }

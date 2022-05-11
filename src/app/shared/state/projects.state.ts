@@ -19,7 +19,7 @@ export interface ProjectsModel {
 export interface ProjectsActions {
   addProject: AddProjectRequest;
   addProjectSync: Project;
-  deleteProject: { $id: string };
+  deleteProject: Project;
   updateProjectSync: { $id: Project['$id']; data: Project };
   removeProjectSync: string;
   fetchProjects: void;
@@ -46,9 +46,9 @@ export class ProjectsState
     ),
     this.actions.deleteProject$.pipe(
       tap(() => this.set({ loading: true })),
-      switchMap(({ $id }) =>
+      switchMap((project) =>
         this.projectsService
-          .deleteProject($id)
+          .deleteProject(project)
           .pipe(finalize(() => this.set({ loading: false })))
       )
     )

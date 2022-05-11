@@ -2,7 +2,8 @@ import { Inject, Injectable } from '@angular/core';
 import { APPWRITE } from '../providers/appwrite.provider';
 import { Appwrite, Models } from 'appwrite';
 import { realtimeListener } from '../shared/utils/realtime';
-import { from, map, Observable } from 'rxjs';
+import { delay, from, map, Observable, tap } from 'rxjs';
+import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 
 export const enum ProjectVisibility {
   'public' = 'public',
@@ -30,7 +31,9 @@ export class ProjectsService {
 
   constructor(
     @Inject(APPWRITE)
-    private readonly appwrite: Appwrite
+    private readonly appwrite: Appwrite,
+    @Inject(TuiAlertService)
+    private readonly alertService: TuiAlertService
   ) {}
 
   getList(): Observable<Models.DocumentList<Project>> {
@@ -50,22 +53,44 @@ export class ProjectsService {
     );
   }
 
-  createProject(project: AddProjectRequest): Observable<Project> {
+  createProject(project: AddProjectRequest): Observable<unknown> {
     return from(
       this.appwrite.functions.createExecution(
         'create-project',
         JSON.stringify({
           ...project,
           $collectionId: ProjectsService.collectionId,
-        }),
-        false
+        })
       )
-    ).pipe(map((x) => JSON.parse(x.stdout)));
+    ).pipe(
+      tap(() =>
+        this.alertService
+          .open(`Initializing "${project.name}" project...`, {
+            status: TuiNotification.Info,
+            hasIcon: true,
+            hasCloseButton: false,
+          })
+          .subscribe()
+      )
+    );
   }
 
-  deleteProject($id: Project['$id']): Observable<{}> {
+  deleteProject(project: Project): Observable<unknown> {
     return from(
-      this.appwrite.database.deleteDocument(ProjectsService.collectionId, $id)
+      this.appwrite.functions.createExecution(
+        'delete-project',
+        JSON.stringify(project)
+      )
+    ).pipe(
+      tap(() =>
+        this.alertService
+          .open(`Closing project...`, {
+            status: TuiNotification.Info,
+            hasIcon: true,
+            hasCloseButton: false,
+          })
+          .subscribe()
+      )
     );
   }
 

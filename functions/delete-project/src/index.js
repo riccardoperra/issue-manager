@@ -4,26 +4,37 @@ module.exports = async function (req, res) {
   const adminClient = new sdk.Client()
     .setEndpoint(process.env['APPWRITE_FUNCTION_ENDPOINT'])
     .setKey(process.env['APPWRITE_FUNCTION_API_KEY'])
-    .setProject(process.env['APPWRITE_FUNCTION_PROJECT_ID'])
-    .setSelfSigned(true);
+    .setProject(process.env['APPWRITE_FUNCTION_PROJECT_ID']);
 
-  const eventName = process.env.APPWRITE_FUNCTION_EVENT;
+  const cardsCollection = '626044d20dbc091c2598';
+  const categoriesCollection = '62604a098cb45c928e5b';
 
-  if (eventName === 'database.documents.delete') {
-    const data = JSON.parse(process.env.APPWRITE_FUNCTION_EVENT_DATA);
+  const storage = new sdk.Storage(adminClient);
+  const database = new sdk.Database(adminClient);
+  const teams = new sdk.Teams(adminClient);
 
-    const { bucketId, $id } = data;
+  const { bucketId, $id, $collection } = JSON.parse(req.payload);
 
-    try {
-      const storage = new sdk.Storage(adminClient);
-      const teams = new sdk.Teams(adminClient);
+  const cardsToDelete = await database.listDocuments(cardsCollection, [
+    sdk.Query.equal('projectId', $id),
+  ]);
 
-      await storage.deleteBucket(bucketId);
-      await teams.delete($id);
+  const listsToDelete = await database.listDocuments(categoriesCollection, [
+    sdk.Query.equal('projectId', $id),
+  ]);
 
-      res.send({ status: 'ok' });
-    } catch (e) {
-      res.send({ err: bucketId });
-    }
-  }
+  await Promise.all([
+    ...cardsToDelete.documents.map((doc) =>
+      database.deleteDocument(cardsCollection, doc.$id)
+    ),
+    ...listsToDelete.documents.map((doc) =>
+      database.deleteDocument(categoriesCollection, doc.$id)
+    ),
+  ]);
+
+  await database.deleteDocument($collection, $id);
+  await storage.deleteBucket(bucketId);
+  await teams.delete($id);
+
+  res.send({ status: 'ok' });
 };

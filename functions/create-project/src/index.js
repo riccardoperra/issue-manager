@@ -30,7 +30,7 @@ module.exports = async function (req, res) {
     const { name, description, tags, visibility } = payload;
 
     const readPermissions = [
-      ...(visibility === 'public' ? ['role:guest', 'role:member'] : []),
+      ...(visibility === 'public' ? ['role:all'] : []),
       teamPermission,
     ];
 

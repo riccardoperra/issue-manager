@@ -20,37 +20,3 @@
 .wrapper {
   display: flex;
 }
-
-.table {
-  width: 100%;
-}
-
-table {
-  border-radius: var(--tui-radius-l);
-  border: 1px solid var(--tui-base-04);
-  border-bottom: 0;
-  overflow: hidden;
-  background-color: var(--tui-base-01);
-}
-
-td,
-th {
-  white-space: nowrap;
-  border-color: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--tui-base-04);
-  padding: var(--tui-padding-l);
-  cursor: pointer;
-
-  &:last-child {
-    border-right-color: transparent;
-  }
-}
-
-tbody {
-  border-color: transparent;
-}
-
-tr:hover {
-  background: var(--tui-base-02);
-}

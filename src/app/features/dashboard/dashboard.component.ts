@@ -30,12 +30,10 @@ import { CommonModule } from '@angular/common';
 
 interface ProjectsBoardActions {
   openCreateProjectDialog: void;
-  deleteProject: string;
+  deleteProject: Project;
 }
 
-interface ProjectsBoardState {
-  boardMode: 'grid' | 'card';
-}
+interface ProjectsBoardState {}
 
 @Component({
   selector: 'app-dashboard',
@@ -68,8 +66,6 @@ export class DashboardComponent
   readonly loading$ = this.projectsState.loading$.pipe(startWith(false));
   readonly account$ = this.authState.account$;
 
-  readonly boardMode$ = this.select('boardMode');
-
   readonly projectTrackBy: TrackByFunction<Project> = (index, { $id }) => $id;
 
   constructor(
@@ -91,16 +87,10 @@ export class DashboardComponent
     });
   }
 
-  toggleBoard(): void {
-    this.set('boardMode', (state) =>
-      state.boardMode === 'grid' ? 'card' : 'grid'
-    );
-  }
-
   ngOnInit(): void {
     this.hold(this.actions.openCreateProjectDialog$, () => this.openDialog());
-    this.hold(this.actions.deleteProject$, ($id) =>
-      this.projectsState.actions.deleteProject({ $id })
+    this.hold(this.actions.deleteProject$, (project) =>
+      this.projectsState.actions.deleteProject(project)
     );
   }
 

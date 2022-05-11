@@ -8,69 +8,25 @@
     <hr class="tui-space_top-6 tui-space_bottom-6" />
 
     <div class="tui-space_top-12">
-      <div class="board-title" *rxLet="boardMode$; let boardMode">
+      <div class="board-title">
         <h1>Your projects</h1>
-
-        <button
-          tuiIconButton
-          size="s"
-          appearance="flat"
-          [icon]="
-            boardMode === 'grid'
-              ? 'tuiIconStructureLarge'
-              : 'tuiIconViewListLarge'
-          "
-          (click)="toggleBoard()"
-        ></button>
       </div>
 
       <div class="tui-space_top-4">
-        <ng-container *ngIf="(boardMode$ | push) === 'grid'; else cardMode">
-          <table
-            tuiTable
-            class="table"
-            [columns]="['name', 'tag']"
-            *rxLet="projects$; let projects"
-          >
-            <tbody tuiTbody [data]="projects">
-              <tr
-                *tuiRow="let item of projects"
-                tuiTr
-                [routerLink]="['project', item.$id]"
-              >
-                <td *tuiCell="'name'">
-                  {{ item.name }}
-                </td>
-
-                <td *tuiCell="'tag'">
-                  <tui-tag
-                    class="tui-space_right-2"
-                    *ngFor="let tag of item.tags"
-                    [value]="tag"
-                    [status]="'info'"
-                  >
-                  </tui-tag>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </ng-container>
-        <ng-template #cardMode>
+        <div
+          class="tui-row tui-row_adaptive tui-col_stretch tui-space_top-6 board-row"
+        >
           <div
-            class="tui-row tui-row_adaptive tui-col_stretch tui-space_top-6 board-row"
+            class="tui-col_xs-12 tui-col_md-4 wrapper"
+            *rxFor="let project of projects$; trackBy: projectTrackBy"
           >
-            <div
-              class="tui-col_xs-12 tui-col_md-4 wrapper"
-              *rxFor="let project of projects$; trackBy: projectTrackBy"
-            >
-              <app-project-card
-                [project]="project"
-                [routerLink]="['project', project.$id]"
-                (deleteProject)="actions.deleteProject($event.$id)"
-              ></app-project-card>
-            </div>
+            <app-project-card
+              [project]="project"
+              [routerLink]="['project', project.$id]"
+              (deleteProject)="actions.deleteProject($event)"
+            ></app-project-card>
           </div>
-        </ng-template>
+        </div>
       </div>
     </div>
   </div>

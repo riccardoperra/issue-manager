@@ -58,9 +58,13 @@
     width: 100%;
     font-weight: 500;
     color: var(--tui-text-01);
+    display: flex;
+    align-items: center;
   }
 
   .metadata-input {
+    max-width: 200px;
+    width: 100%;
   }
 }
 

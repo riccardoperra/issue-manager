@@ -27,6 +27,8 @@ interface Actions {
   editTitle: string;
   updateContent: string;
   updateArchived: boolean;
+  updatePriority: string | undefined;
+  updateExpiryDate: string | undefined;
   addAttachment: UploadedAttachment;
   deleteAttachment: UploadedAttachment;
 }
@@ -44,6 +46,14 @@ export class IssueEditorAdapter extends RxState<KanbanCardEditorState> {
   );
 
   private readonly updateArchivedEvent$ = this.actions.updateArchived$.pipe(
+    withLatestFrom(this.select('card'))
+  );
+
+  private readonly updateExpiryDateEvent = this.actions.updateExpiryDate$.pipe(
+    withLatestFrom(this.select('card'))
+  );
+
+  private readonly updatePriorityEvent = this.actions.updatePriority$.pipe(
     withLatestFrom(this.select('card'))
   );
 
@@ -167,6 +177,30 @@ export class IssueEditorAdapter extends RxState<KanbanCardEditorState> {
           concat(
             of(patch(card, { archived })),
             this.cardsService.updateArchived(card.$id, archived)
+          )
+        )
+      )
+    );
+
+    this.connect(
+      'card',
+      this.updatePriorityEvent.pipe(
+        switchMap(([priority, card]) =>
+          concat(
+            of(patch(card, { priority })),
+            this.cardsService.updatePriority(card.$id, priority)
+          )
+        )
+      )
+    );
+
+    this.connect(
+      'card',
+      this.updateExpiryDateEvent.pipe(
+        switchMap(([expiryDate, card]) =>
+          concat(
+            of(patch(card, { expiryDate })),
+            this.cardsService.updateExpiryDate(card.$id, expiryDate)
           )
         )
       )

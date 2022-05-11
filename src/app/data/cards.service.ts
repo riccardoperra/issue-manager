@@ -83,6 +83,36 @@ export class CardsService {
     );
   }
 
+  updatePriority(
+    $id: Card['$id'],
+    priority: Card['priority']
+  ): Observable<Card> {
+    return from(
+      this.appwrite.database.updateDocument<Card>(
+        CardsService.collectionId,
+        $id,
+        {
+          priority,
+        } as Pick<Card, 'priority'>
+      )
+    );
+  }
+
+  updateExpiryDate(
+    $id: Card['$id'],
+    expiryDate: Card['expiryDate']
+  ): Observable<Card> {
+    return from(
+      this.appwrite.database.updateDocument<Card>(
+        CardsService.collectionId,
+        $id,
+        {
+          expiryDate,
+        } as Pick<Card, 'expiryDate'>
+      )
+    );
+  }
+
   updateContent($id: Card['$id'], content: string): Observable<Card> {
     return from(
       this.appwrite.database.updateDocument<Card>(

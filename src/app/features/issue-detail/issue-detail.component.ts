@@ -3,12 +3,13 @@ import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { CardsService } from '../../data/cards.service';
 import { IssueEditorAdapter } from './issue-detail-adapter.service';
 import { TuiDialogContext } from '@taiga-ui/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { EditorState } from 'lexical';
 import {
   ISSUE_DETAIL_IMPORTS,
   ISSUE_DETAIL_PROVIDERS,
 } from './issue-detail.metadata';
+import { TuiDay, TuiTime } from '@taiga-ui/cdk';
 
 export interface KanbanCardEditorContext {
   cardId: string;
@@ -52,7 +53,9 @@ export class IssueDetailComponent implements OnInit {
     @Inject(CardsService)
     private readonly cardsService: CardsService,
     @Inject(IssueEditorAdapter)
-    readonly adapter: IssueEditorAdapter
+    readonly adapter: IssueEditorAdapter,
+    @Inject(FormBuilder)
+    private readonly fb: FormBuilder
   ) {
     this.adapter.actions.fetch({ $id: this.context.data.cardId });
   }

@@ -54,18 +54,6 @@
     </div>
   </tui-notification>
 
-  <div class="tui-space_top-12">
-    <div class="editor-metadata">
-      <div class="metadata-title">
-        <tui-svg src="tuiIconBookmark" size="s"></tui-svg>
-        Category
-      </div>
-      <div class="metadata-input">
-        <tui-tag value="Categoria" [autoColor]="true"></tui-tag>
-      </div>
-    </div>
-  </div>
-
   <div class="tui-space_top-6">
     <div class="editor-metadata">
       <div class="metadata-title">
@@ -73,8 +61,13 @@
         Expiration date
       </div>
       <div class="metadata-input">
-        12 feb
-        <!--      <tui-input-date-time tuiTextfieldSize="s"></tui-input-date-time>-->
+        <tui-input-date
+          toNativeDate
+          [tuiTextfieldCleaner]="true"
+          [ngModel]="card.expiryDate"
+          (ngModelChange)="adapter.actions.updateExpiryDate($event)"
+          tuiTextfieldSize="s"
+        ></tui-input-date>
       </div>
     </div>
   </div>
@@ -86,7 +79,18 @@
         Priority
       </div>
       <div class="metadata-input">
-        <tui-tag value="HIGH" status="error"></tui-tag>
+        <tui-select
+          tuiTextfieldSize="s"
+          [tuiTextfieldCleaner]="true"
+          [ngModel]="card.priority"
+          (ngModelChange)="adapter.actions.updatePriority($event)"
+        >
+          Choose a priority
+          <tui-data-list-wrapper
+            *tuiDataList
+            [items]="['LOW', 'MEDIUM', 'HIGH']"
+          ></tui-data-list-wrapper>
+        </tui-select>
       </div>
     </div>
   </div>

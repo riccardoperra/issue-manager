@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { CardsService } from '../../data/cards.service';
-import { IssueEditorAdapter } from './issue-detail-adapter.service';
+import { IssueDetailAdapter } from './issue-detail-adapter.service';
 import { TuiDialogContext } from '@taiga-ui/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { EditorState } from 'lexical';
@@ -9,9 +9,9 @@ import {
   ISSUE_DETAIL_IMPORTS,
   ISSUE_DETAIL_PROVIDERS,
 } from './issue-detail.metadata';
-import { TuiDay, TuiTime } from '@taiga-ui/cdk';
 import { PermissionsService } from '../../shared/permissions/permissions.service';
-import { map } from 'rxjs';
+import { filter, finalize, map, Observable, takeUntil, tap } from 'rxjs';
+import { DestroyService } from '../../shared/utils/destroy';
 
 export interface KanbanCardEditorContext {
   cardId: string;
@@ -25,7 +25,7 @@ export interface KanbanCardEditorContext {
   providers: [ISSUE_DETAIL_PROVIDERS],
   imports: [ISSUE_DETAIL_IMPORTS],
 })
-export class IssueDetailComponent implements OnInit {
+export class IssueDetailComponent implements OnInit, OnDestroy {
   readonly card$ = this.adapter.select('card');
   readonly title = new FormControl<any>('');
   readonly project$ = this.adapter.select('project');
@@ -53,18 +53,28 @@ export class IssueDetailComponent implements OnInit {
   }
 
   constructor(
+    @Inject(DestroyService)
+    private readonly destroy$: Observable<void>,
     @Inject(POLYMORPHEUS_CONTEXT)
     private readonly context: TuiDialogContext<void, KanbanCardEditorContext>,
     @Inject(CardsService)
     private readonly cardsService: CardsService,
-    @Inject(IssueEditorAdapter)
-    readonly adapter: IssueEditorAdapter,
+    @Inject(IssueDetailAdapter)
+    readonly adapter: IssueDetailAdapter,
     @Inject(FormBuilder)
     private readonly fb: FormBuilder,
     @Inject(PermissionsService)
     private readonly permissionsService: PermissionsService
   ) {
     this.adapter.actions.fetch({ $id: this.context.data.cardId });
+
+    this.adapter.connect(
+      'card',
+      this.cardsService.observeCardChanges(this.context.data.cardId).pipe(
+        filter((evt) => evt.event === 'database.documents.update'),
+        map((evt) => evt.payload)
+      )
+    );
   }
 
   editorChange(editor: EditorState) {

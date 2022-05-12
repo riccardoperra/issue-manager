@@ -1,4 +1,4 @@
-import { IssueEditorAdapter } from './issue-detail-adapter.service';
+import { IssueDetailAdapter } from './issue-detail-adapter.service';
 import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
 import { LetModule, PushModule } from '@rx-angular/template';
 import { CommonModule } from '@angular/common';
@@ -27,7 +27,7 @@ import { IssueAttachmentsTableComponent } from './issue-attachments-table/issue-
 import { ToNativeDateDirective } from '../../shared/directives/native-date';
 import { TuiUnfinishedValidatorModule } from '@taiga-ui/kit/directives/unfinished-validator/unfinished-validator.module';
 
-export const ISSUE_DETAIL_PROVIDERS = [IssueEditorAdapter, RxActionFactory];
+export const ISSUE_DETAIL_PROVIDERS = [IssueDetailAdapter, RxActionFactory];
 
 export const ISSUE_DETAIL_IMPORTS = [
   LetModule,

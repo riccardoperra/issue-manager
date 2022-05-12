@@ -22,6 +22,7 @@ import {
 } from './issue-detail.model';
 import { PermissionsService } from '../../shared/permissions/permissions.service';
 import { isPresent } from '@taiga-ui/cdk';
+import { realtimeListener } from '../../shared/utils/realtime';
 
 interface Actions {
   fetch: { $id: string };
@@ -37,7 +38,7 @@ interface Actions {
 }
 
 @Injectable()
-export class IssueEditorAdapter extends RxState<KanbanCardEditorState> {
+export class IssueDetailAdapter extends RxState<KanbanCardEditorState> {
   readonly actions = this.rxActionFactory.create();
 
   readonly withAuthorization$ =

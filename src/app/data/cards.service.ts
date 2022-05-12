@@ -173,4 +173,10 @@ export class CardsService {
     this.appwrite,
     `collections.${CardsService.collectionId}.documents`
   );
+
+  readonly observeCardChanges = ($id: string) =>
+    realtimeListener<Card>(
+      this.appwrite,
+      `collections.${CardsService.collectionId}.documents.${$id}`
+    );
 }

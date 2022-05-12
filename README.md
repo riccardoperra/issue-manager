@@ -22,7 +22,8 @@ It also includes [RxAngular](https://github.com/rx-angular/rx-angular), a toolse
 WYSIWYG editor is built with [Lexical](https://github.com/facebook/lexical) from Meta and a small angular wrapper made by myself (the repo is currently private but available to [NPM](https://npmjs.com/lexical-angular)).
 
 ## 🌐 Demo 
-A [live deployment](https://issue-manager-demo.vercel.app) of this app is available to try it out.
+A [live deployment](https://issue-manager-demo.vercel.app) of this app is available to try it out. You must login to access the application
+pages but <strong>you are able to delete your account if you need to.</strong>
 
 ## ✅ Features
 

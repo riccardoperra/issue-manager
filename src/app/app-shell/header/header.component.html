@@ -10,7 +10,44 @@
   >
   </tui-avatar>
 
+  <button
+    size="s"
+    appearance="accent"
+    tuiButton
+    class="tui-space_right-2"
+    (click)="deleteAccount(deleteDialog)"
+  >
+    Delete account
+  </button>
+
   <button size="s" appearance="secondary" tuiButton (click)="logout()">
     Logout
   </button>
+  <ng-template #deleteDialog let-observer>
+    <h3 class="tui-form__header tui-form__header_margin-top_none">
+      Delete account
+    </h3>
+
+    <p>Do you want to delete your account? This action is not reversible</p>
+
+    <button
+      tuiButton
+      type="button"
+      size="m"
+      appearance="accent"
+      (click)="deleteAccountConfirm(); observer.complete()"
+      class="tui-space_right-2"
+    >
+      Delete
+    </button>
+    <button
+      tuiButton
+      type="button"
+      appearance="flat"
+      size="m"
+      (click)="observer.complete()"
+    >
+      No
+    </button>
+  </ng-template>
 </ng-container>

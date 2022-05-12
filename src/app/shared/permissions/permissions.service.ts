@@ -20,7 +20,6 @@ export class PermissionsService {
   });
 
   private readonly includesCurrentWorkspace$ = this.state$.pipe(
-    tap((x) => console.log(x)),
     map(({ workspaceId, teams }) => {
       if (!teams) return false;
       return teams.map((team) => team.$id).includes(workspaceId);

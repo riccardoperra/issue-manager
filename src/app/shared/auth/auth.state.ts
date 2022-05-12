@@ -55,7 +55,6 @@ export class AuthState
     this.connect(
       'teams',
       this.actions.fetchTeams$.pipe(
-        tap((x) => console.log('fetch team')),
         switchMap(() =>
           this.teamService.getCurrentTeams().pipe(catchError(() => of(null)))
         )

@@ -129,6 +129,15 @@ export class AuthEffects {
       });
   };
 
+  deleteAccount = () => {
+    this.appwrite.account
+      .delete()
+      .then(() => this.authState.set({ account: null, session: null }))
+      .then(() => localStorage.clear())
+      .then(() => sessionStorage.clear())
+      .then(() => this.router.navigate(['/login']));
+  };
+
   loginWithGoogle = () => {
     this.appwrite.account.createOAuth2Session(
       'google',

@@ -1,10 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, TemplateRef } from '@angular/core';
 import { AuthState } from '../../shared/auth/auth.state';
 import { AuthEffects } from '../../shared/auth/auth.effects';
 import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
 import { TuiAvatarModule } from '@taiga-ui/kit';
 import { LetModule } from '@rx-angular/template';
-import { TuiButtonModule } from '@taiga-ui/core';
+import { TuiButtonModule, TuiDialogService } from '@taiga-ui/core';
 
 @Component({
   selector: '[shellHeader]',
@@ -23,10 +23,20 @@ export class HeaderComponent {
     @Inject(AuthEffects)
     private readonly authEffects: AuthEffects,
     @Inject(RxActionFactory)
-    private readonly rxActionsFactory: RxActionFactory<any>
+    private readonly rxActionsFactory: RxActionFactory<any>,
+    @Inject(TuiDialogService)
+    private readonly dialogService: TuiDialogService
   ) {}
 
   logout(): void {
     this.authEffects.logout();
+  }
+
+  deleteAccount(template: TemplateRef<any>): void {
+    this.dialogService.open<boolean>(template).subscribe();
+  }
+
+  deleteAccountConfirm(): void {
+    this.authEffects.deleteAccount();
   }
 }

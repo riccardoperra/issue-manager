@@ -82,7 +82,6 @@ export class KanbanMembershipListComponent {
     member: Models.Membership,
     currentUser: Models.User<{}>
   ): boolean {
-    console.log('is current user');
     return member.userId === currentUser.$id;
   }
 

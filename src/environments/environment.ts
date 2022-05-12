@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  appwriteProject: '',
+  appwriteProject: '627959395839464a9ac6',
   appwriteEndpoint: 'http://localhost:4200/v1',
 };
 

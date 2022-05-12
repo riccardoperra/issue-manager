@@ -24,10 +24,8 @@ module.exports = async function (req, res) {
   try {
     await storage.deleteFile(payload.bucketId, payload.ref);
     await database.deleteDocument(payload.$collection, payload.$id);
-    console.log('ok');
     res.json({ success: true });
   } catch (e) {
-    console.log('success false', e);
     res.json({ success: false });
   }
 };

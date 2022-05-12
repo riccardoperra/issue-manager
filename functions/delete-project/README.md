@@ -48,6 +48,6 @@ Make sure you are in the same folder as your `appwrite.json` file and run `appwr
 appwrite functions createDeployment \
 --functionId=delete-project \
 --activate=true \
---entrypoint='index.js' \
+--entrypoint='src/index.js' \
 --code='./functions/delete-project'
 ```

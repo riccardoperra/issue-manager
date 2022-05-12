@@ -30,7 +30,6 @@ import { IssueAddCategoryComponent } from './issue-add-category/issue-add-catego
 import { LetModule } from '@rx-angular/template';
 import { ForModule } from '@rx-angular/template/experimental/for';
 import { HasAuthorizationDirective } from '../../shared/permissions/has-authorization.directive';
-import { PermissionsService } from '../../shared/permissions/permissions.service';
 
 interface LocalActions {
   moveCategory: CdkDragDrop<readonly Category[], readonly Category[], Category>;
@@ -210,12 +209,7 @@ export class IssuesKanbanComponent {
       return { target: event.item.data.$id, newRank: updatedRank.format() };
     } else {
       const ranks = groupedCards[categoryId].map(({ rank }) => rank);
-      const updatedRank = moveRank(
-        ranks,
-        event.previousIndex,
-        event.currentIndex
-      );
-
+      const updatedRank = moveRank(ranks, 0, event.currentIndex);
       return {
         target: event.item.data.$id,
         newRank: updatedRank.format(),

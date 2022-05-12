@@ -74,13 +74,14 @@
         <div class="metadata-input">
           <tui-input-date
             toNativeDate
+            tuiUnfinishedValidator="Finish filling the field"
             [disabled]="readOnly"
             [tuiTextfieldCleaner]="true"
             [ngModel]="card.expiryDate"
             (ngModelChange)="adapter.actions.updateExpiryDate($event)"
             tuiTextfieldSize="s"
           >
-            Select an expiration date
+            Choose a date
           </tui-input-date>
         </div>
       </div>

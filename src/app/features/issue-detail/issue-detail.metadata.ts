@@ -25,6 +25,7 @@ import { PlaygroundEditorModule } from '../../shared/lexical/editor/editor.modul
 import { IssueAttachmentsUploaderComponent } from './issue-attachments-uploader/issue-attachments-uploader.component';
 import { IssueAttachmentsTableComponent } from './issue-attachments-table/issue-attachments-table.component';
 import { ToNativeDateDirective } from '../../shared/directives/native-date';
+import { TuiUnfinishedValidatorModule } from '@taiga-ui/kit/directives/unfinished-validator/unfinished-validator.module';
 
 export const ISSUE_DETAIL_PROVIDERS = [IssueEditorAdapter, RxActionFactory];
 
@@ -53,4 +54,5 @@ export const ISSUE_DETAIL_IMPORTS = [
   IssueAttachmentsUploaderComponent,
   ToNativeDateDirective,
   TuiBadgeModule,
+  TuiUnfinishedValidatorModule,
 ];

@@ -6,7 +6,7 @@
     <tui-badge
       *ngIf="project.visibility === 'public'"
       status="info"
-      value="read-only"
+      value="Public project"
     ></tui-badge>
     <tui-hosted-dropdown
       *ngIf="!(isGuest$ | push)"

@@ -9,6 +9,17 @@
   class="tui-container tui-container_fullwidth main-wrapper tui-row tui-space_all-0"
 >
   <div class="tui-container tui-container_fullwidth wrapper tui-space_all-0">
+    <tui-notification
+      status="info"
+      [hasIcon]="true"
+      *ngIf="adapter.readOnly$ | push"
+    >
+      <strong>
+        You are viewing this board as read-only modality. Only project team
+        member users are allowed to edit the board.
+      </strong>
+    </tui-notification>
+
     <div
       class="project-kanban-title"
       *rxLet="project$; let project; strategy: 'local'"

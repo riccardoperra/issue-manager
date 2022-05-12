@@ -11,6 +11,7 @@ import {
   TuiButtonModule,
   TuiLinkModule,
   TuiLoaderModule,
+  TuiNotificationModule,
   tuiSlideIn,
 } from '@taiga-ui/core';
 import { withWorkspaceContext } from '../../shared/permissions/context.provider';
@@ -43,6 +44,7 @@ import { LetModule, PushModule } from '@rx-angular/template';
     KanbanMembershipListComponent,
     IssuesKanbanComponent,
     KanbanArchivedMenuComponent,
+    TuiNotificationModule,
   ],
 })
 export class ProjectKanbanComponent {

@@ -1,5 +1,5 @@
 # IssueManager
-> A kanban management tool made with Angular and AppWrite
+> A kanban management tool made with Angular and Appwrite
 
 ### ⚠️ <strong>READ THIS</strong> 
 This project is a demo, born mainly to test Appwrite integration with Angular experimental features, and <strong>it's not ready for production!</strong>
@@ -19,7 +19,7 @@ The frontend is built with Angular 14 using entirely the new **Standalone Compon
 
 It also includes [RxAngular](https://github.com/rx-angular/rx-angular), a toolset focused on runtime performance and template rendering [taiga-ui](https://github.com/Tinkoff/taiga-ui), an UI component library.
 
-WYSIWYG editor is built with [Lexical](https://github.com/facebook/lexical) from Meta and a small angular wrapper made by myself (the repo is currently private but available to [NPM](https://npmjs.com/lexical-angular)).
+WYSIWYG editor is built with [Lexical](https://github.com/facebook/lexical) and a small angular wrapper made by myself (the repo is currently private but available to [NPM](https://npmjs.com/lexical-angular)).
 
 ## 🌐 Demo 
 A [live deployment](https://issue-manager-demo.vercel.app) of this app is available to try it out. You must login to access the application

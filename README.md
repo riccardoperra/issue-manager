@@ -3,7 +3,7 @@
 
 ### ⚠️ <strong>READ THIS</strong> 
 This project is a demo, born mainly to test Appwrite integration with Angular experimental features, and <strong>it's not ready for production!</strong>
-The site currently online is a test and will be discontinued soon. If you want to try the application, you need to get Appwrite and host the server yourself.
+The site currently online is a test and will be discontinued soon. Once discontinued, you will need to self-host appwrite to try the application
 
 ## 🎯 About
 

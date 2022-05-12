@@ -19,13 +19,13 @@ import {
   TuiInputTagModule,
   TuiSelectModule,
   TuiTagModule,
+  TuiUnfinishedValidatorModule,
 } from '@taiga-ui/kit';
 import { TuiActiveZoneModule, TuiAutoFocusModule } from '@taiga-ui/cdk';
 import { PlaygroundEditorModule } from '../../shared/lexical/editor/editor.module';
 import { IssueAttachmentsUploaderComponent } from './issue-attachments-uploader/issue-attachments-uploader.component';
 import { IssueAttachmentsTableComponent } from './issue-attachments-table/issue-attachments-table.component';
 import { ToNativeDateDirective } from '../../shared/directives/native-date';
-import { TuiUnfinishedValidatorModule } from '@taiga-ui/kit/directives/unfinished-validator/unfinished-validator.module';
 
 export const ISSUE_DETAIL_PROVIDERS = [IssueDetailAdapter, RxActionFactory];
 

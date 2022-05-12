@@ -25,7 +25,7 @@ export interface KanbanCardEditorContext {
   providers: [ISSUE_DETAIL_PROVIDERS],
   imports: [ISSUE_DETAIL_IMPORTS],
 })
-export class IssueDetailComponent implements OnInit, OnDestroy {
+export class IssueDetailComponent {
   readonly card$ = this.adapter.select('card');
   readonly title = new FormControl<any>('');
   readonly project$ = this.adapter.select('project');
@@ -53,8 +53,6 @@ export class IssueDetailComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    @Inject(DestroyService)
-    private readonly destroy$: Observable<void>,
     @Inject(POLYMORPHEUS_CONTEXT)
     private readonly context: TuiDialogContext<void, KanbanCardEditorContext>,
     @Inject(CardsService)
@@ -93,6 +91,4 @@ export class IssueDetailComponent implements OnInit, OnDestroy {
   undoArchive(): void {
     this.adapter.actions.updateArchived(false);
   }
-
-  ngOnInit(): void {}
 }

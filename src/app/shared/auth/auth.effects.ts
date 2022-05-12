@@ -132,8 +132,8 @@ export class AuthEffects {
   loginWithGoogle = () => {
     this.appwrite.account.createOAuth2Session(
       'google',
-      'http://localhost/',
-      'http://localhost/login'
+      location.origin,
+      `${location.origin}/login`
     );
   };
 }

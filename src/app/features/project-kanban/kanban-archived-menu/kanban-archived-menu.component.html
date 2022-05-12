@@ -1,6 +1,14 @@
 <div class="menu" [@tuiSlideIn]="{ value: 'right', duration: 300 }">
   <tui-scrollbar class="menu-scrollbar">
-    <div class="tui-space_all-4" *rxLet="vm$; let vm">
+    <div class="tui-space_all-4 content" *rxLet="vm$; let vm">
+      <button
+        tuiIconButton
+        icon="tuiIconCloseLarge"
+        class="close-button"
+        appearance="accent"
+        size="m"
+        (click)="closeEvent.emit()"
+      ></button>
       <tui-tabs [(activeItemIndex)]="activeIndex">
         <button tuiTab>
           <span class="tui-space_right-2">Archived lists</span>

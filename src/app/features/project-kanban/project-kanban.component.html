@@ -45,6 +45,7 @@
         </ng-container>
         <div class="project-kanban-actions">
           <button
+            *ngIf="!showArchived"
             tuiButton
             appearance="accent"
             size="s"
@@ -60,5 +61,8 @@
       [readOnly]="adapter.readOnly$ | push"
     ></app-issues-kanban>
   </div>
-  <app-kanban-archived-menu *ngIf="showArchived"></app-kanban-archived-menu>
+  <app-kanban-archived-menu
+    *ngIf="showArchived"
+    (closeEvent)="showArchived = false"
+  ></app-kanban-archived-menu>
 </div>

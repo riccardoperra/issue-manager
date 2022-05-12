@@ -1,4 +1,11 @@
-import { Component, HostBinding, Inject, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostBinding,
+  Inject,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   TuiButtonModule,
   tuiFadeIn,
@@ -36,6 +43,9 @@ import { LetModule } from '@rx-angular/template';
 export class KanbanArchivedMenuComponent implements OnInit {
   @HostBinding('@tuiSlideIn')
   readonly options = { value: 'right', duration: 50 };
+
+  @Output()
+  closeEvent = new EventEmitter<void>();
 
   activeIndex = 0;
 

@@ -10,8 +10,18 @@
   }
 }
 
+.content {
+  position: relative;
+}
+
 .list {
   display: flex;
   flex-direction: column;
   row-gap: var(--tui-padding-s);
+}
+
+.close-button {
+  position: absolute;
+  right: 0;
+  z-index: 100;
 }

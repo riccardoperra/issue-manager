@@ -14,3 +14,19 @@ tui-wrapper[data-appearance='google'] {
     background: var(--tui-base-03);
   }
 }
+
+tui-wrapper[data-appearance='github'] {
+  background: var(--tui-base-09);
+  border: 1px solid #1a1a1a;
+  color: var(--tui-base-01);
+  fill: var(--tui-base-01);
+  cursor: pointer;
+
+  @include wrapper-hover() {
+    background: var(--tui-base-08);
+  }
+
+  @include wrapper-active() {
+    background: var(--tui-base-07);
+  }
+}

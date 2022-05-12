@@ -16,6 +16,8 @@ import {
   TuiInputPasswordModule,
 } from '@taiga-ui/kit';
 import { RouterModule } from '@angular/router';
+import { GoogleSignInButtonComponent } from '../../shared/auth/components/google-sign-in-button.component';
+import { GithubSignInButtonComponent } from '../../shared/auth/components/github-sign-in-button.component';
 
 interface LoginCommands {
   loginWithGoogle: void;
@@ -41,6 +43,8 @@ interface LoginCommands {
     TuiInputPasswordModule,
     TuiButtonModule,
     RouterModule,
+    GoogleSignInButtonComponent,
+    GithubSignInButtonComponent,
   ],
   standalone: true,
 })

@@ -1,6 +1,6 @@
 {
   "/v1": {
-    "target": "http://165.232.80.41/v1",
+    "target": "https://issuemanager.riccardoperra.com/v1",
     "secure": false
   }
 }

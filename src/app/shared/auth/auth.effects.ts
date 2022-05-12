@@ -136,4 +136,12 @@ export class AuthEffects {
       `${location.origin}/login`
     );
   };
+
+  loginWithGithub = () => {
+    this.appwrite.account.createOAuth2Session(
+      'github',
+      location.origin,
+      `${location.origin}/login`
+    );
+  };
 }

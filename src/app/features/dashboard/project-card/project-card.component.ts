@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { Project } from '../../../data/projects.service';
-import { TuiIslandModule, TuiTagModule } from '@taiga-ui/kit';
+import { TuiBadgeModule, TuiIslandModule, TuiTagModule } from '@taiga-ui/kit';
 import { CommonModule } from '@angular/common';
 import {
   TuiButtonModule,
@@ -23,6 +23,7 @@ import { PushModule, PushPipe } from '@rx-angular/template';
     TuiHostedDropdownModule,
     TuiDataListModule,
     PushModule,
+    TuiBadgeModule,
   ],
 })
 export class ProjectCardComponent {

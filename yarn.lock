@@ -1837,6 +1837,13 @@
     angular2-text-mask "^9.0.0"
     tslib "^1.10.0"
 
+"@tinkoff/ng-dompurify@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@tinkoff/ng-dompurify/-/ng-dompurify-3.0.0.tgz#71338db56c047b9de67f05dc9f58c4080e6b4e4b"
+  integrity sha512-Gx153lEakv4nEDZXFd2vW2zK8fI7fJMu8ZaRaPgGcq1wrAe0ps/mCZdg9KXNdyLUvwTu3WFsJXj5CwCG6Zfucg==
+  dependencies:
+    tslib "^1.9.0"
+
 "@tinkoff/ng-event-plugins@^2.5.1":
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/@tinkoff/ng-event-plugins/-/ng-event-plugins-2.5.1.tgz#c55f1d0e621442e6d33c601b911de9a3d577c4ea"
@@ -3398,6 +3405,11 @@ domhandler@^4.2.0, domhandler@^4.3.1:
   integrity sha512-GrwoxYN+uWlzO8uhUXRl0P+kHE4GtVPfYzVLcUxPL7KNdHKj66vvlhiweIHqYYXWlw+T8iLMp42Lm67ghw4WMQ==
   dependencies:
     domelementtype "^2.2.0"
+
+dompurify@^2.3.7:
+  version "2.3.7"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.3.7.tgz#30aa7feddc1420f3e554b1b3fe9e2f318a28066e"
+  integrity sha512-fsVZLywBd3awZIG3qU4JEdw7DCb0uUCajTfWRrLhsgKjTBd5CIIluPoAkNfco05GuNYQGj4/+bQIhlq96eT9eQ==
 
 domutils@^2.8.0:
   version "2.8.0"

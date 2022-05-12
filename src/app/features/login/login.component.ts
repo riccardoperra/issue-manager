@@ -15,9 +15,11 @@ import {
   TuiInputPasswordModule,
 } from '@taiga-ui/kit';
 import { RouterModule } from '@angular/router';
+import { GoogleSignInButtonComponent } from '../../shared/auth/components/google-sign-in-button.component';
+import { GithubSignInButtonComponent } from '../../shared/auth/components/github-sign-in-button.component';
 
 interface LoginCommands {
-  loginAsGuest: void;
+  loginWithGithub: void;
   loginWithGoogle: void;
   login: { email: string; password: string };
 }
@@ -36,6 +38,8 @@ interface LoginCommands {
     TuiInputPasswordModule,
     TuiButtonModule,
     RouterModule,
+    GoogleSignInButtonComponent,
+    GithubSignInButtonComponent,
   ],
   standalone: true,
 })
@@ -63,8 +67,8 @@ export class LoginComponent {
     );
 
     this.rxEffects.register(
-      this.actions.loginAsGuest$,
-      authEffects.loginAsGuest
+      this.actions.loginWithGithub$,
+      authEffects.loginWithGithub
     );
 
     this.rxEffects.register(

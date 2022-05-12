@@ -1,4 +1,10 @@
-import { Component, Inject, NgZone, TrackByFunction } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Input,
+  NgZone,
+  TrackByFunction,
+} from '@angular/core';
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { Category } from '../../data/categories.service';
 import { Card } from '../../data/cards.service';
@@ -24,6 +30,7 @@ import { IssueAddCategoryComponent } from './issue-add-category/issue-add-catego
 import { LetModule } from '@rx-angular/template';
 import { ForModule } from '@rx-angular/template/experimental/for';
 import { HasAuthorizationDirective } from '../../shared/permissions/has-authorization.directive';
+import { PermissionsService } from '../../shared/permissions/permissions.service';
 
 interface LocalActions {
   moveCategory: CdkDragDrop<readonly Category[], readonly Category[], Category>;
@@ -55,6 +62,9 @@ interface LocalActions {
   ],
 })
 export class IssuesKanbanComponent {
+  @Input()
+  readOnly: boolean = false;
+
   readonly ui = this.rxActionFactory.create();
   readonly categories$ = this.adapter.sortedCategories$;
   readonly groupedCards$ = this.adapter.cardsByCategory$;

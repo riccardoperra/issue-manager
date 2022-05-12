@@ -36,6 +36,9 @@ import { from, switchMap } from 'rxjs';
 })
 export class IssueAttachmentsTableComponent {
   @Input()
+  readOnly: boolean = false;
+
+  @Input()
   attachments: readonly UploadedAttachment[] = [];
 
   @Output()

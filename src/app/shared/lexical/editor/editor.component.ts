@@ -31,6 +31,9 @@ export class PlaygroundEditorComponent implements AfterViewInit {
   content: string = '';
 
   @Input()
+  disabled: boolean = false;
+
+  @Input()
   richText: boolean = true;
 
   @ViewChild(LexicalComposerDirective, { static: true })
@@ -79,5 +82,9 @@ export class PlaygroundEditorComponent implements AfterViewInit {
       editor.setEditorState(editorState);
     }
     editor.dispatchCommand(CLEAR_HISTORY_COMMAND, null);
+
+    if (this.disabled) {
+      editor.setReadOnly(true);
+    }
   }
 }

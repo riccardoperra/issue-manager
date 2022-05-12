@@ -5,6 +5,7 @@ import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory
 import {
   concat,
   debounceTime,
+  filter,
   map,
   of,
   switchMap,
@@ -19,6 +20,8 @@ import {
   KanbanCardEditorState,
   UploadedAttachment,
 } from './issue-detail.model';
+import { PermissionsService } from '../../shared/permissions/permissions.service';
+import { isPresent } from '@taiga-ui/cdk';
 
 interface Actions {
   fetch: { $id: string };
@@ -37,24 +40,29 @@ interface Actions {
 export class IssueEditorAdapter extends RxState<KanbanCardEditorState> {
   readonly actions = this.rxActionFactory.create();
 
+  readonly withAuthorization$ =
+    this.permissionService.canWriteOnWorkspace$.pipe(
+      filter((authorized) => authorized)
+    );
+
   private readonly updateTitleEvent$ = this.actions.editTitle$.pipe(
-    withLatestFrom(this.select('card'))
+    withLatestFrom(this.select('card'), this.withAuthorization$)
   );
 
   private readonly updateContentEvent$ = this.actions.updateContent$.pipe(
-    withLatestFrom(this.select('card'))
+    withLatestFrom(this.select('card'), this.withAuthorization$)
   );
 
   private readonly updateArchivedEvent$ = this.actions.updateArchived$.pipe(
-    withLatestFrom(this.select('card'))
+    withLatestFrom(this.select('card'), this.withAuthorization$)
   );
 
   private readonly updateExpiryDateEvent = this.actions.updateExpiryDate$.pipe(
-    withLatestFrom(this.select('card'))
+    withLatestFrom(this.select('card'), this.withAuthorization$)
   );
 
   private readonly updatePriorityEvent = this.actions.updatePriority$.pipe(
-    withLatestFrom(this.select('card'))
+    withLatestFrom(this.select('card'), this.withAuthorization$)
   );
 
   private readonly fetchAttachmentsEvent$ = this.actions.fetchAttachments$.pipe(
@@ -71,7 +79,9 @@ export class IssueEditorAdapter extends RxState<KanbanCardEditorState> {
     @Inject(BucketService)
     private readonly bucketService: BucketService,
     @Inject(RxActionFactory)
-    private readonly rxActionFactory: RxActionFactory<Actions>
+    private readonly rxActionFactory: RxActionFactory<Actions>,
+    @Inject(PermissionsService)
+    private readonly permissionService: PermissionsService
   ) {
     super();
 
@@ -131,7 +141,7 @@ export class IssueEditorAdapter extends RxState<KanbanCardEditorState> {
     this.connect(
       'attachmentList',
       this.actions.addAttachment$.pipe(
-        withLatestFrom(this.select('attachmentList')),
+        withLatestFrom(this.select('attachmentList'), this.withAuthorization$),
         map(([newAttachment, attachments]) => {
           return [newAttachment, ...attachments];
         })
@@ -141,7 +151,7 @@ export class IssueEditorAdapter extends RxState<KanbanCardEditorState> {
     this.connect(
       'attachmentList',
       this.actions.deleteAttachment$.pipe(
-        withLatestFrom(this.select('attachmentList')),
+        withLatestFrom(this.select('attachmentList'), this.withAuthorization$),
         map(([{ $id }, attachments]) => {
           return attachments.filter((file) => file.$id !== $id);
         })

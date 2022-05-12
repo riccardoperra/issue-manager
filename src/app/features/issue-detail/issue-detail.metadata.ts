@@ -12,6 +12,7 @@ import {
 } from '@taiga-ui/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
+  TuiBadgeModule,
   TuiDataListWrapperModule,
   TuiInputDateModule,
   TuiInputModule,
@@ -24,7 +25,6 @@ import { PlaygroundEditorModule } from '../../shared/lexical/editor/editor.modul
 import { IssueAttachmentsUploaderComponent } from './issue-attachments-uploader/issue-attachments-uploader.component';
 import { IssueAttachmentsTableComponent } from './issue-attachments-table/issue-attachments-table.component';
 import { ToNativeDateDirective } from '../../shared/directives/native-date';
-import { TuiTextfieldCleanerDirective } from '@taiga-ui/core/directives/textfield-controller/textfield-cleaner.directive';
 
 export const ISSUE_DETAIL_PROVIDERS = [IssueEditorAdapter, RxActionFactory];
 
@@ -52,4 +52,5 @@ export const ISSUE_DETAIL_IMPORTS = [
   IssueAttachmentsTableComponent,
   IssueAttachmentsUploaderComponent,
   ToNativeDateDirective,
+  TuiBadgeModule,
 ];

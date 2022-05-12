@@ -56,7 +56,9 @@
       </div>
     </div>
 
-    <app-issues-kanban></app-issues-kanban>
+    <app-issues-kanban
+      [readOnly]="adapter.readOnly$ | push"
+    ></app-issues-kanban>
   </div>
   <app-kanban-archived-menu *ngIf="showArchived"></app-kanban-archived-menu>
 </div>

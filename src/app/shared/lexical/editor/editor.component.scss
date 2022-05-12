@@ -45,6 +45,10 @@
   cursor: text;
   display: block;
   padding-top: 60px;
+
+  &.disabled {
+    padding-top: 0;
+  }
 }
 
 .editor-shell .editor-container.tree-view {

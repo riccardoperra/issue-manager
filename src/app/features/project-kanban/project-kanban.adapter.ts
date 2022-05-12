@@ -14,9 +14,12 @@ import {
   forkJoin,
   iif,
   map,
+  mapTo,
   merge,
+  MonoTypeOperatorFunction,
   Observable,
   of,
+  pipe,
   pluck,
   ReplaySubject,
   switchMap,
@@ -55,9 +58,26 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
 
   private readonly categories$ = this.select('categories');
 
+  readonly authorizationFilter = <T>(): MonoTypeOperatorFunction<T> =>
+    pipe(
+      switchMap((result) =>
+        this.readOnly$.pipe(
+          filter((readOnly) => !readOnly),
+          map(() => result)
+        )
+      )
+    );
+
   readonly project$ = this.select('project');
   readonly loading$ = this.select('loading');
   readonly workspace$ = this.select('workspace');
+  readonly readOnly$ = this.permissionsService.canWriteOnWorkspace$.pipe(
+    map((allowed) => !allowed)
+  );
+
+  readonly withAuthorizationFilter$ = this.readOnly$.pipe(
+    this.authorizationFilter()
+  );
 
   readonly sortedCategories$: Observable<readonly Category[]> =
     this.categories$.pipe(
@@ -96,20 +116,23 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
 
   private readonly sideEffects$ = merge(
     this.ui.updateCategoryPosition$.pipe(
+      this.authorizationFilter(),
       switchMap(({ $id, rank }) =>
         this.categoriesService.updatePosition($id, rank)
       )
     ),
     this.ui.updateCardPosition$.pipe(
+      this.authorizationFilter(),
       switchMap(({ $id, rank }) => this.cardsService.updatePosition($id, rank))
     ),
     this.ui.updateCardCategory$.pipe(
+      this.authorizationFilter(),
       switchMap(({ $id, categoryId, rank }) =>
         this.cardsService.updateCategory($id, categoryId, rank)
       )
     ),
     this.ui.addCategory$.pipe(
-      withLatestFrom(this.project$),
+      withLatestFrom(this.project$, this.withAuthorizationFilter$),
       switchMap(([{ $projectId, rank, name }, project]) =>
         this.categoriesService.addCategory(project, {
           rank,
@@ -118,17 +141,19 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
       )
     ),
     this.ui.updateArchivedCategory$.pipe(
+      this.authorizationFilter(),
       switchMap(({ $id, archived }) =>
         this.categoriesService.archiveCategory($id, archived)
       )
     ),
     this.ui.updateArchivedCard$.pipe(
+      this.authorizationFilter(),
       switchMap(({ $id, archived }) =>
         this.cardsService.updateArchived($id, archived)
       )
     ),
     this.ui.addCard$.pipe(
-      withLatestFrom(this.project$),
+      withLatestFrom(this.project$, this.withAuthorizationFilter$),
       switchMap(([{ name, rank, $categoryId }, $project]) =>
         this.cardsService.addCard($project, {
           name,
@@ -138,7 +163,10 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
       )
     ),
     this.ui.addMember$.pipe(
-      withLatestFrom(this.project$.pipe(pluck('$id'))),
+      withLatestFrom(
+        this.project$.pipe(pluck('$id')),
+        this.withAuthorizationFilter$
+      ),
       switchMap(([email, $projectId]) =>
         this.teamsService.addMembership($projectId, email).pipe(
           tap((membership) => {
@@ -152,7 +180,10 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
       )
     ),
     this.ui.removeMember$.pipe(
-      withLatestFrom(this.project$.pipe(pluck('$id'))),
+      withLatestFrom(
+        this.project$.pipe(pluck('$id')),
+        this.withAuthorizationFilter$
+      ),
       switchMap(([$id, $projectId]) =>
         this.teamsService.removeMembership($projectId, $id).pipe(
           tap((membership) =>
@@ -213,7 +244,7 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
 
     this.connect(
       'categories',
-      this.ui.updateCategoryPosition$,
+      this.ui.updateCategoryPosition$.pipe(this.authorizationFilter()),
       (state, { $id, rank }) =>
         state.categories.map((category) =>
           category.$id === $id ? patch(category, { rank }) : category
@@ -222,22 +253,25 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
 
     this.connect(
       'categories',
-      this.ui.updateArchivedCategory$,
+      this.ui.updateArchivedCategory$.pipe(this.authorizationFilter()),
       (state, { $id, archived }) =>
         state.categories.map((category) =>
           category.$id === $id ? patch(category, { archived }) : category
         )
     );
 
-    this.connect('cards', this.ui.updateCardPosition$, (state, { $id, rank }) =>
-      state.cards.map((card) =>
-        card.$id === $id ? patch(card, { rank }) : card
-      )
+    this.connect(
+      'cards',
+      this.ui.updateCardPosition$.pipe(this.authorizationFilter()),
+      (state, { $id, rank }) =>
+        state.cards.map((card) =>
+          card.$id === $id ? patch(card, { rank }) : card
+        )
     );
 
     this.connect(
       'cards',
-      this.ui.updateArchivedCard$,
+      this.ui.updateArchivedCard$.pipe(this.authorizationFilter()),
       (state, { $id, archived }) =>
         state.cards.map((card) =>
           card.$id === $id ? patch(card, { archived }) : card
@@ -246,7 +280,7 @@ export class ProjectKanbanAdapter extends RxState<ProjectKanbanPageModel> {
 
     this.connect(
       'cards',
-      this.ui.updateCardCategory$,
+      this.ui.updateCardCategory$.pipe(this.authorizationFilter()),
       (state, { $id, rank, categoryId }) =>
         state.cards.map((card) =>
           card.$id === $id ? patch(card, { rank, categoryId }) : card

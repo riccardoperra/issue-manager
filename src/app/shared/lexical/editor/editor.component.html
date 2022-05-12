@@ -8,12 +8,24 @@
   class="lexical-editor"
   (lexicalChangeEvent)="editorChange.emit($event)"
 >
-  <lxc-toolbar *ngIf="richText"></lxc-toolbar>
-  <div class="editor-container" lexicalRichText [class.plain-text]="!richText">
-    <div lexicalContentEditable class="ContentEditable__root"></div>
+  <lxc-toolbar *ngIf="richText && !disabled"></lxc-toolbar>
 
-    <div *lexicalPlaceholder class="Placeholder__root">
-      {{ richText ? 'Enter some rich text...' : 'Enter some plain text...' }}
-    </div>
+  <div
+    class="editor-container"
+    [class.disabled]="disabled"
+    lexicalRichText
+    [class.plain-text]="!richText"
+  >
+    <div
+      lexicalContentEditable
+      [readOnly]="disabled"
+      class="ContentEditable__root"
+    ></div>
+
+    <ng-container *ngIf="!disabled">
+      <div *lexicalPlaceholder class="Placeholder__root">
+        {{ richText ? 'Enter some rich text...' : 'Enter some plain text...' }}
+      </div>
+    </ng-container>
   </div>
 </div>

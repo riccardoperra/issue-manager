@@ -9,6 +9,7 @@
     *rxFor="let card of cards$; trackBy: cardTrackBy; strategy: 'native'"
     class="card-wrapper"
     cdkDrag
+    [cdkDragDisabled]="readOnly"
     #ref
     [cdkDragData]="card"
   >

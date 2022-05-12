@@ -1,9 +1,10 @@
 <tui-island
+  *rxLet="vm$; let vm"
   class="wrapper"
   cdkDrag
   tuiElement
+  [cdkDragDisabled]="vm.readOnly"
   #ref="elementRef"
-  *rxLet="vm$; let vm"
   [cdkDragData]="vm.list"
 >
   <div class="list-header" cdkDragHandle>
@@ -30,6 +31,7 @@
       <app-issue-card-list
         [cards]="vm.cards"
         [list]="vm.list"
+        [readOnly]="vm.readOnly"
         (dropEvent)="moveCard.emit($event)"
         (archiveCard)="archiveCard.emit($event)"
       ></app-issue-card-list>

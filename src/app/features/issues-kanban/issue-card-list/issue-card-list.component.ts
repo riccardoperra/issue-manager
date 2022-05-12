@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Inject,
+  Injector,
   Input,
   Output,
   TrackByFunction,
@@ -54,6 +55,9 @@ export class IssueCardListComponent extends RxState<{
   cards: readonly Card[];
 }> {
   @Input()
+  readOnly: boolean = false;
+
+  @Input()
   set list(category: Category) {
     this.connect('category', of(category));
   }
@@ -82,7 +86,9 @@ export class IssueCardListComponent extends RxState<{
 
   constructor(
     @Inject(TuiDialogService)
-    private readonly dialogService: TuiDialogService
+    private readonly dialogService: TuiDialogService,
+    @Inject(Injector)
+    private readonly injector: Injector
   ) {
     super();
   }
@@ -95,10 +101,13 @@ export class IssueCardListComponent extends RxState<{
     from(detail)
       .pipe(
         switchMap((component) =>
-          this.dialogService.open(new PolymorpheusComponent(component), {
-            size: 'page',
-            data: { cardId: card.$id },
-          })
+          this.dialogService.open(
+            new PolymorpheusComponent(component, this.injector),
+            {
+              size: 'page',
+              data: { cardId: card.$id },
+            }
+          )
         )
       )
       .subscribe();

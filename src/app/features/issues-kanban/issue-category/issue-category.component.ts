@@ -58,7 +58,13 @@ import { AddIssueCardComponent } from '../issue-add-issue-card/add-issue-card.co
 export class IssueCategoryComponent extends RxState<{
   list: Category;
   cards: readonly Card[];
+  readOnly: boolean;
 }> {
+  @Input()
+  set readOnly(readOnly: boolean) {
+    this.connect('readOnly', of(readOnly));
+  }
+
   @Input()
   set list(list: Category) {
     this.connect('list', of(list));
@@ -69,7 +75,7 @@ export class IssueCategoryComponent extends RxState<{
     this.connect('cards', of(cards));
   }
 
-  readonly vm$ = this.select(selectSlice(['cards', 'list']));
+  readonly vm$ = this.select(selectSlice(['cards', 'list', 'readOnly']));
 
   @Output()
   dropEvent = new EventEmitter<

@@ -13,6 +13,7 @@
     >
       <div
         cdkDropListGroup
+        [cdkDropListGroupDisabled]=""
         class="list-grid"
         *rxLet="groupedCards$; let groupedCards"
       >
@@ -23,6 +24,7 @@
             trackBy: categoriesTrackBy;
             let index = index
           "
+          [readOnly]="readOnly"
           [list]="list"
           [cards]="groupedCards[list.$id]"
           (addCard)="ui.addCard($event)"

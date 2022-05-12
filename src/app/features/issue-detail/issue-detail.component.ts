@@ -10,6 +10,8 @@ import {
   ISSUE_DETAIL_PROVIDERS,
 } from './issue-detail.metadata';
 import { TuiDay, TuiTime } from '@taiga-ui/cdk';
+import { PermissionsService } from '../../shared/permissions/permissions.service';
+import { map } from 'rxjs';
 
 export interface KanbanCardEditorContext {
   cardId: string;
@@ -28,6 +30,9 @@ export class IssueDetailComponent implements OnInit {
   readonly title = new FormControl<any>('');
   readonly project$ = this.adapter.select('project');
   readonly attachments$ = this.adapter.select('attachmentList');
+  readonly readOnly$ = this.permissionsService.canWriteOnWorkspace$.pipe(
+    map((enabled) => !enabled)
+  );
 
   editingTitle: boolean = false;
 
@@ -55,7 +60,9 @@ export class IssueDetailComponent implements OnInit {
     @Inject(IssueEditorAdapter)
     readonly adapter: IssueEditorAdapter,
     @Inject(FormBuilder)
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    @Inject(PermissionsService)
+    private readonly permissionsService: PermissionsService
   ) {
     this.adapter.actions.fetch({ $id: this.context.data.cardId });
   }

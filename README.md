@@ -19,11 +19,16 @@ The frontend is built with Angular 14 using entirely the new **Standalone Compon
 
 It also includes [RxAngular](https://github.com/rx-angular/rx-angular), a toolset focused on runtime performance and template rendering [taiga-ui](https://github.com/Tinkoff/taiga-ui), an UI component library.
 
-WYSIWYG editor is built with [Lexical](https://github.com/facebook/lexical) from Meta and a small angular wrapper made by myself (the repo is currently private but available to [NPM](https://npmjs.com/lexical-angular).
+WYSIWYG editor is built with [Lexical](https://github.com/facebook/lexical) from Meta and a small angular wrapper made by myself (the repo is currently private but available to [NPM](https://npmjs.com/lexical-angular)).
+
+## 🌐 Demo 
+A [live deployment](https://issue-manager-demo.vercel.app) of this app is available to try it out.
+
+## ✅ Features
 
 ### Authentication
 
-IssueMaanger authentication system is entirely based on Appwrite, and currently supports login and registration via Email/Password, Google and Github.
+IssueManager authentication system is entirely based on Appwrite, and currently supports login and registration via Email/Password, Google and Github.
 
 ![issue-manager-demo vercel app_login (2)](https://user-images.githubusercontent.com/37072694/168169039-74bb5278-e7ff-426b-9d05-a3bfd28a3003.png)
 
@@ -64,6 +69,26 @@ https://user-images.githubusercontent.com/37072694/168176690-3fa25104-ccd5-4d7e-
 Thanks to Appwrite Storage, the user has the possibility to manage the attachments of a task. Attachments consists of uploaded files that can be downloaded, deleted or viewed (if the preview is available). Each file (even multiple) can be uploaded through drag-and-drop or clicking to the custom file input provided by `taiga-ui`
 
 https://user-images.githubusercontent.com/37072694/168177316-a007e76e-ca9c-4789-abb7-d51ce428f3f9.mp4
+
+## 👨🏻‍💻 Run Locally
+- Clone the project
+  ```bash
+  git clone https://github.com/riccardoperra/issue-manager
+  ```
+- Install dependencies
+  ```bash
+  yarn install
+  ```
+- Start the local server
+  ```bash
+  ng serve
+  ```
+  
+### ⚠️ <strong>READ THIS</strong> 
+To connect to Appwrite you have to follow their guides to install the instance
+Appwrite Installation - https://appwrite.io/docs/installation
+Appwrite Web SDK - https://appwrite.io/docs/getting-started-for-web
+  
 
 ## License
 

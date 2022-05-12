@@ -1,6 +1,10 @@
 # on-delete-project
 
-Welcome to the documentation of this function 👋 We strongly recommend keeping this file in sync with your function's logic to make sure anyone can easily understand your function in the future. If you don't need documentation, you can remove this file.
+Trigger delete project process:
+- Delete project linked storage
+- Delete project linked team
+- Delete all project cards
+- Delete all project categories
 
 ## 🤖 Documentation
 
@@ -42,7 +46,7 @@ Make sure you have [Appwrite CLI](https://appwrite.io/docs/command-line#installa
 
 Make sure you are in the same folder as your `appwrite.json` file and run `appwrite deploy function` to deploy your function. You will be prompted to select which functions you want to deploy.
 
-### Manual using tar.gz
+### SCript to deploy with CLI
 
 ```bash
 appwrite functions createDeployment \

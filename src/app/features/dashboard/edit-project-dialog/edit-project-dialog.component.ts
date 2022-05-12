@@ -9,7 +9,11 @@ import {
   TuiTextfieldControllerModule,
   TuiTooltipModule,
 } from '@taiga-ui/core';
-import { AddProjectRequest } from '../../../data/projects.service';
+import {
+  AddProjectRequest,
+  EditProjectRequest,
+  Project,
+} from '../../../data/projects.service';
 import {
   TuiFieldErrorModule,
   TuiInputModule,
@@ -19,9 +23,9 @@ import {
 } from '@taiga-ui/kit';
 
 @Component({
-  selector: 'app-add-project-dialog',
-  templateUrl: './add-project-dialog.component.html',
-  styleUrls: ['./add-project-dialog.component.scss'],
+  selector: 'app-edit-project-dialog',
+  templateUrl: './edit-project-dialog.component.html',
+  styleUrls: ['./edit-project-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -38,21 +42,25 @@ import {
     TuiButtonModule,
   ],
 })
-export class AddProjectDialogComponent {
-  readonly form = this.fb.group<any>({
+export class EditProjectDialogComponent {
+  readonly form = this.fb.group({
     name: ['', Validators.required],
     description: [''],
-    imageUrl: [null],
-    tags: [[]],
+    tags: [[] as string[]],
     visibility: ['private'],
   });
 
   constructor(
     @Inject(POLYMORPHEUS_CONTEXT)
-    private readonly context: TuiDialogContext<AddProjectRequest | void, void>,
+    private readonly context: TuiDialogContext<
+      EditProjectRequest | void,
+      Project
+    >,
     @Inject(FormBuilder)
     private readonly fb: FormBuilder
-  ) {}
+  ) {
+    this.form.patchValue(context.data);
+  }
 
   close(): void {
     this.context.completeWith();
@@ -61,6 +69,6 @@ export class AddProjectDialogComponent {
   submit(): void {
     this.form.markAllAsTouched();
     if (!this.form.valid) return;
-    this.context.completeWith(this.form.value as any);
+    this.context.completeWith(this.form.value as AddProjectRequest);
   }
 }

@@ -12,7 +12,11 @@ import {
   tuiFadeIn,
   TuiLoaderModule,
 } from '@taiga-ui/core';
-import { AddProjectRequest, Project } from '../../data/projects.service';
+import {
+  AddProjectRequest,
+  EditProjectRequest,
+  Project,
+} from '../../data/projects.service';
 import { AuthState } from '../../shared/auth/auth.state';
 import { RxActionFactory } from '../../shared/rxa-custom/actions/actions.factory';
 import { RxState } from '@rx-angular/state';
@@ -31,6 +35,7 @@ import { CommonModule } from '@angular/common';
 interface ProjectsBoardActions {
   openCreateProjectDialog: void;
   deleteProject: Project;
+  updateProject: { project: Project; data: EditProjectRequest };
 }
 
 interface ProjectsBoardState {}
@@ -91,6 +96,10 @@ export class DashboardComponent
     this.hold(this.actions.openCreateProjectDialog$, () => this.openDialog());
     this.hold(this.actions.deleteProject$, (project) =>
       this.projectsState.actions.deleteProject(project)
+    );
+
+    this.hold(this.actions.updateProject$, ({ project, data }) =>
+      this.projectsState.actions.updateProject({ $id: project.$id, data })
     );
   }
 

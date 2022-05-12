@@ -1,0 +1,44 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="b-form">
+  <h3 class="tui-form__header tui-form__header_margin-top_none">
+    Edit project
+  </h3>
+  <div class="tui-form__row">
+    <label tuiLabel [label]="'Name*'">
+      <tui-input
+        tuiAutoFocus
+        formControlName="name"
+        [tuiTextfieldLabelOutside]="true"
+      >
+      </tui-input>
+      <tui-field-error formControlName="name"></tui-field-error>
+    </label>
+  </div>
+  <div class="tui-form__row">
+    <label tuiLabel [label]="'Description'">
+      <tui-text-area
+        formControlName="description"
+        [tuiTextfieldLabelOutside]="true"
+      ></tui-text-area>
+      <tui-field-error formControlName="description"></tui-field-error>
+    </label>
+  </div>
+
+  <div class="tui-form__row">
+    <label tuiLabel label="Tags">
+      <tui-input-tag
+        [tuiTextfieldLabelOutside]="true"
+        [tuiTextfieldCleaner]="true"
+        [uniqueTags]="true"
+        formControlName="tags"
+      ></tui-input-tag>
+      <tui-field-error formControlName="tags"></tui-field-error>
+    </label>
+  </div>
+
+  <div class="tui-form__row actions">
+    <button tuiButton appearance="secondary" type="button" (click)="close()">
+      Cancel
+    </button>
+    <button tuiButton appearance="primary">Confirm</button>
+  </div>
+</form>

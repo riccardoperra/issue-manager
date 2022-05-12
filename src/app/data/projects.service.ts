@@ -4,6 +4,7 @@ import { Appwrite, Models } from 'appwrite';
 import { realtimeListener } from '../shared/utils/realtime';
 import { delay, from, map, Observable, tap } from 'rxjs';
 import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
+import { EditProjectDialogComponent } from '../features/dashboard/edit-project-dialog/edit-project-dialog.component';
 
 export const enum ProjectVisibility {
   'public' = 'public',
@@ -22,8 +23,10 @@ export interface Project extends Models.Document {
 
 export type AddProjectRequest = Pick<
   Project,
-  'name' | 'description' | 'visibility' | 'tags' | 'imageUrl'
+  'name' | 'description' | 'visibility' | 'tags'
 >;
+
+export type EditProjectRequest = Pick<Project, 'name' | 'description' | 'tags'>;
 
 @Injectable({ providedIn: 'root' })
 export class ProjectsService {
@@ -49,6 +52,16 @@ export class ProjectsService {
       this.appwrite.database.getDocument<Project>(
         ProjectsService.collectionId,
         $id
+      )
+    );
+  }
+
+  updateProject($id: string, project: EditProjectRequest): Observable<Project> {
+    return from(
+      this.appwrite.database.updateDocument<Project>(
+        ProjectsService.collectionId,
+        $id,
+        project
       )
     );
   }

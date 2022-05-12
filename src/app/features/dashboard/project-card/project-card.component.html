@@ -1,4 +1,4 @@
-<tui-island class="card" *ngIf="project; else fallback">
+<tui-island class="card" *rxLet="project$; let project">
   <div class="card-header">
     <h3 class="tui-island__title card-title">
       {{ project?.name }}
@@ -6,10 +6,10 @@
     <tui-badge
       *ngIf="project.visibility === 'public'"
       status="info"
-      value="Public project"
+      value="Public"
     ></tui-badge>
     <tui-hosted-dropdown
-      *ngIf="!(isGuest$ | push)"
+      *ngIf="allowedWrite$ | push"
       tuiDropdownAlign="right"
       [content]="actions"
       (click)="$event.stopPropagation()"
@@ -23,7 +23,14 @@
     </tui-hosted-dropdown>
     <ng-template #actions>
       <tui-data-list>
-        <button tuiOption (click)="deleteProject.emit(project)">Delete</button>
+        <button tuiOption (click)="onUpdateProject(project)">
+          <tui-svg src="tuiIconEditLarge"></tui-svg>
+          <span class="tui-space_left-2">Update</span>
+        </button>
+        <button tuiOption (click)="deleteProject.emit(project)">
+          <tui-svg src="tuiIconTrashLarge"></tui-svg>
+          <span class="tui-space_left-2">Delete</span>
+        </button>
       </tui-data-list>
     </ng-template>
   </div>

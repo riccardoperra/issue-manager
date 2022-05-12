@@ -2,6 +2,7 @@ import { RxState } from '@rx-angular/state';
 import { WithInitializer } from '../rxa-custom/initializer';
 import {
   AddProjectRequest,
+  EditProjectRequest,
   Project,
   ProjectsService,
 } from '../../data/projects.service';
@@ -21,6 +22,7 @@ export interface ProjectsActions {
   addProject: AddProjectRequest;
   addProjectSync: Project;
   deleteProject: Project;
+  updateProject: { $id: Project['$id']; data: EditProjectRequest };
   updateProjectSync: { $id: Project['$id']; data: Project };
   removeProjectSync: string;
   fetchProjects: void;
@@ -43,6 +45,14 @@ export class ProjectsState
       switchMap((request) =>
         this.projectsService
           .createProject(request)
+          .pipe(finalize(() => this.set({ loading: false })))
+      )
+    ),
+    this.actions.updateProject$.pipe(
+      tap(() => this.set({ loading: true })),
+      switchMap(({ $id, data }) =>
+        this.projectsService
+          .updateProject($id, data)
           .pipe(finalize(() => this.set({ loading: false })))
       )
     ),

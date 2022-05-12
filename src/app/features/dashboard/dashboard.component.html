@@ -24,6 +24,9 @@
               [project]="project"
               [routerLink]="['project', project.$id]"
               (deleteProject)="actions.deleteProject($event)"
+              (updateProject)="
+                actions.updateProject({ project: project, data: $event })
+              "
             ></app-project-card>
           </div>
         </div>
